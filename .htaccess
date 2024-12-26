@@ -1,0 +1,16 @@
+# Enable URL rewriting
+RewriteEngine On
+
+# Ensure the base URL is set correctly
+RewriteBase /pakotour/
+
+# Allow access to JavaScript, CSS, and image files
+<FilesMatch "\.(js|css|jpg|png|jpeg|gif|ico)$">
+    Order allow,deny
+    Allow from all
+</FilesMatch>
+
+# Fallback to index.php for all other requests (if using a framework)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /pakotour/index.php [L]
