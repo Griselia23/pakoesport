@@ -1,16 +1,23 @@
-# Enable URL rewriting
+# Enable mod_rewrite
 RewriteEngine On
 
-# Ensure the base URL is set correctly
-RewriteBase /pakotour/
+# Ensure that Apache can use mod_rewrite
+RewriteBase /
 
-# Allow access to JavaScript, CSS, and image files
-<FilesMatch "\.(js|css|jpg|png|jpeg|gif|ico)$">
-    Order allow,deny
+# Remove index.php from URLs
+RewriteCond %{REQUEST_URI} ^/index.php [NC]
+RewriteRule ^index.php(.*)$ $1 [R=301,L]
+
+# Remove 'index.php' from the URL for clean URLs
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L]
+
+# Allow access to specific file types (images, CSS, JS, HTML)
+<FilesMatch "\.(jpg|jpeg|png|gif|css|js|html|xml|json)$">
+    Order Allow,Deny
     Allow from all
 </FilesMatch>
 
-# Fallback to index.php for all other requests (if using a framework)
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ /pakotour/index.php [L]
+# Disable directory listing for security purposes
+Options -Indexes
