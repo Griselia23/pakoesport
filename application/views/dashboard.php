@@ -562,40 +562,57 @@
     <div class="row">
     <!-- Card for registration form -->
     <div class="card">
-        <h3>Register Your Team</h3>
-        <form action="<?php echo site_url('register/submit'); ?>" method="POST" enctype="multipart/form-data">
-            <!-- Team Name -->
-            <div class="form-group">
-                <label for="teamName">Team Name:</label>
-                <input type="text" id="teamName" name="teamName" required>
+    <h3>Register Your Team</h3>
+    <form action="<?= base_url('dashboard/submit_registration') ?>" method="POST">
+        <!-- Team Information -->
+        <div class="form-group">
+            <label for="team">Team Name:</label>
+            <input type="text" id="team" name="team" required placeholder="Enter team name">
+        </div>
+
+        <div class="form-group">
+            <label for="plant">Plant:</label>
+            <input type="text" id="plant" name="plant" required placeholder="Enter plant name">
+        </div>
+
+        <div class="form-group">
+            <label for="leadernpk">Leader NPK:</label>
+            <input type="number" id="leadernpk" name="leadernpk" required placeholder="Enter leader's NPK">
+        </div>
+
+        <div class="form-group">
+            <label for="leadername">Leader Name:</label>
+            <input type="text" id="leadername" name="leadername" required placeholder="Enter leader's name">
+        </div>
+
+        <div class="form-group">
+            <label for="number">Team Number:</label>
+            <input type="text" id="number" name="number" required placeholder="Enter team number">
+        </div>
+
+        <!-- Member Information -->
+        <h4>Members:</h4>
+
+        <div id="members-container">
+            <!-- First Member Input -->
+            <div class="form-group member">
+                <label for="member1npk">Member 1 NPK:</label>
+                <input type="number" id="member1npk" name="member1npk" placeholder="Enter member 1 NPK">
+                <label for="member1name">Member 1 Name:</label>
+                <input type="text" id="member1name" name="member1name" placeholder="Enter member 1 name">
             </div>
-            <!-- Leader Name -->
-            <div class="form-group">
-                <label for="leaderName">Leader Name:</label>
-                <input type="text" id="leaderName" name="leaderName" required>
-            </div>
-            <!-- Plant -->
-            <div class="form-group">
-                <label for="plant">Plant:</label>
-                <input type="text" id="plant" name="plant" required>
-            </div>
-            <!-- Upload Badge -->
-            <div class="form-group">
-                <label for="badge">Upload Badge:</label>
-                <input type="file" id="badge" name="badge" accept="image/*" required>
-            </div>
-            <!-- Gaming Division -->
-            <div class="form-group">
-                <label for="gamingDivision">Gaming Division:</label>
-                <select id="gamingDivision" name="gamingDivision" required>
-                    <option value="Mobile Legends">Mobile Legends</option>
-                    <option value="FIFA">FIFA</option>
-                </select>
-            </div>
-            <!-- Submit Button -->
-            <button type="submit">Register</button>
-        </form>
-    </div>
+        </div>
+
+        <div class="form-group">
+            <button type="button" id="add-member-btn">Add Member</button>
+        </div>
+
+        <div class="form-group">
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+</div>
+
       <!-- Modal Order Form -->
       <div id="buy-ticket-modal" class="modal fade">
         <div class="modal-dialog" role="document">
@@ -703,4 +720,70 @@
     </section><!-- #contact -->
 
   </main>
+
+  <script>
+    document.getElementById("add-member-btn").addEventListener("click", function() {
+        var memberCount = document.querySelectorAll(".member").length;
+
+        // Limit to 5 members
+        if (memberCount < 5) {
+            var memberContainer = document.getElementById("members-container");
+
+            var newMemberDiv = document.createElement("div");
+            newMemberDiv.classList.add("form-group", "member");
+
+            // Create Member NPK input
+            var memberNPKLabel = document.createElement("label");
+            memberNPKLabel.setAttribute("for", "member" + (memberCount + 1) + "npk");
+            memberNPKLabel.textContent = "Member " + (memberCount + 1) + " NPK:";
+            newMemberDiv.appendChild(memberNPKLabel);
+            var memberNPKInput = document.createElement("input");
+            memberNPKInput.setAttribute("type", "number");
+            memberNPKInput.setAttribute("id", "member" + (memberCount + 1) + "npk");
+            memberNPKInput.setAttribute("name", "member" + (memberCount + 1) + "npk");
+            memberNPKInput.setAttribute("placeholder", "Enter member " + (memberCount + 1) + " NPK");
+            newMemberDiv.appendChild(memberNPKInput);
+
+            // Create Member Name input
+            var memberNameLabel = document.createElement("label");
+            memberNameLabel.setAttribute("for", "member" + (memberCount + 1) + "name");
+            memberNameLabel.textContent = "Member " + (memberCount + 1) + " Name:";
+            newMemberDiv.appendChild(memberNameLabel);
+            var memberNameInput = document.createElement("input");
+            memberNameInput.setAttribute("type", "text");
+            memberNameInput.setAttribute("id", "member" + (memberCount + 1) + "name");
+            memberNameInput.setAttribute("name", "member" + (memberCount + 1) + "name");
+            memberNameInput.setAttribute("placeholder", "Enter member " + (memberCount + 1) + " name");
+            newMemberDiv.appendChild(memberNameInput);
+
+            // Append the new member div to the container
+            memberContainer.appendChild(newMemberDiv);
+        }
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+
+<script>
+    // Check if there's flashdata for success or error
+    <?php if ($this->session->flashdata('success')): ?>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: '<?= $this->session->flashdata('success'); ?>',
+            showConfirmButton: true,
+            timer: 4000 // The alert will disappear after 4 seconds
+        });
+    <?php elseif ($this->session->flashdata('error')): ?>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '<?= $this->session->flashdata('error'); ?>',
+            showConfirmButton: true,
+            timer: 4000 // The alert will disappear after 4 seconds
+        });
+    <?php endif; ?>
+</script>
+
+
   <?php include(APPPATH . 'views/layout/footer.php'); ?>

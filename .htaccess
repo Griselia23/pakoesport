@@ -2,7 +2,7 @@
 RewriteEngine On
 
 # Ensure that Apache can use mod_rewrite
-RewriteBase /
+RewriteBase /pakoesport/
 
 # Remove index.php from URLs
 RewriteCond %{REQUEST_URI} ^/index.php [NC]
