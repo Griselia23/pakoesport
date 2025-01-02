@@ -1,0 +1,184 @@
+-- phpMyAdmin SQL Dump
+-- version 4.8.5
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 02 Jan 2025 pada 10.15
+-- Versi server: 10.1.38-MariaDB
+-- Versi PHP: 5.6.40
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `pakoesp`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `register`
+--
+
+CREATE TABLE `register` (
+  `id` int(11) NOT NULL,
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `team` varchar(255) NOT NULL,
+  `points` int(11) DEFAULT NULL,
+  `plant` varchar(255) NOT NULL,
+  `leadernpk` varchar(50) NOT NULL,
+  `leadername` varchar(255) NOT NULL,
+  `number` varchar(50) NOT NULL,
+  `member1npk` varchar(50) DEFAULT NULL,
+  `member1name` varchar(255) DEFAULT NULL,
+  `member2npk` varchar(50) DEFAULT NULL,
+  `member2name` varchar(255) DEFAULT NULL,
+  `member3npk` varchar(50) DEFAULT NULL,
+  `member3name` varchar(255) DEFAULT NULL,
+  `member4npk` varchar(50) DEFAULT NULL,
+  `member4name` varchar(255) DEFAULT NULL,
+  `member5npk` varchar(50) DEFAULT NULL,
+  `member5name` varchar(255) DEFAULT NULL,
+  `division` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `register`
+--
+
+INSERT INTO `register` (`id`, `creation_date`, `team`, `points`, `plant`, `leadernpk`, `leadername`, `number`, `member1npk`, `member1name`, `member2npk`, `member2name`, `member3npk`, `member3name`, `member4npk`, `member4name`, `member5npk`, `member5name`, `division`) VALUES
+(2, '2025-01-02 03:29:46', 'geg1', NULL, 'inko', '3712631', 'Bagus', '2137617', '2317183', 'riski', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ml'),
+(4, '2025-01-02 05:57:40', 'GEge gaming', NULL, '2w', '3271361', 'bunge', '3813102', '231421', 'dwadaadwa', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'fifa'),
+(5, '2025-01-02 07:11:26', 'bubu', NULL, 'inko', '231141', 'riski', '20391031', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'fifa'),
+(6, '2025-01-02 07:12:22', 'babab', NULL, '2w', '213671', 'iwan', '20391-31', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'fifa');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `result`
+--
+
+CREATE TABLE `result` (
+  `id` int(11) NOT NULL,
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `matches` varchar(255) NOT NULL,
+  `points` int(11) DEFAULT '0',
+  `result` enum('win','lose','draw') NOT NULL,
+  `upload` varchar(255) DEFAULT NULL,
+  `upload_timestamp` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `schedule`
+--
+
+CREATE TABLE `schedule` (
+  `id` int(11) NOT NULL,
+  `match_number` int(11) NOT NULL,
+  `division` enum('ml','fifa') NOT NULL,
+  `start_date` date NOT NULL,
+  `start_time` time NOT NULL,
+  `end_date` date NOT NULL,
+  `end_time` time NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `schedule`
+--
+
+INSERT INTO `schedule` (`id`, `match_number`, `division`, `start_date`, `start_time`, `end_date`, `end_time`, `created_at`) VALUES
+(1, 1, 'fifa', '2025-01-02', '22:00:00', '2025-01-02', '23:00:00', '2025-01-02 08:53:52'),
+(2, 1, 'ml', '2025-01-02', '22:00:00', '2025-01-02', '23:00:00', '2025-01-02 08:57:07');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `npk` varchar(50) NOT NULL,
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `password`, `npk`, `creation_date`) VALUES
+(2, 'bagus', '$2y$10$BrQfN229KopDyB4bssR8U.o.wcjmSUYAdq6OY1opA6VY3blSIdwEO', 'os0945', '2025-01-02 04:48:10');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indeks untuk tabel `register`
+--
+ALTER TABLE `register`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `result`
+--
+ALTER TABLE `result`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `schedule`
+--
+ALTER TABLE `schedule`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT untuk tabel yang dibuang
+--
+
+--
+-- AUTO_INCREMENT untuk tabel `register`
+--
+ALTER TABLE `register`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT untuk tabel `result`
+--
+ALTER TABLE `result`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `schedule`
+--
+ALTER TABLE `schedule`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
