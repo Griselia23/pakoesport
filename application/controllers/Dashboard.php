@@ -34,6 +34,7 @@ class Dashboard extends CI_Controller {
             'member4name' => $this->input->post('member4name'),
             'member5npk' => $this->input->post('member5npk'),
             'member5name' => $this->input->post('member5name'),
+            'division' => $this->input->post('division'),
         );
 
         // Save the data to the database
@@ -47,4 +48,34 @@ class Dashboard extends CI_Controller {
             redirect('dashboard');
         }
     }
+
+    public function save_schedule() {
+        $matchNumber = $this->input->post('matchNumber');
+        $startDate = $this->input->post('startDate');  // Format: YYYY-MM-DD
+        $startTime = $this->input->post('startTime');  // Format: HH:MM
+        $endDate = $this->input->post('endDate');      // Format: YYYY-MM-DD
+        $endTime = $this->input->post('endTime');      // Format: HH:MM
+
+        // Gabungkan tanggal dan waktu menjadi satu string datetime (jika perlu)
+        $startDateTime = $startDate . ' ' . $startTime;
+        $endDateTime = $endDate . ' ' . $endTime;
+
+        // Panggil model untuk menyimpan jadwal
+        $data = array(
+            'match_number' => $matchNumber,
+            'start_date' => $startDate,
+            'start_time' => $startTime,
+            'end_date' => $endDate,
+            'end_time' => $endTime,
+        );
+
+        // Panggil model untuk menyimpan data
+        $this->load->model('Dashboard_model');
+        $this->Dashboard_model->save_schedule($data);
+
+        // Redirect ke halaman lain setelah berhasil (misalnya kembali ke halaman jadwal)
+        redirect('admin');
+    }
+    
+
 }

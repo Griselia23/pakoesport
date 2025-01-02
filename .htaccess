@@ -21,3 +21,4 @@ RewriteRule ^(.*)$ index.php/$1 [L]
 
 # Disable directory listing for security purposes
 Options -Indexes
+
