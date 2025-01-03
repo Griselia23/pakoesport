@@ -55,4 +55,5 @@ $route['translate_uri_dashes'] = FALSE;
 $route['dashboard'] = 'dashboard';
 $route['admin'] = 'admin';
 $route['setuser'] = 'setuser';
+$route['admin/schedule/(:any)'] = 'admin/schedule_list/$1';  
 

@@ -18,12 +18,123 @@
         <li><a href="#buy-tickets">Register</a></li>
         <!-- <li><a href="#contact">Contact</a></li> -->
         <li class="buy-tickets"><a href="login">Admin</a></li>
-        
+
       </ul>
     </nav><!-- #nav-menu-container -->
   </div>
 </header><!-- #header -->
+<style>
+ .upload-result-form {
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+}
 
+.smaller-container {
+  width: 50%; /* You can adjust this percentage to make it smaller or bigger */
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff; /* White background for the form box */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Drop shadow */
+}
+
+.match-selection,
+.team-selection,
+.score-inputs,
+.upload-section,
+.submit-section {
+  margin-bottom: 20px;
+}
+
+.match-selection label,
+.team-selection label,
+.score-inputs label,
+.upload-section label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between; /* Distribute items evenly across the row */
+  align-items: center;
+  flex-wrap: wrap; /* Wrap if space is too small */
+}
+
+.form-row > div {
+  margin-right: 10px;
+  flex: 1; /* Allow all items to flex and adjust their width */
+  min-width: 120px; /* Set a minimum width for each input */
+}
+
+.vs {
+  font-weight: bold;
+  font-size: 20px;
+  padding: 0 15px;
+  margin: 0 20px; /* Add margin to the left and right of the VS to space out team 1 and team 2 */
+}
+
+/* Styling for the left side of the form (Team 1 and Score 1) */
+.team-left, .score-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.score-inputs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+/* Styling for the right side of the form (Team 2 and Score 2) */
+.team-right, .score-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-right: auto; /* Align to the right */
+}
+
+.score-inputs input {
+  width: 80px;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.upload-section {
+  margin-bottom: 20px;
+}
+
+.submit-section {
+  text-align: center;
+}
+
+.rslt-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: rgb(245, 42, 15);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.rslt-btn:hover {
+  background-color: rgb(245, 42, 15);
+}
+
+.rslt-btn:active {
+  background-color: #3e8e41;
+}
+
+.upload-section input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+</style>
 <!-- Your main content continues here -->
 <section id="intro">
   <div class="intro-container wow fadeIn">
@@ -78,58 +189,59 @@
   <!--==========================
       Schedule Section
     ============================-->
-    <section id="schedule" class="section-with-bg">
+  <section id="schedule" class="section-with-bg">
     <div class="container wow fadeInUp">
-        <div class="section-header">
-            <h2>Event Schedule</h2>
-            <p>Here is our event schedule</p>
-        </div>
+      <div class="section-header">
+        <h2>Event Schedule</h2>
+        <p>Here is our event schedule</p>
+      </div>
 
-        <div class="schedule-toggle-stripe">
-            <span id="mlbtn" class="toggle-stripe active">Mobile Legends</span>
-            <span id="fifabtn" class="toggle-stripe">FIFA</span>
-        </div>
+      <div class="schedule-toggle-stripe">
+        <span id="mlbtn" class="toggle-stripe active">Mobile Legends</span>
+        <span id="fifabtn" class="toggle-stripe">FIFA</span>
+      </div>
 
-        <div id="mobileLegendsTable" class="schedule-table">
-            <h3>Mobile Legends Schedule</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Match</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>--</td>
-                        <td>--</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+      <div id="mobileLegendsTable" class="schedule-table">
+        <h3>Mobile Legends Schedule</h3>
+        <table style="border-collapse: collapse; width: 100%;">
+          <thead>
+            <tr>
+              <th style="border: none; padding: 8px;">Date</th>
+              <th style="border: none; padding: 8px;">Match</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="border: none; padding: 8px;">--</td>
+              <td style="border: none; padding: 8px;">--</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-        <div id="fifaTable" class="schedule-table" style="display:none;">
-            <h3>FIFA Schedule</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Match</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>--</td>
-                        <td>--</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+      <div id="fifaTable" class="schedule-table" style="display:none;">
+        <h3>FIFA Schedule</h3>
+        <table style="border-collapse: collapse; width: 100%;">
+          <thead>
+            <tr>
+              <th style="border: none; padding: 8px;">Date</th>
+              <th style="border: none; padding: 8px;">Match</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="border: none; padding: 8px;">--</td>
+              <td style="border: none; padding: 8px;">--</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
     </div>
-</section>
+  </section>
 
-<!-- Include External JS File -->
-<script src="script.js"></script>
+  <!-- Include External JS File -->
+  <script src="script.js"></script>
 
 
   <!--==========================
@@ -236,22 +348,136 @@
   <!--==========================
       Hotels Section
     ============================-->
-  <section id="teams" class="section-with-bg wow fadeInUp">
-
-      <!-- upload_result_view.php -->
-<div class="container">
+    <section id="teams" class="section-with-bg wow fadeInUp">
+  <div class="container smaller-container">
     <div class="section-header">
-        <h2>Upload Result</h2>
-        <p>Fill this form to upload the match result.</p>
+      <h2>Upload Result</h2>
+      <p>Fill this form to upload the match result.</p>
     </div>
-    
-</div>
 
+    <div class="schedule-toggle-stripe">
+      <span id="mlresultbtn" class="toggle-stripe active">Mobile Legends</span>
+      <span id="fifaresultbtn" class="toggle-stripe">FIFA</span>
+    </div>
 
-       
+    <!-- Form to upload result -->
+    <form action="update_points.php" method="post" enctype="multipart/form-data" class="upload-result-form">
+      
+      <!-- Match Selection Box -->
+      <div class="form-row match-selection">
+        <div>
+          <label for="match_number">Match:</label>
+          <select name="match_number" id="match_number" required>
+            <option value="1">Match 1</option>
+            <option value="2">Match 2</option>
+            <option value="3">Match 3</option>
+          </select>
+        </div>
       </div>
 
-    </section>
+      <!-- Team Selection Box -->
+      <div class="form-row team-selection">
+        <div class="team-left">
+          <label for="team1">Team 1:</label>
+          <select name="team1" id="team1" required>
+            <option value="team_a">Team A</option>
+            <option value="team_b">Team B</option>
+            <option value="team_c">Team C</option>
+          </select>
+        </div>
+
+        <span class="vs">VS</span>
+
+        <div class="team-right">
+          <label for="team2">Team 2:</label>
+          <select name="team2" id="team2" required>
+            <option value="team_d">Team D</option>
+            <option value="team_e">Team E</option>
+            <option value="team_f">Team F</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Score Input Box -->
+      <div class="form-row score-inputs">
+        <div class="score-left">
+          <label for="team_1_score">Score Team 1:</label>
+          <input type="number" name="team_1_score" id="team_1_score" required>
+        </div>
+
+        <div class="score-right">
+          <label for="team_2_score">Score Team 2:</label>
+          <input type="number" name="team_2_score" id="team_2_score" required>
+        </div>
+      </div>
+
+      <!-- Upload Evidence Box -->
+      <div class="form-row upload-section">
+        <div>
+          <label for="evidence">Upload Evidence (Image/PDF):</label>
+          <input type="file" name="evidence" id="evidence" accept="image/*,application/pdf" required>
+        </div>
+      </div>
+
+      <!-- Submit Button Box -->
+      <div class="form-row submit-section">
+        <button type="submit" class="rslt-btn">Submit Result</button>
+      </div>
+
+    </form>
+  </div>
+</section>
+
+
+
+<script>
+  // Toggle between Mobile Legends and FIFA sections
+  const mlResultBtn = document.getElementById('mlresultbtn');
+  const fifaResultBtn = document.getElementById('fifaresultbtn');
+
+  const mlMatchSelection = document.getElementById('mlmatchSelection');
+  const fifaMatchSelection = document.getElementById('fifamatchSelection');
+
+  const mlTeamSelection = document.getElementById('mlteamSelection');
+  const fifaTeamSelection = document.getElementById('fifateamSelection');
+
+  // Function to show Mobile Legends sections and hide FIFA
+  function showML() {
+    mlResultBtn.classList.add('active');
+    fifaResultBtn.classList.remove('active');
+    
+    mlMatchSelection.style.display = 'block';
+    fifaMatchSelection.style.display = 'none';
+
+    mlTeamSelection.style.display = 'block';
+    fifaTeamSelection.style.display = 'none';
+  }
+
+  // Function to show FIFA sections and hide Mobile Legends
+  function showFIFA() {
+    fifaResultBtn.classList.add('active');
+    mlResultBtn.classList.remove('active');
+    
+    fifaMatchSelection.style.display = 'block';
+    mlMatchSelection.style.display = 'none';
+
+    fifaTeamSelection.style.display = 'block';
+    mlTeamSelection.style.display = 'none';
+  }
+
+  // Event listeners for toggle buttons
+  mlResultBtn.addEventListener('click', showML);
+  fifaResultBtn.addEventListener('click', showFIFA);
+
+  // Initially show Mobile Legends
+  showML();
+</script>
+
+
+
+
+
+
 
   <!--==========================
       Gallery Section
@@ -483,7 +709,7 @@
                 <option value="fifa">FIFA</option>
               </select>
             </div>
-            
+
             <!-- Member Information -->
             <h4>Members:</h4>
 
@@ -498,9 +724,9 @@
             </div>
 
             <div class="form-group">
-    <button type="button" id="add-member-btn" style="float: left;">Add Member</button>
-    <button type="submit" style="float: right;">Submit</button>
-</div>
+              <button type="button" id="add-member-btn" style="float: left;">Add Member</button>
+              <button type="submit" style="float: right;">Submit</button>
+            </div>
 
           </form>
         </div>
@@ -648,28 +874,26 @@
 <!-- schedule script -->
 
 <script>
-    
-const mlbtn = document.getElementById('mlbtn');
-const fifabtn = document.getElementById('fifabtn');
-const mobileLegendsTable = document.getElementById('mobileLegendsTable');
-const fifaTable = document.getElementById('fifaTable');
+  const mlbtn = document.getElementById('mlbtn');
+  const fifabtn = document.getElementById('fifabtn');
+  const mobileLegendsTable = document.getElementById('mobileLegendsTable');
+  const fifaTable = document.getElementById('fifaTable');
 
-// Add event listeners for the toggle buttons
-mlbtn.addEventListener('click', function() {
+  // Add event listeners for the toggle buttons
+  mlbtn.addEventListener('click', function() {
     mobileLegendsTable.style.display = 'block';
     fifaTable.style.display = 'none';
     mlbtn.classList.add('active');
     fifabtn.classList.remove('active');
-});
+  });
 
-fifabtn.addEventListener('click', function() {
+  fifabtn.addEventListener('click', function() {
     mobileLegendsTable.style.display = 'none';
     fifaTable.style.display = 'block';
     fifabtn.classList.add('active');
     mlbtn.classList.remove('active');
-});
-window.addEventListener('load', function() {
+  });
+  window.addEventListener('load', function() {
     mlbtn.click();
-});
-
+  });
 </script>

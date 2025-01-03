@@ -101,9 +101,8 @@
                                     <td><?php echo $schedule->match_number; ?></td>
                                     <td><?php echo $schedule->start_date . ' up to ' . $schedule->end_date; ?></td>
                                     <td><?php echo $schedule->start_time . ' up to ' . $schedule->end_time; ?></td>
-                                    <td>
-                                        <!-- teams will be added later -->
-                                    </td>
+                                    <td>team a vs team b</td>
+
                                     <td><?php echo ($schedule->division == 'ml') ? 'Mobile Legends' : 'FIFA'; ?></td>
                                     <td>
                                         <!-- Edit Button -->
