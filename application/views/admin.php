@@ -1,21 +1,21 @@
 <?php include(APPPATH . 'views/layout/header.php'); ?>
 <link href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" rel="stylesheet" />
 <header id="header">
-  <div class="container">
-    <div id="logo" class="pull-left">
-    </div>
-    <nav id="nav-menu-container">
-      <ul class="nav-menu">
-        <li><a href="<?php echo base_url('admin'); ?>">Setting Period</a></li>
-        <li><a href="<?php echo base_url('setuser'); ?>">Setting User</a></li>
-        
-        <li class="buy-tickets">
-    <a href="<?php echo base_url('login/logout'); ?>">Logout</a>
-</li>
+    <div class="container">
+        <div id="logo" class="pull-left">
+        </div>
+        <nav id="nav-menu-container">
+            <ul class="nav-menu">
+                <li><a href="<?php echo base_url('admin'); ?>">Setting Period</a></li>
+                <li><a href="<?php echo base_url('setuser'); ?>">Setting User</a></li>
 
-      </ul>
-    </nav>
-  </div>
+                <li class="buy-tickets">
+                    <a href="<?php echo base_url('login/logout'); ?>">Logout</a>
+                </li>
+
+            </ul>
+        </nav>
+    </div>
 </header>
 
 <style>
@@ -68,230 +68,271 @@
     .modal-body {
         padding-bottom: 20px;
     }
-
-    /* Optional: Add some padding and spacing for the button */
-    .btn {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .btn-primary {
-        background-color: #007bff;
-        color: white;
-    }
-
-    .btn-primary:hover {
-        background-color: #0056b3;
-    }
 </style>
 
 <main id="main">
 
 
-<section id="main-content" style="background-color: white; padding: 20px; margin-top: 50px;">
-<div class="container">
-<div class="container" style="background-color: white; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border-radius: 8px;">
-    <div class="section-header">
-        <h2 style="color: black;">Setting Period</h2>
-        <p style="color: black;">Hai <?php echo $this->session->userdata('username'); ?>, Here you can set the schedules</p>
-    </div>
-
-    <!-- Button to trigger modal for adding schedule -->
-    <a href="#addScheduleModal" class="btn btn-primary mt-4">Add Schedule</a>
-
-    <!-- Table to display match schedules -->
-    <table class="table table-bordered table-striped mt-4">
-        <thead>
-            <tr style="background-color: #f4f4f4;">
-                <th>Matches</th>
-                <th>Date</th>
-                <th>Hours</th>
-                <th>Teams</th>
-                <th>Division</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Add your match schedule rows here -->
-            <?php if (!empty($schedules)): ?>
-                <?php foreach ($schedules as $schedule): ?>
-                    <tr>
-                        <td><?php echo $schedule->match_number; ?></td>
-                        <td><?php echo $schedule->start_date; ?></td>
-                        <td><?php echo $schedule->start_time . ' - ' . $schedule->end_time; ?></td>
-                        <td><?php echo $schedule->team_1 . ' vs ' . $schedule->team_2; ?></td>
-                        <td><?php echo $schedule->division; ?></td>
-                        <td>
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#editModal<?php echo $schedule->id; ?>">Edit</button>
-                            <form method="POST" action="<?php echo site_url('admin/delete_schedule/' . $schedule->id); ?>" style="display:inline;">
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this schedule?');">Delete</button>
-                            </form>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <tr>
-                    <td colspan="6">No schedules available</td>
-                </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
-</div>
-
-<!-- Add Schedule Modal -->
-<div id="addScheduleModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">Add Match Schedule</h5>
-            <a href="#" class="close">&times;</a>
-        </div>
-        <div class="modal-body">
-            <!-- Schedule form -->
-            <form method="POST" action="<?php echo base_url('admin/save_schedule'); ?>">
-                <!-- Match Number -->
-                <div class="mb-3">
-                    <label for="matchNumber" class="form-label">Match Number</label>
-                    <input type="text" class="form-control" id="matchNumber" name="matchNumber" required placeholder="Enter match number (e.g., 1)">
+    <section id="main-content" style="background-color: white; padding: 20px; margin-top: 50px;">
+        <div class="container">
+            <div class="container" style="background-color: white; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border-radius: 8px;">
+                <div class="section-header">
+                    <h2 style="color: black;">Setting Period</h2>
+                    <p style="color: black;">Hai <?php echo $this->session->userdata('username'); ?>, Here you can set the schedules</p>
                 </div>
 
-                <!-- Division (ML or FIFA) -->
-                <div class="mb-3">
-                    <label for="division" class="form-label">Division</label>
-                    <select class="form-control" id="division" name="division" required>
-                        <option value="ml">Mobile Legends</option>
-                        <option value="fifa">FIFA</option>
-                    </select>
-                </div>
+                <a href="#addScheduleModal" class="btn btn-primary mt-4">Add Schedule</a>
 
-                <!-- Start Date -->
-                <div class="mb-3">
-                    <label for="startDate" class="form-label">Start Date</label>
-                    <input type="date" class="form-control" id="startDate" name="startDate" required>
-                </div>
+                <table class="table table-bordered table-striped mt-4">
+                    <thead>
+                        <tr style="background-color: #f4f4f4;">
+                            <th>Matches</th>
+                            <th>Date</th>
+                            <th>Hours</th>
+                            <th>Teams</th>
+                            <th>Division</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($schedules)): ?>
+                            <?php foreach ($schedules as $schedule): ?>
+                                <tr>
+                                    <td><?php echo $schedule->match_number; ?></td>
+                                    <td><?php echo $schedule->start_date . ' up to ' . $schedule->end_date; ?></td>
+                                    <td><?php echo $schedule->start_time . ' up to ' . $schedule->end_time; ?></td>
+                                    <td>
+                                        <!-- teams will be added later -->
+                                    </td>
+                                    <td><?php echo ($schedule->division == 'ml') ? 'Mobile Legends' : 'FIFA'; ?></td>
+                                    <td>
+                                        <!-- Edit Button -->
+                                        <a href="#editModal<?php echo $schedule->id; ?>" class="btn btn-primary" style="background-color: #007bff; border-color: #007bff;">Edit</a>
 
-                <!-- Start Time -->
-                <div class="mb-3">
-                    <label for="startTime" class="form-label">Start Time</label>
-                    <input type="time" class="form-control" id="startTime" name="startTime" required>
-                </div>
+                                        <!-- Delete Button -->
+                                        <form method="POST" action="<?php echo site_url('admin/delete_schedule/' . $schedule->id); ?>" style="display:inline;">
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this schedule?');">Del</button>
+                                        </form>
+                                    </td>
+                                </tr>
 
-                <!-- End Date -->
-                <div class="mb-3">
-                    <label for="endDate" class="form-label">End Date</label>
-                    <input type="date" class="form-control" id="endDate" name="endDate" required>
-                </div>
+                                <!-- Edit Modal -->
+                                <div id="editModal<?php echo $schedule->id; ?>" class="modal">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Edit Match Schedule</h5>
+                                            <a href="#" class="close">&times;</a>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form method="POST" action="<?php echo base_url('admin/update_schedule/' . $schedule->id); ?>">
+                                                <!-- Match Number -->
+                                                <div class="mb-3">
+                                                    <label for="matchNumber" class="form-label">Match Number</label>
+                                                    <input type="text" class="form-control" id="matchNumber" name="matchNumber" value="<?php echo $schedule->match_number; ?>" required>
+                                                </div>
 
-                <!-- End Time -->
-                <div class="mb-3">
-                    <label for="endTime" class="form-label">End Time</label>
-                    <input type="time" class="form-control" id="endTime" name="endTime" required>
-                </div>
+                                                <!-- Division -->
+                                                <div class="mb-3">
+                                                    <label for="division" class="form-label">Division</label>
+                                                    <select class="form-control" id="division" name="division" required>
+                                                        <option value="ml" <?php echo ($schedule->division == 'ml' ? 'selected' : ''); ?>>Mobile Legends</option>
+                                                        <option value="fifa" <?php echo ($schedule->division == 'fifa' ? 'selected' : ''); ?>>FIFA</option>
+                                                    </select>
+                                                </div>
 
-                <!-- Submit Button -->
-                <button type="submit" class="btn btn-primary">Save</button>
-            </form>
-        </div>
-    </div>
-</div>
+                                                <!-- Start Date -->
+                                                <div class="mb-3">
+                                                    <label for="startDate" class="form-label">Start Date</label>
+                                                    <input type="date" class="form-control" id="startDate" name="startDate" value="<?php echo $schedule->start_date; ?>" required>
+                                                </div>
+
+                                                <!-- Start Time -->
+                                                <div class="mb-3">
+                                                    <label for="startTime" class="form-label">Start Time</label>
+                                                    <input type="time" class="form-control" id="startTime" name="startTime" value="<?php echo $schedule->start_time; ?>" required>
+                                                </div>
+
+                                                <!-- End Date -->
+                                                <div class="mb-3">
+                                                    <label for="endDate" class="form-label">End Date</label>
+                                                    <input type="date" class="form-control" id="endDate" name="endDate" value="<?php echo $schedule->end_date; ?>" required>
+                                                </div>
+
+                                                <!-- End Time -->
+                                                <div class="mb-3">
+                                                    <label for="endTime" class="form-label">End Time</label>
+                                                    <input type="time" class="form-control" id="endTime" name="endTime" value="<?php echo $schedule->end_time; ?>" required>
+                                                </div>
+
+                                                <!-- Display Teams as Read-Only -->
+                                                <div class="mb-3">
+                                                    <label for="teams" class="form-label">Teams</label>
+                                                    <p><?php echo !empty($schedule->team_1) && !empty($schedule->team_2) ? $schedule->team_1 . ' vs ' . $schedule->team_2 : 'TBD'; ?></p>
+                                                </div>
+
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="6">No schedules available</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+
+            </div>
 
 
 
- <br>
-<div class="container"></div>
+            <div id="addScheduleModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Match Schedule</h5>
+                        <a href="#" class="close">&times;</a>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="<?php echo base_url('admin/save_schedule'); ?>">
+                            <div class="mb-3">
+                                <label for="matchNumber" class="form-label">Match Number</label>
+                                <input type="text" class="form-control" id="matchNumber" name="matchNumber" required placeholder="Enter match number (e.g., 1)">
+                            </div>
 
-  <div class="container" style="background-color: white; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border-radius: 8px;">
-    <div class="section-header">
-        <h2 style="color: black;">Registered Teams</h2>
-        <p style="color: black;">Hai <?php echo $this->session->userdata('username'); ?>, Here are the details of the registered teams:</p>
-    </div>
+                            <div class="mb-3">
+                                <label for="division" class="form-label">Division</label>
+                                <select class="form-control" id="division" name="division" required>
+                                    <option value="ml">Mobile Legends</option>
+                                    <option value="fifa">FIFA</option>
+                                </select>
+                            </div>
 
-    <div class="period-toggle-stripe">
-        <span id="mobileLegendsPeriodBtn" class="period-btn active">Mobile Legends</span>
-        <span id="fifaPeriodBtn" class="period-btn">FIFA</span>
-    </div>
+                            <div class="mb-3">
+                                <label for="startDate" class="form-label">Start Date</label>
+                                <input type="date" class="form-control" id="startDate" name="startDate" required>
+                            </div>
 
-    <table class="table table-bordered table-striped" id="teamsTable">
-    <thead>
-        <tr style="background-color: #f4f4f4;">
-            <th>Team</th>
-            <th>Plant</th>
-            <th>Leader Name</th>
-            <th>Division</th>
-            <th>Points</th> <!-- Added Points Column -->
-            <th>Action</th> <!-- New Action column -->
-        </tr>
-    </thead>
-    <tbody>
-        <?php if (!empty($teams)): ?>
-            <?php foreach ($teams as $team): ?>
-                <tr class="team" data-division="<?php echo $team->division; ?>" id="team-<?php echo $team->id; ?>">
-                    <td><?php echo $team->team; ?></td>
-                    <td><?php echo $team->plant; ?></td>
-                    <td><?php echo $team->leadername; ?></td>
-                    <td><?php echo $team->division; ?></td>
-                    <td><?php echo $team->points; ?></td> <!-- Display Points -->
-                    <td>
-                        <!-- Edit Button -->
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#editModal<?php echo $team->id; ?>">Edit</button>
-                        
-                        <!-- Delete Button -->
-                        <form method="POST" action="<?php echo site_url('admin/delete_team/' . $team->id); ?>" style="display:inline;">
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this team?');">Delete</button>
+                            <div class="mb-3">
+                                <label for="startTime" class="form-label">Start Time</label>
+                                <input type="time" class="form-control" id="startTime" name="startTime" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="endDate" class="form-label">End Date</label>
+                                <input type="date" class="form-control" id="endDate" name="endDate" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="endTime" class="form-label">End Time</label>
+                                <input type="time" class="form-control" id="endTime" name="endTime" required>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Save</button>
                         </form>
-                    </td>
-                </tr>
-
-                <!-- Edit Modal for this team -->
-                <div class="modal fade" id="editModal<?php echo $team->id; ?>" tabindex="-1" aria-labelledby="editModalLabel<?php echo $team->id; ?>" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="editModalLabel<?php echo $team->id; ?>">Edit Team</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <!-- Form to edit team details -->
-                                <form method="POST" action="<?php echo site_url('admin/update_team'); ?>">
-                                    <input type="hidden" name="team_id" value="<?php echo $team->id; ?>" />
-                                    <div class="mb-3">
-                                        <label for="teamName" class="form-label">Team</label>
-                                        <input type="text" class="form-control" id="teamName" name="teamName" value="<?php echo $team->team; ?>" required />
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="plant" class="form-label">Plant</label>
-                                        <input type="text" class="form-control" id="plant" name="plant" value="<?php echo $team->plant; ?>" required />
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="leaderName" class="form-label">Leader Name</label>
-                                        <input type="text" class="form-control" id="leaderName" name="leaderName" value="<?php echo $team->leadername; ?>" required />
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="division" class="form-label">Division</label>
-                                        <input type="text" class="form-control" id="division" name="division" value="<?php echo $team->division; ?>" required />
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="points" class="form-label">Points</label>
-                                        <input type="number" class="form-control" id="points" name="points" value="<?php echo $team->points; ?>" required />
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Save</button>
-                                </form>
-                            </div>
-                        </div>
                     </div>
                 </div>
-            <?php endforeach; ?>
-        <?php else: ?>
-            <tr>
-                <td colspan="6">No teams registered</td>
-            </tr>
-        <?php endif; ?>
-    </tbody>
-</table>
+            </div>
 
-  </div>
-</section>
+
+
+
+            <br>
+            <div class="container"></div>
+
+            <div class="container" style="background-color: white; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border-radius: 8px;">
+                <div class="section-header">
+                    <h2 style="color: black;">Registered Teams</h2>
+                    <p style="color: black;">Hai <?php echo $this->session->userdata('username'); ?>, Here are the details of the registered teams:</p>
+                </div>
+
+                <div class="period-toggle-stripe">
+                    <span id="mobileLegendsPeriodBtn" class="period-btn active">Mobile Legends</span>
+                    <span id="fifaPeriodBtn" class="period-btn">FIFA</span>
+                </div>
+
+                <table class="table table-bordered table-striped" id="teamsTable">
+                    <thead>
+                        <tr style="background-color: #f4f4f4;">
+                            <th>Team</th>
+                            <th>Plant</th>
+                            <th>Leader Name</th>
+                            <th>Division</th>
+                            <th>Points</th> <!-- Added Points Column -->
+                            <th>Action</th> <!-- New Action column -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($teams)): ?>
+                            <?php foreach ($teams as $team): ?>
+                                <tr class="team" data-division="<?php echo $team->division; ?>" id="team-<?php echo $team->id; ?>">
+                                    <td><?php echo $team->team; ?></td>
+                                    <td><?php echo $team->plant; ?></td>
+                                    <td><?php echo $team->leadername; ?></td>
+                                    <td><?php echo $team->division; ?></td>
+                                    <td><?php echo $team->points; ?></td> <!-- Display Points -->
+                                    <td>
+                                        <!-- Edit Button -->
+                                        <button class="btn btn-primary" data-toggle="modal" data-target="#editModal<?php echo $team->id; ?>">Edit</button>
+
+                                        <!-- Delete Button -->
+                                        <form method="POST" action="<?php echo site_url('admin/delete_team/' . $team->id); ?>" style="display:inline;">
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this team?');">Del</button>
+                                        </form>
+                                    </td>
+                                </tr>
+
+                                <!-- Edit Modal for this team -->
+                                <div class="modal fade" id="editModal<?php echo $team->id; ?>" tabindex="-1" aria-labelledby="editModalLabel<?php echo $team->id; ?>" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="editModalLabel<?php echo $team->id; ?>">Edit Team</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Form to edit team details -->
+                                                <form method="POST" action="<?php echo site_url('admin/update_team'); ?>">
+                                                    <input type="hidden" name="team_id" value="<?php echo $team->id; ?>" />
+                                                    <div class="mb-3">
+                                                        <label for="teamName" class="form-label">Team</label>
+                                                        <input type="text" class="form-control" id="teamName" name="teamName" value="<?php echo $team->team; ?>" required />
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="plant" class="form-label">Plant</label>
+                                                        <input type="text" class="form-control" id="plant" name="plant" value="<?php echo $team->plant; ?>" required />
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="leaderName" class="form-label">Leader Name</label>
+                                                        <input type="text" class="form-control" id="leaderName" name="leaderName" value="<?php echo $team->leadername; ?>" required />
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="division" class="form-label">Division</label>
+                                                        <input type="text" class="form-control" id="division" name="division" value="<?php echo $team->division; ?>" required />
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="points" class="form-label">Points</label>
+                                                        <input type="number" class="form-control" id="points" name="points" value="<?php echo $team->points; ?>" required />
+                                                    </div>
+                                                    <button type="submit" class="btn btn-primary">Save</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="6">No teams registered</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+
+            </div>
+    </section>
 
 
 
@@ -316,38 +357,39 @@
 <script src="<?php echo base_url('application/template/js/main.js'); ?>"></script>
 
 <script>
-  $(document).ready(function() {
-    $('.team').each(function() {
-        if ($(this).data('division') !== 'ml') {
-            $(this).hide();
-        }
-    });
-
-    $('#mobileLegendsPeriodBtn').click(function() {
-        $(this).addClass('active');
-        $('#fifaPeriodBtn').removeClass('active');
-        $('#teamsTable .team').each(function() {
-            if ($(this).data('division') === 'ml') {
-                $(this).show();
-            } else {
+    $(document).ready(function() {
+        $('.team').each(function() {
+            if ($(this).data('division') !== 'ml') {
                 $(this).hide();
             }
         });
-    });
 
-    $('#fifaPeriodBtn').click(function() {
-        $(this).addClass('active');
-        $('#mobileLegendsPeriodBtn').removeClass('active');
-        $('#teamsTable .team').each(function() {
-            if ($(this).data('division') === 'fifa') {
-                $(this).show();
-            } else {
-                $(this).hide();
-            }
+        $('#mobileLegendsPeriodBtn').click(function() {
+            $(this).addClass('active');
+            $('#fifaPeriodBtn').removeClass('active');
+            $('#teamsTable .team').each(function() {
+                if ($(this).data('division') === 'ml') {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+
+        $('#fifaPeriodBtn').click(function() {
+            $(this).addClass('active');
+            $('#mobileLegendsPeriodBtn').removeClass('active');
+            $('#teamsTable .team').each(function() {
+                if ($(this).data('division') === 'fifa') {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
         });
     });
-});
 </script>
 
 </body>
+
 </html>

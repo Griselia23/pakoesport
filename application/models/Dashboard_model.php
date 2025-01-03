@@ -60,14 +60,26 @@ class Dashboard_model extends CI_Model {
         return $this->db->delete('user');
     }
 
+
+
+    // scheduling
+
+    public function get_all_schedules() {
+        return $this->db->get('schedule')->result();
+    }
+    
     public function save_schedule($data) {
-        // Insert the data into the 'schedule' table
         $this->db->insert('schedule', $data);
     }
-
-    // Function to get all schedules
-    public function get_all_schedules() {
-        $query = $this->db->get('schedule');
-        return $query->result();
+    
+    public function update_schedule($id, $data) {
+        $this->db->where('id', $id);
+        $this->db->update('schedule', $data);
     }
+    
+    public function delete_schedule($id) {
+        $this->db->where('id', $id);
+        $this->db->delete('schedule');
+    }
+    
 }
