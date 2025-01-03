@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 02 Jan 2025 pada 10.15
+-- Waktu pembuatan: 03 Jan 2025 pada 09.43
 -- Versi server: 10.1.38-MariaDB
 -- Versi PHP: 5.6.40
 
@@ -32,7 +32,7 @@ CREATE TABLE `register` (
   `id` int(11) NOT NULL,
   `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `team` varchar(255) NOT NULL,
-  `points` int(11) DEFAULT NULL,
+  `points` int(11) NOT NULL DEFAULT '0',
   `plant` varchar(255) NOT NULL,
   `leadernpk` varchar(50) NOT NULL,
   `leadername` varchar(255) NOT NULL,
@@ -55,10 +55,8 @@ CREATE TABLE `register` (
 --
 
 INSERT INTO `register` (`id`, `creation_date`, `team`, `points`, `plant`, `leadernpk`, `leadername`, `number`, `member1npk`, `member1name`, `member2npk`, `member2name`, `member3npk`, `member3name`, `member4npk`, `member4name`, `member5npk`, `member5name`, `division`) VALUES
-(2, '2025-01-02 03:29:46', 'geg1', NULL, 'inko', '3712631', 'Bagus', '2137617', '2317183', 'riski', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ml'),
-(4, '2025-01-02 05:57:40', 'GEge gaming', NULL, '2w', '3271361', 'bunge', '3813102', '231421', 'dwadaadwa', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'fifa'),
-(5, '2025-01-02 07:11:26', 'bubu', NULL, 'inko', '231141', 'riski', '20391031', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'fifa'),
-(6, '2025-01-02 07:12:22', 'babab', NULL, '2w', '213671', 'iwan', '20391-31', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'fifa');
+(1, '2025-01-03 07:03:07', 'inko1', 0, 'inko', '218219', 'Bani', '239102931-4', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ml'),
+(2, '2025-01-03 07:03:27', 'assy1', 0, 'assy', '24123134', 'rizal', '2341412314', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ml');
 
 -- --------------------------------------------------------
 
@@ -72,8 +70,7 @@ CREATE TABLE `result` (
   `matches` varchar(255) NOT NULL,
   `points` int(11) DEFAULT '0',
   `result` enum('win','lose','draw') NOT NULL,
-  `upload` varchar(255) DEFAULT NULL,
-  `upload_timestamp` timestamp NULL DEFAULT NULL
+  `upload` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -90,16 +87,17 @@ CREATE TABLE `schedule` (
   `start_time` time NOT NULL,
   `end_date` date NOT NULL,
   `end_time` time NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `team_1_id` int(11) DEFAULT NULL,
+  `team_2_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `schedule`
 --
 
-INSERT INTO `schedule` (`id`, `match_number`, `division`, `start_date`, `start_time`, `end_date`, `end_time`, `created_at`) VALUES
-(1, 1, 'fifa', '2025-01-02', '22:00:00', '2025-01-02', '23:00:00', '2025-01-02 08:53:52'),
-(2, 1, 'ml', '2025-01-02', '22:00:00', '2025-01-02', '23:00:00', '2025-01-02 08:57:07');
+INSERT INTO `schedule` (`id`, `match_number`, `division`, `start_date`, `start_time`, `end_date`, `end_time`, `created_at`, `team_1_id`, `team_2_id`) VALUES
+(1, 1, 'ml', '2025-01-03', '22:00:00', '2025-01-03', '23:00:00', '2025-01-03 07:03:52', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -120,7 +118,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `npk`, `creation_date`) VALUES
-(2, 'bagus', '$2y$10$BrQfN229KopDyB4bssR8U.o.wcjmSUYAdq6OY1opA6VY3blSIdwEO', 'os0945', '2025-01-02 04:48:10');
+(2, 'bagus', '$2y$10$BrQfN229KopDyB4bssR8U.o.wcjmSUYAdq6OY1opA6VY3blSIdwEO', 'os0945', '2025-01-02 04:48:10'),
+(3, 'bani', '$2y$10$6V0BoXlsif0ZRKIH5a13k..yUqnLGxDCHXfsG3bRN39eULJ/B3GJq', '2137612', '2025-01-03 00:33:59');
 
 --
 -- Indexes for dumped tables
@@ -158,7 +157,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `register`
 --
 ALTER TABLE `register`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `result`
@@ -170,13 +169,13 @@ ALTER TABLE `result`
 -- AUTO_INCREMENT untuk tabel `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
