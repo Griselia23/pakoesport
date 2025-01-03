@@ -68,8 +68,8 @@
     <!-- Login Form -->
     <form action="<?php echo base_url('login/authenticate'); ?>" method="post">
         <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username" name="username" required placeholder="Enter your username">
+            <label for="npk" class="form-label">Username</label>
+            <input type="text" class="form-control" id="npk" name="npk" required placeholder="Enter your npk">
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>

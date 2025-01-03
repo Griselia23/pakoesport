@@ -15,19 +15,19 @@ class Login extends CI_Controller {
     }
 
     public function authenticate() {
-        $username = $this->input->post('username');
+        $npk = $this->input->post('npk');
         $password = $this->input->post('password');
     
-        $user = $this->db->get_where('user', ['username' => $username])->row();
+        $user = $this->db->get_where('user', ['npk' => $npk])->row();
     
         if ($user && password_verify($password, $user->password)) {
             $this->session->set_userdata('user_id', $user->id);
             $this->session->set_userdata('username', $user->username);
     
-            $this->session->set_flashdata('success', 'Login successful! Welcome, ' . $user->username . '.');
+            $this->session->set_flashdata('success', 'Login successful! Welcome, ' . $user->npk . '.');
             redirect('admin'); // redirects to admin controller
         } else {
-            $this->session->set_flashdata('error', 'Invalid username or password!');
+            $this->session->set_flashdata('error', 'Invalid npk or password!');
             redirect('login'); // redirects back to login
         }
     }

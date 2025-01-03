@@ -100,6 +100,44 @@
 
     <!-- Button to trigger modal for adding schedule -->
     <a href="#addScheduleModal" class="btn btn-primary mt-4">Add Schedule</a>
+
+    <!-- Table to display match schedules -->
+    <table class="table table-bordered table-striped mt-4">
+        <thead>
+            <tr style="background-color: #f4f4f4;">
+                <th>Matches</th>
+                <th>Date</th>
+                <th>Hours</th>
+                <th>Teams</th>
+                <th>Division</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Add your match schedule rows here -->
+            <?php if (!empty($schedules)): ?>
+                <?php foreach ($schedules as $schedule): ?>
+                    <tr>
+                        <td><?php echo $schedule->match_number; ?></td>
+                        <td><?php echo $schedule->start_date; ?></td>
+                        <td><?php echo $schedule->start_time . ' - ' . $schedule->end_time; ?></td>
+                        <td><?php echo $schedule->team_1 . ' vs ' . $schedule->team_2; ?></td>
+                        <td><?php echo $schedule->division; ?></td>
+                        <td>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#editModal<?php echo $schedule->id; ?>">Edit</button>
+                            <form method="POST" action="<?php echo site_url('admin/delete_schedule/' . $schedule->id); ?>" style="display:inline;">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this schedule?');">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="6">No schedules available</td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
 </div>
 
 <!-- Add Schedule Modal -->
@@ -112,52 +150,52 @@
         <div class="modal-body">
             <!-- Schedule form -->
             <form method="POST" action="<?php echo base_url('admin/save_schedule'); ?>">
-        <!-- Match Number -->
-        <div class="mb-3">
-            <label for="matchNumber" class="form-label">Match Number</label>
-            <input type="text" class="form-control" id="matchNumber" name="matchNumber" required placeholder="Enter match number (e.g., 1)">
-        </div>
+                <!-- Match Number -->
+                <div class="mb-3">
+                    <label for="matchNumber" class="form-label">Match Number</label>
+                    <input type="text" class="form-control" id="matchNumber" name="matchNumber" required placeholder="Enter match number (e.g., 1)">
+                </div>
 
-        <!-- Division (ML or FIFA) -->
-        <div class="mb-3">
-            <label for="division" class="form-label">Division</label>
-            <select class="form-control" id="division" name="division" required>
-                <option value="ml">Mobile Legends</option>
-                <option value="fifa">FIFA</option>
-            </select>
-        </div>
+                <!-- Division (ML or FIFA) -->
+                <div class="mb-3">
+                    <label for="division" class="form-label">Division</label>
+                    <select class="form-control" id="division" name="division" required>
+                        <option value="ml">Mobile Legends</option>
+                        <option value="fifa">FIFA</option>
+                    </select>
+                </div>
 
-        <!-- Start Date -->
-        <div class="mb-3">
-            <label for="startDate" class="form-label">Start Date</label>
-            <input type="date" class="form-control" id="startDate" name="startDate" required>
-        </div>
+                <!-- Start Date -->
+                <div class="mb-3">
+                    <label for="startDate" class="form-label">Start Date</label>
+                    <input type="date" class="form-control" id="startDate" name="startDate" required>
+                </div>
 
-        <!-- Start Time -->
-        <div class="mb-3">
-            <label for="startTime" class="form-label">Start Time</label>
-            <input type="time" class="form-control" id="startTime" name="startTime" required>
-        </div>
+                <!-- Start Time -->
+                <div class="mb-3">
+                    <label for="startTime" class="form-label">Start Time</label>
+                    <input type="time" class="form-control" id="startTime" name="startTime" required>
+                </div>
 
-        <!-- End Date -->
-        <div class="mb-3">
-            <label for="endDate" class="form-label">End Date</label>
-            <input type="date" class="form-control" id="endDate" name="endDate" required>
-        </div>
+                <!-- End Date -->
+                <div class="mb-3">
+                    <label for="endDate" class="form-label">End Date</label>
+                    <input type="date" class="form-control" id="endDate" name="endDate" required>
+                </div>
 
-        <!-- End Time -->
-        <div class="mb-3">
-            <label for="endTime" class="form-label">End Time</label>
-            <input type="time" class="form-control" id="endTime" name="endTime" required>
-        </div>
+                <!-- End Time -->
+                <div class="mb-3">
+                    <label for="endTime" class="form-label">End Time</label>
+                    <input type="time" class="form-control" id="endTime" name="endTime" required>
+                </div>
 
-        <!-- Submit Button -->
-        <button type="submit" class="btn btn-primary">Save</button>
-    </form>
-
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
         </div>
     </div>
 </div>
+
 
 
  <br>
