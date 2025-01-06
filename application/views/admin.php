@@ -112,7 +112,7 @@
                             if (isset($schedule->team_1_name) && isset($schedule->team_2_name)) {
                                 echo $schedule->team_1_name . ' vs ' . $schedule->team_2_name;
                             } else {
-                                echo 'TBD';
+                                echo 'league auto generate';
                             }
                             ?>
                         </td>
