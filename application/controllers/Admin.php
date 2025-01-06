@@ -106,10 +106,19 @@
             redirect('admin');
         }
         
-
+        public function teamversus() {
+            $division = 'ml'; // Or dynamically set this value
+            $sections = 1; // Or dynamically set this value
         
-
+            // Fetch the schedules with teams (assuming you have a model method)
+            $schedules = $this->Admin_model->get_schedules_with_teams($division, $sections);
+        
+            // Pass the data to the view
+            $data['schedules'] = $schedules;
+            $this->load->view('admin', $data);  // Ensure you're loading the correct view here
+        }
         
         
         
+    
     }

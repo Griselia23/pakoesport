@@ -54,6 +54,8 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['dashboard'] = 'dashboard';
 $route['admin'] = 'admin';
+$route['admin/schedule/(:any)'] = 'admin/schedule_list/$1';
 $route['setuser'] = 'setuser';
-$route['admin/schedule/(:any)'] = 'admin/schedule_list/$1';  
+$route['admin'] = 'admin/index';
+
 
