@@ -5,32 +5,34 @@ class Admin_model extends CI_Model {
 
     public function __construct() {
         parent::__construct();
-        $this->load->database(); // Ensure the database connection is loaded
+        $this->load->database(); 
     }
-    public function get_schedules_with_teams($division = NULL) {
-        $this->db->select('schedule.id, 
-                           schedule.match_number, 
-                           schedule.division, 
-                           schedule.start_date, 
-                           schedule.start_time, 
-                           schedule.end_date, 
-                           schedule.end_time, 
-                           register1.team as team_1, 
-                           register2.team as team_2');
-        $this->db->from('schedule');
-        $this->db->join('register AS register1', 'schedule.team_1_id = register1.id', 'left');
-        $this->db->join('register AS register2', 'schedule.team_2_id = register2.id', 'left');
-        
-        if ($division) {
-            $this->db->where('schedule.division', $division);
+    public function get_schedules_with_teams($division = NULL, $sections = 1) {
+        $query = "SELECT * FROM register WHERE division = :division";
+    
+        if ($sections == 1) {
+            $query .= " ORDER BY RAND()";
+        } else {
+            $query .= " ORDER BY points DESC";
         }
-        
-        // Execute the query
-        $query = $this->db->get();
-        
-        // Return the result as an array of objects
-        return $query->result();
+    
+        $stmt = $this->pdo->prepare($query);
+        $stmt->bindParam(':division', $division, PDO::PARAM_STR);
+        $stmt->execute();
+        $teams = $stmt->fetchAll();
+    
+        $matches = [];
+    
+        if ($sections == 1) {
+            shuffle($teams);
+            $matches = array_chunk($teams, 2);
+        } else {
+            $matches = array_chunk($teams, 2);
+        }
+    
+        return $matches;
     }
+    
     
     
 

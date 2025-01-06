@@ -58,6 +58,7 @@
             $startTime = $this->input->post('startTime');
             $endDate = $this->input->post('endDate');
             $endTime = $this->input->post('endTime');
+            $sections = $this->input->post('sections');
             
             $data = array(
                 'match_number' => $matchNumber,
@@ -65,7 +66,8 @@
                 'start_date' => $startDate,
                 'start_time' => $startTime,
                 'end_date' => $endDate,
-                'end_time' => $endTime
+                'end_time' => $endTime,
+                'sections' => $sections
             );
         
             $this->load->model('Dashboard_model');
@@ -80,6 +82,7 @@
             $startTime = $this->input->post('startTime');
             $endDate = $this->input->post('endDate');
             $endTime = $this->input->post('endTime');
+            $sections = $this->input->post('sections');
             
             $data = array(
                 'match_number' => $matchNumber,
@@ -87,7 +90,8 @@
                 'start_date' => $startDate,
                 'start_time' => $startTime,
                 'end_date' => $endDate,
-                'end_time' => $endTime
+                'end_time' => $endTime,
+                'sections' => $sections
             );
         
             $this->load->model('Dashboard_model');
@@ -102,24 +106,7 @@
             redirect('admin');
         }
         
-        public function schedule_list($division = NULL) {
-            // Get schedules with teams, filtered by division if provided
-            $data['schedules'] = $this->Admin_model->get_schedules_with_teams($division);
-    
-            // Load the view and pass the schedule data
-            $this->load->view('admin/schedule_list', $data);
-        }
-    
-        // If you have separate methods for Mobile Legends and FIFA
-        public function schedule_ml() {
-            // Get schedules filtered for Mobile Legends (ml)
-            $this->schedule_list('ml');
-        }
-        
-        public function schedule_fifa() {
-            // Get schedules filtered for FIFA (fifa)
-            $this->schedule_list('fifa');
-        }
+
         
 
         
