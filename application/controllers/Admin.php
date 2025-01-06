@@ -55,21 +55,15 @@
             $matchNumber = $this->input->post('matchNumber');
             $division = $this->input->post('division');
             $startDate = $this->input->post('startDate');
-            $startTime = $this->input->post('startTime');
-            $endDate = $this->input->post('endDate');
-            $endTime = $this->input->post('endTime');
             $sections = $this->input->post('sections');
             
             $data = array(
                 'match_number' => $matchNumber,
                 'division' => $division,
                 'start_date' => $startDate,
-                'start_time' => $startTime,
-                'end_date' => $endDate,
-                'end_time' => $endTime,
                 'sections' => $sections
             );
-        
+            
             $this->load->model('Dashboard_model');
             $this->Dashboard_model->save_schedule($data);
             redirect('admin');
@@ -79,25 +73,20 @@
             $matchNumber = $this->input->post('matchNumber');
             $division = $this->input->post('division');
             $startDate = $this->input->post('startDate');
-            $startTime = $this->input->post('startTime');
-            $endDate = $this->input->post('endDate');
-            $endTime = $this->input->post('endTime');
             $sections = $this->input->post('sections');
             
             $data = array(
                 'match_number' => $matchNumber,
                 'division' => $division,
                 'start_date' => $startDate,
-                'start_time' => $startTime,
-                'end_date' => $endDate,
-                'end_time' => $endTime,
                 'sections' => $sections
             );
-        
+            
             $this->load->model('Dashboard_model');
             $this->Dashboard_model->update_schedule($id, $data);
             redirect('admin');
         }
+        
         
 
         public function delete_schedule($id) {
@@ -106,17 +95,7 @@
             redirect('admin');
         }
         
-        public function teamversus() {
-            $division = 'ml'; // Or dynamically set this value
-            $sections = 1; // Or dynamically set this value
         
-            // Fetch the schedules with teams (assuming you have a model method)
-            $schedules = $this->Admin_model->get_schedules_with_teams($division, $sections);
-        
-            // Pass the data to the view
-            $data['schedules'] = $schedules;
-            $this->load->view('admin', $data);  // Ensure you're loading the correct view here
-        }
         
         
         
