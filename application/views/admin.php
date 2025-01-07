@@ -90,100 +90,95 @@
     </div>
 
     <table class="table table-bordered table-striped mt-4" id="mlscheduleTable">
-        <thead>
-            <tr style="background-color: #f4f4f4;">
-                <th>Sections</th>
-                <th>Matches</th>
-                <th>Date</th>
-                <th>Teams</th>
-                <th>Division</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (!empty($schedules)): ?>
-                <?php foreach ($schedules as $schedule): ?>
-                    <tr data-division="<?php echo $schedule->division; ?>"> <!-- Add data-division attribute -->
-                        <td><?php echo $schedule->sections; ?></td>
-                        <td><?php echo $schedule->match_number; ?></td>
-                        <td><?php echo $schedule->start_date; ?></td>
-                        <td>
-                            <?php
-                            if (isset($schedule->team_1_name) && isset($schedule->team_2_name)) {
-                                echo $schedule->team_1_name . ' vs ' . $schedule->team_2_name;
+    <thead>
+        <tr style="background-color: #f4f4f4;">
+            <th>Matches</th>
+            <th>Date</th>
+            <th>Teams</th>
+            <th>Division</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php if (!empty($schedules)): ?>
+            <?php foreach ($schedules as $index => $schedule): ?>
+                <tr data-division="<?php echo $schedule->division; ?>"> <!-- Add data-division attribute -->
+                    <td><?php echo $schedule->match_number; ?></td>
+                    <td><?php echo $schedule->start_date; ?></td>
+                    <td>
+                        <?php 
+                            // Display match title using $match_titles array
+                            if (isset($match_titles[$index])) {
+                                echo $match_titles[$index]; 
                             } else {
-                                echo 'league auto generate';
+                                echo 'TBD';  // Default if no match title is available
                             }
-                            ?>
-                        </td>
-                        <td><?php echo ($schedule->division == 'ml') ? 'Mobile Legends' : 'FIFA'; ?></td>
-                        <td>
-                            <!-- Edit Button -->
-                            <a href="#editModal<?php echo $schedule->id; ?>" class="btn btn-primary" style="background-color: #007bff; border-color: #007bff;">Edit</a>
+                        ?>
+                    </td>
+                    <td><?php echo ($schedule->division == 'ml') ? 'Mobile Legends' : 'FIFA'; ?></td>
+                    <td>
+                        <!-- Edit Button -->
+                        <a href="#editModal<?php echo $schedule->id; ?>" class="btn btn-primary" style="background-color: #007bff; border-color: #007bff;">Edit</a>
 
-                            <!-- Delete Button -->
-                            <form method="POST" action="<?php echo site_url('admin/delete_schedule/' . $schedule->id); ?>" style="display:inline;">
-                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this schedule?');">Del</button>
+                        <!-- Delete Button -->
+                        <form method="POST" action="<?php echo site_url('admin/delete_schedule/' . $schedule->id); ?>" style="display:inline;">
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this schedule?');">Del</button>
+                        </form>
+                    </td>
+                </tr>
+
+                <!-- Edit Modal -->
+                <div id="editModal<?php echo $schedule->id; ?>" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Match Schedule</h5>
+                            <a href="#" class="close">&times;</a>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" action="<?php echo base_url('admin/update_schedule/' . $schedule->id); ?>">
+
+                                <!-- Match Number -->
+                                <div class="mb-3">
+                                    <label for="matchNumber" class="form-label">Match Number</label>
+                                    <input type="text" class="form-control" id="matchNumber" name="matchNumber" value="<?php echo $schedule->match_number; ?>" required>
+                                </div>
+
+                                <!-- Division -->
+                                <div class="mb-3">
+                                    <label for="division" class="form-label">Division</label>
+                                    <select class="form-control" id="division" name="division" required>
+                                        <option value="ml" <?php echo ($schedule->division == 'ml' ? 'selected' : ''); ?>>Mobile Legends</option>
+                                        <option value="fifa" <?php echo ($schedule->division == 'fifa' ? 'selected' : ''); ?>>FIFA</option>
+                                    </select>
+                                </div>
+
+                                <!-- Start Date -->
+                                <div class="mb-3">
+                                    <label for="startDate" class="form-label">Start Date</label>
+                                    <input type="date" class="form-control" id="startDate" name="startDate" value="<?php echo $schedule->start_date; ?>" required>
+                                </div>
+
+                                <!-- Display Teams as Read-Only -->
+                                <div class="mb-3">
+                                    <label for="teams" class="form-label">Teams</label>
+                                    <p><?php echo !empty($schedule->team_1_name) && !empty($schedule->team_2_name) ? $schedule->team_1_name . ' vs ' . $schedule->team_2_name : 'TBD'; ?></p>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Save</button>
                             </form>
-                        </td>
-                    </tr>
-
-                    <!-- Edit Modal -->
-                    <div id="editModal<?php echo $schedule->id; ?>" class="modal">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Edit Match Schedule</h5>
-                                <a href="#" class="close">&times;</a>
-                            </div>
-                            <div class="modal-body">
-                                <form method="POST" action="<?php echo base_url('admin/update_schedule/' . $schedule->id); ?>">
-
-                                    <div class="mb-3">
-                                        <label for="sections" class="form-label">Sections</label>
-                                        <input type="text" class="form-control" id="sections" name="sections" value="<?php echo $schedule->sections; ?>" required>
-                                    </div>
-
-                                    <!-- Match Number -->
-                                    <div class="mb-3">
-                                        <label for="matchNumber" class="form-label">Match Number</label>
-                                        <input type="text" class="form-control" id="matchNumber" name="matchNumber" value="<?php echo $schedule->match_number; ?>" required>
-                                    </div>
-
-                                    <!-- Division -->
-                                    <div class="mb-3">
-                                        <label for="division" class="form-label">Division</label>
-                                        <select class="form-control" id="division" name="division" required>
-                                            <option value="ml" <?php echo ($schedule->division == 'ml' ? 'selected' : ''); ?>>Mobile Legends</option>
-                                            <option value="fifa" <?php echo ($schedule->division == 'fifa' ? 'selected' : ''); ?>>FIFA</option>
-                                        </select>
-                                    </div>
-
-                                    <!-- Start Date -->
-                                    <div class="mb-3">
-                                        <label for="startDate" class="form-label">Start Date</label>
-                                        <input type="date" class="form-control" id="startDate" name="startDate" value="<?php echo $schedule->start_date; ?>" required>
-                                    </div>
-
-                                    <!-- Display Teams as Read-Only -->
-                                    <div class="mb-3">
-                                        <label for="teams" class="form-label">Teams</label>
-                                        <p><?php echo !empty($schedule->team_1_name) && !empty($schedule->team_2_name) ? $schedule->team_1_name . ' vs ' . $schedule->team_2_name : 'TBD'; ?></p>
-                                    </div>
-
-                                    <button type="submit" class="btn btn-primary">Save</button>
-                                </form>
-                            </div>
                         </div>
                     </div>
+                </div>
 
-                <?php endforeach; ?>
-            <?php else: ?>
-                <tr>
-                    <td colspan="6">No schedules available</td>
-                </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="6">No schedules available</td>
+            </tr>
+        <?php endif; ?>
+    </tbody>
+</table>
+
 </div>
 
 
@@ -198,10 +193,6 @@
         </div>
         <div class="modal-body">
             <form method="POST" action="<?php echo base_url('admin/save_schedule'); ?>">
-                <div class="mb-3">
-                    <label for="sections" class="form-label">Sections</label>
-                    <input type="text" class="form-control" id="sections" name="sections" required placeholder="Enter section (e.g., 1)">
-                </div>
                 <div class="mb-3">
                     <label for="matchNumber" class="form-label">Match Number</label>
                     <input type="text" class="form-control" id="matchNumber" name="matchNumber" required placeholder="Enter match number (e.g., 1)">

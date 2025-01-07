@@ -8,26 +8,21 @@ class Admin_model extends CI_Model {
         $this->load->database(); 
     }
 
-    public function get_schedules_with_teams() {
-        $query = "SET @match_number = 0;
-
-INSERT INTO schedule (sections, match_number, division, start_date, team_1_id, team_2_id)
-SELECT 
-    1 AS sections,
-    @match_number := @match_number + 1 AS match_number,
-    r1.division,
-    CURDATE() AS start_date,
-    r1.id AS team_1_id,
-    r2.id AS team_2_id
-FROM 
-    register r1
-JOIN 
-    register r2 ON r1.division = r2.division AND r1.id < r2.id
-ORDER BY 
-    r1.division, r1.team, r2.team;
-";
+    public function matchmaking() {
+        $query = "SELECT 
+                    CONCAT(a.team, ' vs. ', b.team) AS match_title
+                  FROM register a
+                  JOIN register b ON a.division = b.division
+                  JOIN schedule s ON a.division = s.division
+                  WHERE a.id < b.id
+                  ORDER BY CONCAT(SUBSTRING(a.team, 4), SUBSTRING(b.team, 3)) ASC;";
     
+        // Execute the query and fetch results
+        $result = $this->db->query($query);
+        // Extract match titles into a simple array of strings
+        $titles = array_column($result->result_array(), 'match_title');
         
-        $this->db->query($query);
+        return $titles;  // Return an array of match titles
     }
+    
 }
