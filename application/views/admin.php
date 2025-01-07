@@ -82,14 +82,14 @@
         <p style="color: black;">Hai <?php echo $this->session->userdata('username'); ?>, Here you can set the schedules</p>
     </div>
 
-    <a href="#addScheduleModal" class="btn btn-primary mt-4">Add Schedule</a>
+        <a href="#addScheduleModal" class="btn btn-primary mt-4">Add Schedule</a>
 
-    <div class="period-toggle-stripe">
-        <span id="mlschedulebtn" class="period-btn active">Mobile Legends</span>
-        <span id="fifaschedulebtn" class="period-btn">FIFA</span>
-    </div>
+        <div class="period-toggle-stripe">
+            <span id="mlschedulebtn" class="period-btn active">Mobile Legends</span>
+            <span id="fifaschedulebtn" class="period-btn">FIFA</span>
+        </div>
 
-    <table class="table table-bordered table-striped mt-4" id="mlscheduleTable">
+        <table class="table table-bordered table-striped mt-4" id="mlscheduleTable">
     <thead>
         <tr style="background-color: #f4f4f4;">
             <th>Matches</th>
@@ -102,16 +102,16 @@
     <tbody>
         <?php if (!empty($schedules)): ?>
             <?php foreach ($schedules as $index => $schedule): ?>
-                <tr data-division="<?php echo $schedule->division; ?>"> <!-- Add data-division attribute -->
+                <tr data-division="<?php echo $schedule->division; ?>">
                     <td><?php echo $schedule->match_number; ?></td>
                     <td><?php echo $schedule->start_date; ?></td>
                     <td>
                         <?php 
-                            // Display match title using $match_titles array
-                            if (isset($match_titles[$index])) {
-                                echo $match_titles[$index]; 
-                            } else {
-                                echo 'TBD';  // Default if no match title is available
+                            // Match the schedule's division and retrieve match_titles
+                            foreach ($match_titles as $match_title) {
+                                if ($match_title['categ'] == $schedule->division) {
+                                    echo $match_title['match_title'] . '<br>';
+                                }
                             }
                         ?>
                     </td>
@@ -178,44 +178,43 @@
         <?php endif; ?>
     </tbody>
 </table>
-
-</div>
-
+    </div>
 
 
 
 
-<div id="addScheduleModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">Add Match Schedule</h5>
-            <a href="#" class="close">&times;</a>
-        </div>
-        <div class="modal-body">
-            <form method="POST" action="<?php echo base_url('admin/save_schedule'); ?>">
-                <div class="mb-3">
-                    <label for="matchNumber" class="form-label">Match Number</label>
-                    <input type="text" class="form-control" id="matchNumber" name="matchNumber" required placeholder="Enter match number (e.g., 1)">
-                </div>
 
-                <div class="mb-3">
-                    <label for="division" class="form-label">Division</label>
-                    <select class="form-control" id="division" name="division" required>
-                        <option value="ml">Mobile Legends</option>
-                        <option value="fifa">FIFA</option>
-                    </select>
-                </div>
+    <div id="addScheduleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Match Schedule</h5>
+                <a href="#" class="close">&times;</a>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="<?php echo base_url('admin/save_schedule'); ?>">
+                    <div class="mb-3">
+                        <label for="matchNumber" class="form-label">Match Number</label>
+                        <input type="text" class="form-control" id="matchNumber" name="matchNumber" required placeholder="Enter match number (e.g., 1)">
+                    </div>
 
-                <div class="mb-3">
-                    <label for="startDate" class="form-label">Start Date</label>
-                    <input type="date" class="form-control" id="startDate" name="startDate" required>
-                </div>
+                    <div class="mb-3">
+                        <label for="division" class="form-label">Division</label>
+                        <select class="form-control" id="division" name="division" required>
+                            <option value="ml">Mobile Legends</option>
+                            <option value="fifa">FIFA</option>
+                        </select>
+                    </div>
 
-                <button type="submit" class="btn btn-primary">Save</button>
-            </form>
+                    <div class="mb-3">
+                        <label for="startDate" class="form-label">Start Date</label>
+                        <input type="date" class="form-control" id="startDate" name="startDate" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
 
             <br>

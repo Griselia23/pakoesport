@@ -17,7 +17,7 @@ class Admin extends CI_Controller {
     public function index() {
         $data['teams'] = $this->Dashboard_model->get_all_teams();
         $data['schedules'] = $this->Dashboard_model->get_all_schedules();
-        $data['match_titles'] = $this->Admin_model->matchmaking();  // Get match titles
+        $data['match_titles'] = $this->Admin_model->matchmaking();  
         $this->load->view('admin', $data);
     }
 
@@ -89,9 +89,9 @@ class Admin extends CI_Controller {
         redirect('admin');
     }
 
-    public function get_match_titles() {
-        $this->load->model('Admin_model');
-        $match_titles = $this->Admin_model->matchmaking();
-        print_r($match_titles);
+    public function get_match_titles (){
+        
     }
+
+
 }
