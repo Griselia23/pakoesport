@@ -55,13 +55,13 @@ class Admin extends CI_Controller {
         $matchNumber = $this->input->post('matchNumber');
         $division = $this->input->post('division');
         $startDate = $this->input->post('startDate');
-        $sections = $this->input->post('sections');
+        
         
         $data = array(
             'match_number' => $matchNumber,
             'division' => $division,
-            'start_date' => $startDate,
-            'sections' => $sections
+            'start_date' => $startDate
+            
         );
         
         $this->Dashboard_model->save_schedule($data);
@@ -72,13 +72,12 @@ class Admin extends CI_Controller {
         $matchNumber = $this->input->post('matchNumber');
         $division = $this->input->post('division');
         $startDate = $this->input->post('startDate');
-        $sections = $this->input->post('sections');
+        
         
         $data = array(
             'match_number' => $matchNumber,
             'division' => $division,
-            'start_date' => $startDate,
-            'sections' => $sections
+            'start_date' => $startDate
         );
         
         $this->Dashboard_model->update_schedule($id, $data);
