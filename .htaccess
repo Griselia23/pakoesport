@@ -1,19 +1,19 @@
 # Enable mod_rewrite
 RewriteEngine On
 
-# Ensure that Apache can use mod_rewrite
+# Set the base URL for the subdirectory /pakoesport/
 RewriteBase /pakoesport/
 
 # Remove index.php from URLs
 RewriteCond %{REQUEST_URI} ^/index.php [NC]
 RewriteRule ^index.php(.*)$ $1 [R=301,L]
 
-# Remove 'index.php' from the URL for clean URLs
+# If the requested file or directory does not exist, route to index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php/$1 [L]
 
-# Allow access to specific file types (images, CSS, JS, HTML)
+# Allow access to specific file types (images, CSS, JS, HTML, etc.)
 <FilesMatch "\.(jpg|jpeg|png|gif|css|js|html|xml|json)$">
     Order Allow,Deny
     Allow from all
@@ -21,4 +21,3 @@ RewriteRule ^(.*)$ index.php/$1 [L]
 
 # Disable directory listing for security purposes
 Options -Indexes
-

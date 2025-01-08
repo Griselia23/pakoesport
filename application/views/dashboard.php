@@ -189,56 +189,74 @@
   <!--==========================
       Schedule Section
     ============================-->
-  <section id="schedule" class="section-with-bg">
-    <div class="container wow fadeInUp">
-      <div class="section-header">
-        <h2>Event Schedule</h2>
-        <p>Here is our event schedule</p>
-      </div>
-
-      <div class="schedule-toggle-stripe">
-        <span id="mlbtn" class="toggle-stripe active">Mobile Legends</span>
-        <span id="fifabtn" class="toggle-stripe">FIFA</span>
-      </div>
-
-      <div id="mobileLegendsTable" class="schedule-table">
-        <h3>Mobile Legends Schedule</h3>
-        <table style="border-collapse: collapse; width: 100%;">
-          <thead>
-            <tr>
-              <th style="border: none; padding: 8px;">Date</th>
-              <th style="border: none; padding: 8px;">Match</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="border: none; padding: 8px;">--</td>
-              <td style="border: none; padding: 8px;">--</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div id="fifaTable" class="schedule-table" style="display:none;">
-        <h3>FIFA Schedule</h3>
-        <table style="border-collapse: collapse; width: 100%;">
-          <thead>
-            <tr>
-              <th style="border: none; padding: 8px;">Date</th>
-              <th style="border: none; padding: 8px;">Match</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="border: none; padding: 8px;">--</td>
-              <td style="border: none; padding: 8px;">--</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
+    <section id="schedule" class="section-with-bg">
+  <div class="container wow fadeInUp">
+    <div class="section-header">
+      <h2>Event Schedule</h2>
+      <p>Here is our event schedule</p>
     </div>
-  </section>
+
+    <div class="schedule-toggle-stripe">
+      <span id="mlbtn" class="toggle-stripe active">Mobile Legends</span>
+      <span id="fifabtn" class="toggle-stripe">FIFA</span>
+    </div>
+
+    <!-- Mobile Legends Table -->
+    <div id="mobileLegendsTable" class="schedule-table">
+      <h3>Mobile Legends Schedule</h3>
+      <table style="border-collapse: collapse; width: 100%;">
+        <thead>
+          <tr>
+            <th style="border: none; padding: 8px;">Date</th>
+            <th style="border: none; padding: 8px;">Match</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php if (isset($matches_by_division['ml']) && !empty($matches_by_division['ml'])): ?>
+            <?php foreach ($matches_by_division['ml'] as $match): ?>
+              <tr>
+                <td style="border: none; padding: 8px;"><?php echo date('Y-m-d', strtotime($match['match_day'])); ?></td>
+                <td style="border: none; padding: 8px;"><?php echo $match['match_title']; ?></td>
+              </tr>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <tr>
+              <td colspan="2" style="border: none; padding: 8px;">No matches scheduled.</td>
+            </tr>
+          <?php endif; ?>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- FIFA Table -->
+    <div id="fifaTable" class="schedule-table" style="display:none;">
+      <h3>FIFA Schedule</h3>
+      <table style="border-collapse: collapse; width: 100%;">
+        <thead>
+          <tr>
+            <th style="border: none; padding: 8px;">Date</th>
+            <th style="border: none; padding: 8px;">Match</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php if (isset($matches_by_division['fifa']) && !empty($matches_by_division['fifa'])): ?>
+            <?php foreach ($matches_by_division['fifa'] as $match): ?>
+              <tr>
+                <td style="border: none; padding: 8px;"><?php echo date('Y-m-d', strtotime($match['match_day'])); ?></td>
+                <td style="border: none; padding: 8px;"><?php echo $match['match_title']; ?></td>
+              </tr>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <tr>
+              <td colspan="2" style="border: none; padding: 8px;">No matches scheduled.</td>
+            </tr>
+          <?php endif; ?>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</section>
 
   <!-- Include External JS File -->
   <script src="script.js"></script>

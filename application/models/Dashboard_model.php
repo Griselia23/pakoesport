@@ -93,12 +93,12 @@ class Dashboard_model extends CI_Model {
             'evidence' => $evidence
         );
 
-        // Update the result for the specified match number
+
         $this->db->where('match_number', $match_number);
         return $this->db->update('schedule', $data);
     }
 
-    // Get match details based on match_number
+
     public function get_schedule_by_match_number($match_number) {
         $this->db->where('match_number', $match_number);
         $query = $this->db->get('schedule');
