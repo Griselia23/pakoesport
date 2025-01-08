@@ -89,6 +89,32 @@ class Admin extends CI_Controller {
         redirect('admin');
     }
 
+    public function upload_result() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Capture form data
+            $team_1_id = $this->input->post('team1');
+            $team_2_id = $this->input->post('team2');
+            $team_1_score = $this->input->post('team_1_score');
+            $team_2_score = $this->input->post('team_2_score');
+    
+            // Handle file upload
+            $evidence = $this->Admin_model->upload_evidence();
+            if (isset($evidence['error'])) {
+                // Handle error if file upload fails
+                $this->session->set_flashdata('error', $evidence['error']);
+                redirect('dashboard');
+            }
+    
+            // Save the result
+            $this->Admin_model->save_result($team_1_id, $team_2_id, $team_1_score, $team_2_score, $evidence);
+            
+            // Redirect to admin dashboard or result page
+            $this->session->set_flashdata('success', 'Match result saved successfully!');
+            redirect('dashboard');
+        }
+    }
+    
+
 
 
 

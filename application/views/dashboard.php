@@ -379,16 +379,19 @@
     </div>
 
     <!-- Form to upload result -->
-    <form action="update_points.php" method="post" enctype="multipart/form-data" class="upload-result-form">
+    <form action="<?php echo base_url('admin/upload_result'); ?>" method="post" enctype="multipart/form-data" class="upload-result-form">
       
       <!-- Match Selection Box -->
       <div class="form-row match-selection">
         <div>
-          <label for="match_number">Match:</label>
-          <select name="match_number" id="match_number" required>
-            <option value="1">Match 1</option>
-            <option value="2">Match 2</option>
-            <option value="3">Match 3</option>
+          <label for="match_title">Match:</label>
+          <select name="match_title" id="match_title" required>
+            <option value="">Select Match</option>
+            <?php foreach ($match_titles as $match): ?>
+              <option value="<?php echo $match['team_a_id']; ?>-<?php echo $match['team_b_id']; ?>">
+                <?php echo $match['match_title']; ?> (<?php echo $match['match_day']; ?>)
+              </option>
+            <?php endforeach; ?>
           </select>
         </div>
       </div>
@@ -398,9 +401,12 @@
         <div class="team-left">
           <label for="team1">Team 1:</label>
           <select name="team1" id="team1" required>
-            <option value="team_a">Team A</option>
-            <option value="team_b">Team B</option>
-            <option value="team_c">Team C</option>
+            <option value="">Select Team 1</option>
+            <?php foreach ($teams as $team): ?>
+              <option value="<?php echo $team['id']; ?>">
+                <?php echo $team['team']; ?> (<?php echo $team['division']; ?>)
+              </option>
+            <?php endforeach; ?>
           </select>
         </div>
 
@@ -409,9 +415,12 @@
         <div class="team-right">
           <label for="team2">Team 2:</label>
           <select name="team2" id="team2" required>
-            <option value="team_d">Team D</option>
-            <option value="team_e">Team E</option>
-            <option value="team_f">Team F</option>
+            <option value="">Select Team 2</option>
+            <?php foreach ($teams as $team): ?>
+              <option value="<?php echo $team['id']; ?>">
+                <?php echo $team['team']; ?> (<?php echo $team['division']; ?>)
+              </option>
+            <?php endforeach; ?>
           </select>
         </div>
       </div>
@@ -445,6 +454,7 @@
     </form>
   </div>
 </section>
+
 
 
 

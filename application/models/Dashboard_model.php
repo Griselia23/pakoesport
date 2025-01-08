@@ -83,25 +83,4 @@ class Dashboard_model extends CI_Model {
     }
     
 
-    //add the result model here 
-    public function update_result($match_number, $team1, $team2, $score1, $score2, $evidence) {
-        $data = array(
-            'team1' => $team1,
-            'team2' => $team2,
-            'score1' => $score1,
-            'score2' => $score2,
-            'evidence' => $evidence
-        );
-
-
-        $this->db->where('match_number', $match_number);
-        return $this->db->update('schedule', $data);
-    }
-
-
-    public function get_schedule_by_match_number($match_number) {
-        $this->db->where('match_number', $match_number);
-        $query = $this->db->get('schedule');
-        return $query->row();
-    }
 }
