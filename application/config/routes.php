@@ -52,9 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'dashboard/schedule';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-$route['admin'] = 'admin';
-$route['admin/schedule/(:any)'] = 'admin/schedule_list/$1';
 $route['setuser'] = 'setuser';
-$route['admin'] = 'admin/index';
+
 
 

@@ -379,79 +379,71 @@
     </div>
 
     <!-- Form to upload result -->
-    <form action="<?php echo base_url('admin/upload_result'); ?>" method="post" enctype="multipart/form-data" class="upload-result-form">
-      
-      <!-- Match Selection Box -->
-      <div class="form-row match-selection">
-        <div>
-          <label for="match_title">Match:</label>
-          <select name="match_title" id="match_title" required>
-            <option value="">Select Match</option>
-            <?php foreach ($match_titles as $match): ?>
-              <option value="<?php echo $match['team_a_id']; ?>-<?php echo $match['team_b_id']; ?>">
-                <?php echo $match['match_title']; ?> (<?php echo $match['match_day']; ?>)
-              </option>
-            <?php endforeach; ?>
-          </select>
-        </div>
-      </div>
+    <form action="your-action-url-here" method="post" enctype="multipart/form-data" class="upload-result-form">
+  
+  <!-- Match Selection Box -->
+  <div class="form-row match-selection">
+    <div>
+      <label for="match_title">Match:</label>
+      <select name="match_title" id="match_title" required>
+        <option value="">Select Match</option>
+        <!-- Replace this block with your match options -->
+        <option value="match-id">Match Title</option>
+      </select>
+    </div>
+  </div>
 
-      <!-- Team Selection Box -->
-      <div class="form-row team-selection">
-        <div class="team-left">
-          <label for="team1">Team 1:</label>
-          <select name="team1" id="team1" required>
-            <option value="">Select Team 1</option>
-            <?php foreach ($teams as $team): ?>
-              <option value="<?php echo $team['id']; ?>">
-                <?php echo $team['team']; ?> (<?php echo $team['division']; ?>)
-              </option>
-            <?php endforeach; ?>
-          </select>
-        </div>
+  <!-- Team Selection Box -->
+  <div class="form-row team-selection">
+    <div class="team-left">
+      <label for="team1">Team 1:</label>
+      <select name="team1" id="team1" required>
+        <option value="">Select Team 1</option>
+        <!-- Replace this block with your team options -->
+        <option value="team-id">Team Name (Division)</option>
+      </select>
+    </div>
 
-        <span class="vs">VS</span>
+    <span class="vs">VS</span>
 
-        <div class="team-right">
-          <label for="team2">Team 2:</label>
-          <select name="team2" id="team2" required>
-            <option value="">Select Team 2</option>
-            <?php foreach ($teams as $team): ?>
-              <option value="<?php echo $team['id']; ?>">
-                <?php echo $team['team']; ?> (<?php echo $team['division']; ?>)
-              </option>
-            <?php endforeach; ?>
-          </select>
-        </div>
-      </div>
+    <div class="team-right">
+      <label for="team2">Team 2:</label>
+      <select name="team2" id="team2" required>
+        <option value="">Select Team 2</option>
+        <!-- Replace this block with your team options -->
+        <option value="team-id">Team Name (Division)</option>
+      </select>
+    </div>
+  </div>
 
-      <!-- Score Input Box -->
-      <div class="form-row score-inputs">
-        <div class="score-left">
-          <label for="team_1_score">Score Team 1:</label>
-          <input type="number" name="team_1_score" id="team_1_score" required>
-        </div>
+  <!-- Score Input Box -->
+  <div class="form-row score-inputs">
+    <div class="score-left">
+      <label for="team_1_score">Score Team 1:</label>
+      <input type="number" name="team_1_score" id="team_1_score" required>
+    </div>
 
-        <div class="score-right">
-          <label for="team_2_score">Score Team 2:</label>
-          <input type="number" name="team_2_score" id="team_2_score" required>
-        </div>
-      </div>
+    <div class="score-right">
+      <label for="team_2_score">Score Team 2:</label>
+      <input type="number" name="team_2_score" id="team_2_score" required>
+    </div>
+  </div>
 
-      <!-- Upload Evidence Box -->
-      <div class="form-row upload-section">
-        <div>
-          <label for="evidence">Upload Evidence (Image/PDF):</label>
-          <input type="file" name="evidence" id="evidence" accept="image/*,application/pdf" required>
-        </div>
-      </div>
+  <!-- Upload Evidence Box -->
+  <div class="form-row upload-section">
+    <div>
+      <label for="evidence">Upload Evidence (Image/PDF):</label>
+      <input type="file" name="evidence" id="evidence" accept="image/*,application/pdf" required>
+    </div>
+  </div>
 
-      <!-- Submit Button Box -->
-      <div class="form-row submit-section">
-        <button type="submit" class="rslt-btn">Submit Result</button>
-      </div>
+  <!-- Submit Button Box -->
+  <div class="form-row submit-section">
+    <button type="submit" class="rslt-btn">Submit Result</button>
+  </div>
 
-    </form>
+</form>
+
   </div>
 </section>
 
