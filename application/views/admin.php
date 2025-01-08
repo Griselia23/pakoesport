@@ -19,57 +19,70 @@
 </header>
 
 <style>
-    /* Modal Styles */
-    .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-    }
+        .table th {
+            background-color: rgb(190, 11, 11) !important;
+            color: white;
+        }
 
-    .modal:target {
-        display: flex;
-    }
+        .table td {
+            background-color: rgb(255, 255, 255) !important;
+            color: black;
+            
+        }
 
-    .modal-content {
-        background-color: white;
-        padding: 20px;
-        border-radius: 8px;
-        width: 500px;
-    }
+        .table tbody tr:hover {
+            background-color: rgb(255, 102, 102) !important;
+        }
 
-    .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-    }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
 
-    .modal-title {
-        font-size: 18px;
-    }
+        .modal:target {
+            display: flex;
+        }
 
-    .close {
-        font-size: 30px;
-        text-decoration: none;
-        color: black;
-    }
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 500px;
+        }
 
-    .close:hover {
-        color: red;
-    }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
 
-    .modal-body {
-        padding-bottom: 20px;
-    }
+        .modal-title {
+            font-size: 18px;
+        }
 
-</style>
+        .close {
+            font-size: 30px;
+            text-decoration: none;
+            color: black;
+        }
+
+        .close:hover {
+            color: red;
+        }
+
+        .modal-body {
+            padding-bottom: 20px;
+        }
+    </style>
 
 <main id="main">
 
@@ -91,7 +104,7 @@
 
         <table class="table table-bordered table-striped mt-4" id="mlscheduleTable">
     <thead>
-        <tr style="background-color: #f4f4f4;">
+        <tr style="background-color:rgb(190, 11, 11);">
             <th>Matches</th>
             <th>Date</th>
             <th>Teams</th>

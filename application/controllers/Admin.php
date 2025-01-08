@@ -89,9 +89,15 @@ class Admin extends CI_Controller {
         redirect('admin');
     }
 
+    // Controller method
+    public function match_form() {
+        // Get match titles from the model
+        $data['matches'] = $this->Admin_model->getMatchTitles();   
 
+        // Load the view and pass the match titles
+        $this->load->view('dashboard', $data);  // Pass matches data to view
+    }
     
-
 
 
 

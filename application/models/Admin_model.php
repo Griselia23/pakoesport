@@ -36,4 +36,46 @@ class Admin_model extends CI_Model {
     
         return $result->result_array();
     }
+
+    public function getMatchTitles() {
+        $query = "
+            SELECT 
+                a.id AS team_a_id,
+                a.division AS categ,
+                a.team AS team_a_name,
+                b.id AS team_b_id,
+                b.team AS team_b_name,
+                CONCAT(a.team, ' vs. ', b.team) AS match_title,
+                s.start_date AS match_day
+            FROM 
+                register a
+            CROSS JOIN 
+                register b
+            JOIN 
+                schedule s ON a.division = s.division
+            WHERE 
+                a.id < b.id 
+                AND a.division = b.division
+            ORDER BY 
+                a.division, a.team, b.team;
+        ";
+        
+        // Log the query for debugging
+        log_message('debug', 'SQL Query: ' . $query);
+    
+        // Execute the query and fetch results
+        $result = $this->db->query($query);
+        
+        // Log the result for debugging
+        log_message('debug', 'Query Result: ' . print_r($result->result_array(), true));
+        
+        // Check if any rows were returned
+        if ($result->num_rows() > 0) {
+            return $result->result_array();
+        } else {
+            return [];  // Return an empty array if no results
+        }
+    }
+    
+    
 }

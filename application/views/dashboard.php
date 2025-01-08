@@ -384,37 +384,33 @@
   <!-- Match Selection Box -->
   <div class="form-row match-selection">
     <div>
-      <label for="match_title">Match:</label>
-      <select name="match_title" id="match_title" required>
-        <option value="">Select Match</option>
-        <!-- Replace this block with your match options -->
-        <option value="match-id">Match Title</option>
-      </select>
+        <label for="match_title">Match:</label>
+        <select name="match_title" id="match_title" required>
+            <option value="">Select Match</option>
+            <!-- Loop through matches and populate the dropdown -->
+            <?php if (!empty($matches)) { ?>
+                <?php foreach ($matches as $match) { 
+                    // Generate unique match ID for each match
+                    $match_id = $match['team_a_id'] . '-' . $match['team_b_id'];
+                    ?>
+                    <option value="<?php echo $match_id; ?>">
+                        <?php echo htmlspecialchars($match['match_title']); ?>
+                    </option>
+                <?php } ?>
+            <?php } else { ?>
+                <option value="">No matches available</option>
+            <?php } ?>
+        </select>
     </div>
-  </div>
+</div>
 
-  <!-- Team Selection Box -->
-  <div class="form-row team-selection">
-    <div class="team-left">
-      <label for="team1">Team 1:</label>
-      <select name="team1" id="team1" required>
-        <option value="">Select Team 1</option>
-        <!-- Replace this block with your team options -->
-        <option value="team-id">Team Name (Division)</option>
-      </select>
-    </div>
+<!-- Team Selection Box (This will be populated dynamically) -->
+<div class="form-row team-selection" id="team-selection">
+    <!-- Teams will be displayed here based on the selected match -->
+</div>
 
-    <span class="vs">VS</span>
 
-    <div class="team-right">
-      <label for="team2">Team 2:</label>
-      <select name="team2" id="team2" required>
-        <option value="">Select Team 2</option>
-        <!-- Replace this block with your team options -->
-        <option value="team-id">Team Name (Division)</option>
-      </select>
-    </div>
-  </div>
+
 
   <!-- Score Input Box -->
   <div class="form-row score-inputs">
@@ -449,7 +445,49 @@
 
 
 
+<script>
+    // Wait for the page to load
+    document.addEventListener("DOMContentLoaded", function () {
+        const matchSelect = document.getElementById("match_title");
+        const teamSelection = document.getElementById("team-selection");
 
+        // Listen for changes to the match selection
+        matchSelect.addEventListener("change", function () {
+            const matchId = matchSelect.value;
+
+            // Clear the team selection box before populating it with new teams
+            teamSelection.innerHTML = '';
+
+            if (matchId) {
+                // Find the selected match based on the matchId
+                const selectedMatch = <?php echo json_encode($matches); ?>.find(function(match) {
+                    return match.team_a_id + '-' + match.team_b_id === matchId;
+                });
+
+                // If the match exists, populate the team selection box
+                if (selectedMatch) {
+                    // Create the HTML structure for the teams
+                    const teamLeft = document.createElement('div');
+                    teamLeft.classList.add('team-left');
+                    teamLeft.textContent = selectedMatch.team_a_name;  // Team A
+
+                    const vsSpan = document.createElement('span');
+                    vsSpan.classList.add('vs');
+                    vsSpan.textContent = 'VS';
+
+                    const teamRight = document.createElement('div');
+                    teamRight.classList.add('team-right');
+                    teamRight.textContent = selectedMatch.team_b_name;  // Team B
+
+                    // Append the elements to the team selection div
+                    teamSelection.appendChild(teamLeft);
+                    teamSelection.appendChild(vsSpan);
+                    teamSelection.appendChild(teamRight);
+                }
+            }
+        });
+    });
+</script>
 <script>
   // Toggle between Mobile Legends and FIFA sections
   const mlResultBtn = document.getElementById('mlresultbtn');
@@ -492,11 +530,6 @@
   // Initially show Mobile Legends
   showML();
 </script>
-
-
-
-
-
 
 
   <!--==========================
