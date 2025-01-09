@@ -18,9 +18,9 @@
         <li><a href="#buy-tickets">Register</a></li>
         <!-- <li><a href="#contact">Contact</a></li> -->
         <li class="buy-tickets"><a href="admin">Admin</a></li>
-
       </ul>
-    </nav><!-- #nav-menu-container -->
+      
+    </nav>
   </div>
 </header><!-- #header -->
 <style>
@@ -163,6 +163,53 @@
 <!-- Your main content continues here -->
 <section id="intro">
   <div class="intro-container wow fadeIn">
+    <!-- Carousel Section -->
+    <!-- <div id="matchCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <?php if (!empty($matches_by_division)): ?>
+          <?php
+           
+            $all_matches = [];
+            foreach ($matches_by_division as $division => $matches) {
+                $all_matches = array_merge($all_matches, $matches);
+            }
+          ?>
+
+         
+          <?php foreach ($all_matches as $index => $match): ?>
+            <div class="carousel-item <?php echo ($index == 0) ? 'active' : ''; ?>">
+              <div class="card text-center">
+                <div class="card-body">
+                  <h5 class="card-title"><?php echo $match['match_title']; ?></h5>
+                  
+                </div>
+              </div>
+            </div>
+          <?php endforeach; ?>
+
+        <?php else: ?>
+          <div class="carousel-item active">
+            <div class="card text-center">
+              <div class="card-body">
+                <h5 class="card-title">No Matches Available</h5>
+              </div>
+            </div>
+          </div>
+        <?php endif; ?>
+      </div>
+
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#matchCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#matchCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div> -->
+
+    <!-- Intro Text -->
     <h1 class="mb-4 pb-0">The Annual<br><span>Gaming</span> League</h1>
     <p class="mb-4 pb-0">29-31 February, Pako Group, Karawang</p>
     <a href="https://www.youtube.com/watch?v=rYBjPWV3esY" class="venobox play-btn mb-4" data-vbtype="video"
@@ -170,6 +217,7 @@
     <a href="#about" class="about-btn scrollto">About The Event</a>
   </div>
 </section>
+
 
 <main id="main">
 
@@ -663,7 +711,7 @@
     <div class="container">
 
       <div class="section-header">
-        <h2>F.A.Q </h2>
+        <h2>Rules</h2>
       </div>
 
       <div class="row justify-content-center">

@@ -89,8 +89,8 @@
 
 
 <section id="main-content" style="background-color: white; padding: 20px; margin-top: 50px;">
-    <div class="container">
-        <!-- Schedule Section -->
+<div class="container">
+        <!-- Schedule Section (Setting Period) -->
         <div class="container" style="background-color: white; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border-radius: 8px;">
             <div class="section-header">
                 <h2 style="color: black;">Setting Period</h2>
@@ -187,6 +187,40 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- Add Schedule Modal -->
+        <div id="addScheduleModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add Match Schedule</h5>
+                    <a href="#" class="close">&times;</a>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="<?php echo base_url('admin/save_schedule'); ?>">
+                        <div class="mb-3">
+                            <label for="matchNumber" class="form-label">Match Number</label>
+                            <input type="text" class="form-control" id="matchNumber" name="matchNumber" required placeholder="Enter match number (e.g., 1)">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="division" class="form-label">Division</label>
+                            <select class="form-control" id="division" name="division" required>
+                                <option value="ml">Mobile Legends</option>
+                                <option value="fifa">FIFA</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="startDate" class="form-label">Start Date</label>
+                            <input type="date" class="form-control" id="startDate" name="startDate" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
         <!-- Add Schedule Modal -->
         <div id="addScheduleModal" class="modal">
