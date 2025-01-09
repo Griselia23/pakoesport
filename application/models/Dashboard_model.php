@@ -81,6 +81,23 @@ class Dashboard_model extends CI_Model {
         $this->db->where('id', $id);
         $this->db->delete('schedule');
     }
+
+    public function get_match_by_number($match_number) {
+        $this->db->select('s.team_a_id, s.team_b_id');
+        $this->db->from('schedule s');
+        $this->db->join('register a', 'a.id = s.team_a_id');
+        $this->db->join('register b', 'b.id = s.team_b_id');
+        $this->db->where('s.match_number', $match_number);
+        
+        $query = $this->db->get();
+        
+        if ($query->num_rows() > 0) {
+            return $query->row_array(); // Return the team IDs
+        }
+        
+        return null; // Return null if no match is found
+    }
+    
     
 
 }

@@ -7,7 +7,8 @@
 
     <!-- Bootstrap 5 CDN for styling -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css" rel="stylesheet">
     <!-- SweetAlert2 CDN for popup notifications -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

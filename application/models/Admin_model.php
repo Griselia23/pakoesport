@@ -14,17 +14,12 @@ class Admin_model extends CI_Model {
     a.id AS team_a_id,
     b.id AS team_b_id,
     a.division AS categ,
-    a.team AS team_a_name,
-    b.team AS team_b_name,
+    a.team AS team_a_name,  
+    b.team AS team_b_name,  
     CONCAT(a.team, ' vs. ', b.team) AS match_title,
     s.start_date AS match_day,
-    s.team_a_score AS team_a_score,
-    s.team_b_score AS team_b_score,
-    CASE
-        WHEN s.team_a_score > s.team_b_score THEN a.team
-        WHEN s.team_a_score < s.team_b_score THEN b.team
-        ELSE 'Draw' 
-    END AS winner
+    a.points AS team_a_points,  
+    b.points AS team_b_points  
 FROM 
     register a
 JOIN 
@@ -34,9 +29,12 @@ JOIN
 WHERE 
     a.id < b.id
     AND s.start_date IS NOT NULL
-    AND a.division IN ('ml', 'fifa');
+    AND a.division IN ('ml', 'fifa')
+    AND s.team_a_score IS NOT NULL
+    AND s.team_b_score IS NOT NULL;
 
-        ";
+
+        ";//these all insert to match_result
     
         // Execute the query and fetch results
         $result = $this->db->query($query);
@@ -46,7 +44,11 @@ WHERE
         } else {
             return [];  
         }
+
+        
     }
+    
+
 
     
     

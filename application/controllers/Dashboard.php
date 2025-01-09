@@ -58,45 +58,51 @@ class Dashboard extends CI_Controller {
     }
 
     public function submit_score() {
-        $match_id = $this->input->post('match_title');
-        $team_1_score = $this->input->post('team_1_score');
-        $team_2_score = $this->input->post('team_2_score');
-    
-        log_message('debug', 'match_id: ' . $match_id);
-        log_message('debug', 'team_1_score: ' . $team_1_score . ' team_2_score: ' . $team_2_score);
-        list($team_a_id, $team_b_id) = explode('-', $match_id);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $match_id = $this->input->post('match_title');
+            $team_a_score = $this->input->post('team_1_score');
+            $team_b_score = $this->input->post('team_2_score');
+            $team_a_id = $this->input->post('team_a_id');
+            $team_b_id = $this->input->post('team_b_id');
         
-        log_message('debug', 'Parsed team_a_id: ' . $team_a_id . ' team_b_id: ' . $team_b_id);
+            list($team_a_id, $team_b_id) = explode('-', $match_id);
         
-        if (!is_numeric($team_1_score) || !is_numeric($team_2_score)) {
-            $this->session->set_flashdata('error', 'Scores must be numeric.');
+            $team_a = $this->db->get_where('register', ['id' => $team_a_id])->row_array();
+            $team_b = $this->db->get_where('register', ['id' => $team_b_id])->row_array();
+        
+            // Directly add the score to the team's points without condition
+            $team_a_new_points = $team_a['points'] + $team_a_score;
+            $team_b_new_points = $team_b['points'] + $team_b_score;
+        
+            // Update the points in the database
+            $update_team_a = $this->db->update('register', ['points' => $team_a_new_points], ['id' => $team_a_id]);
+            $update_team_b = $this->db->update('register', ['points' => $team_b_new_points], ['id' => $team_b_id]);
+        
+            // Check if both updates were successful
+            if ($update_team_a && $update_team_b) {
+                // Set flashdata for success
+                $this->session->set_flashdata('success', 'Scores submitted and points updated successfully!');
+            } else {
+                // Set flashdata for error if something went wrong
+                $this->session->set_flashdata('error', 'There was an issue updating the scores.');
+            }
+        
+            // Redirect to the dashboard
             redirect('dashboard');
         }
-        $match = $this->db->get_where('schedule', ['match_number' => $match_id])->row();
-    
-        log_message('debug', 'Match found: ' . print_r($match, true));
-    
-        if (!$match) {
-            $this->session->set_flashdata('error', 'Match not found.');
-            redirect('dashboard');
-        }
-        
-        $data = array(
-            'team_a_score' => $team_1_score,
-            'team_b_score' => $team_2_score
-        );
-        
-        $this->db->where('id', $match->id);
-        $this->db->update('schedule', $data);
-        
-        if ($this->db->affected_rows() > 0) {
-            $this->session->set_flashdata('success', 'Score updated successfully.');
-        } else {
-            $this->session->set_flashdata('error', 'Failed to update score. Please try again.');
-        }
-        
-        redirect('dashboard');
     }
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
     
 
 }

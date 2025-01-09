@@ -25,16 +25,16 @@ class Login extends CI_Controller {
             $this->session->set_userdata('username', $user->username);
     
             $this->session->set_flashdata('success', 'Login successful! Welcome, ' . $user->npk . '.');
-            redirect('admin'); // redirects to admin controller
+            redirect('admin');
         } else {
             $this->session->set_flashdata('error', 'Invalid npk or password!');
-            redirect('login'); // redirects back to login
+            redirect('login');
         }
     }
     
-
     public function logout() {
         $this->session->sess_destroy();
+        $this->session->set_flashdata('success', 'You have logged out successfully.');
         redirect('#home');
     }
 }

@@ -381,54 +381,59 @@
     <!-- Form to upload result -->
     <form action="dashboard/submit_score" method="post" enctype="multipart/form-data" class="upload-result-form">
   
+    <!-- Match Selection -->
     <div class="form-row match-selection">
-    <div>
-        <label for="match_title">Match:</label>
-        <select name="match_title" id="match_title" required>
-            <option value="">Select Match</option>
-            <!-- Loop through matches and populate the dropdown -->
-            <?php if (!empty($matches_by_division)) { ?>
-                <?php foreach ($matches_by_division as $division => $matches) { ?>
-                    <optgroup label="<?php echo htmlspecialchars(ucfirst($division)); ?>">
-                        <?php foreach ($matches as $match) { 
-                            // Generate unique match ID for each match
-                            $match_id = $match['team_a_id'] . '-' . $match['team_b_id'];
-                        ?>
-                        <option value="<?php echo $match_id; ?>">
-                            <?php echo htmlspecialchars($match['match_title']); ?>
-                        </option>
-                        <?php } ?>
-                    </optgroup>
+        <div>
+            <label for="match_title">Match:</label>
+            <select name="match_title" id="match_title" required onchange="populateTeams()">
+                <option value="">Select Match</option>
+                <!-- Loop through matches and populate the dropdown -->
+                <?php if (!empty($matches_by_division)) { ?>
+                    <?php foreach ($matches_by_division as $division => $matches) { ?>
+                        <optgroup label="<?php echo htmlspecialchars(ucfirst($division)); ?>">
+                            <?php foreach ($matches as $match) { 
+                                // Generate unique match ID for each match
+                                $match_id = $match['team_a_id'] . '-' . $match['team_b_id'];
+                            ?>
+                            <option value="<?php echo $match_id; ?>" 
+                                    data-team-a-id="<?php echo $match['team_a_id']; ?>" 
+                                    data-team-b-id="<?php echo $match['team_b_id']; ?>" 
+                                    data-team-a-name="<?php echo htmlspecialchars($match['team_a_name']); ?>" 
+                                    data-team-b-name="<?php echo htmlspecialchars($match['team_b_name']); ?>">
+                                <?php echo htmlspecialchars($match['match_title']); ?>
+                            </option>
+                            <?php } ?>
+                        </optgroup>
+                    <?php } ?>
+                <?php } else { ?>
+                    <option value="">No matches available</option>
                 <?php } ?>
-            <?php } else { ?>
-                <option value="">No matches available</option>
-            <?php } ?>
-        </select>
-    </div>
-</div>
-
-<!-- Team Selection Box (This will be populated dynamically) -->
-<div class="form-row team-selection" id="team-selection">
-    <!-- Teams will be displayed here based on the selected match -->
-</div>
-
-<!-- Score Input Box -->
-<div class="form-row score-inputs">
-    <div class="score-left">
-        <label for="team_1_score">Score Team 1:</label>
-        <input type="number" name="team_1_score" id="team_1_score" required>
+            </select>
+        </div>
     </div>
 
-    <div class="score-right">
-        <label for="team_2_score">Score Team 2:</label>
-        <input type="number" name="team_2_score" id="team_2_score" required>
+    <!-- Team Selection Box (Populated dynamically) -->
+    <div class="form-row team-selection" id="team-selection">
+        <!-- Teams will be displayed here based on the selected match -->
     </div>
-</div>
 
-<!-- Submit Button -->
-<div class="form-row">
-    <button type="submit">Submit Scores</button>
-</div>
+    <!-- Score Input Box -->
+    <div class="form-row score-inputs">
+        <div class="score-left">
+            <label for="team_1_score">Score Team 1:</label>
+            <input type="number" name="team_1_score" id="team_1_score" required>
+        </div>
+
+        <div class="score-right">
+            <label for="team_2_score">Score Team 2:</label>
+            <input type="number" name="team_2_score" id="team_2_score" required>
+        </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-row">
+        <button type="submit">Submit Scores</button>
+    </div>
 
 </form>
 
