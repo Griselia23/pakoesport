@@ -12,12 +12,9 @@ class Dashboard extends CI_Controller {
     }
 
     public function index() {
-        // Fetch match titles from Admin_model
-        $data['matches'] = $this->Admin_model->getMatchTitles();  // Fetch match titles for dropdown
-
-        // Fetch matches schedule from Admin_model
-        $matches = $this->Admin_model->matchmaking(); // Using matchmaking to get the scheduled matches
         
+        $data['matches'] = $this->Admin_model->matchmaking();
+        $matches = $this->Admin_model->matchmaking(); 
         if ($matches) {
             $grouped_matches = [];
             foreach ($matches as $match) {
@@ -27,8 +24,6 @@ class Dashboard extends CI_Controller {
         } else {
             $data['matches_by_division'] = [];
         }
-
-        // Pass both match titles and match schedule to the view
         $this->load->view('dashboard', $data);
     }
 
