@@ -34,7 +34,7 @@ WHERE
     AND s.team_b_score IS NOT NULL;
 
 
-        ";//these all insert to match_result
+        ";
     
         // Execute the query and fetch results
         $result = $this->db->query($query);

@@ -17,122 +17,147 @@
         <!-- <li><a href="#gallery">Gallery</a></li> -->
         <li><a href="#buy-tickets">Register</a></li>
         <!-- <li><a href="#contact">Contact</a></li> -->
-        <li class="buy-tickets"><a href="login">Admin</a></li>
+        <li class="buy-tickets"><a href="admin">Admin</a></li>
 
       </ul>
     </nav><!-- #nav-menu-container -->
   </div>
 </header><!-- #header -->
 <style>
- .upload-result-form {
-  margin-top: 20px;
-  font-family: Arial, sans-serif;
-}
-
-.smaller-container {
-  width: 50%; /* You can adjust this percentage to make it smaller or bigger */
+ /* General Form Styles */
+.upload-result-form {
+  width: 100%;
+  max-width: 800px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #fff; /* White background for the form box */
-  border-radius: 10px; /* Rounded corners */
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Drop shadow */
+  background: #fff;
+  border-radius: 8px;
+  
+  /* Adding drop shadow */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
 }
 
-.match-selection,
-.team-selection,
-.score-inputs,
-.upload-section,
-.submit-section {
+.upload-result-form .form-row {
   margin-bottom: 20px;
 }
 
-.match-selection label,
-.team-selection label,
-.score-inputs label,
-.upload-section label {
+.upload-result-form label {
   font-weight: bold;
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
-.form-row {
-  display: flex;
-  justify-content: space-between; /* Distribute items evenly across the row */
-  align-items: center;
-  flex-wrap: wrap; /* Wrap if space is too small */
+.upload-result-form select,
+.upload-result-form input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
 }
 
-.form-row > div {
-  margin-right: 10px;
-  flex: 1; /* Allow all items to flex and adjust their width */
-  min-width: 120px; /* Set a minimum width for each input */
-}
-
-.vs {
-  font-weight: bold;
-  font-size: 20px;
-  padding: 0 15px;
-  margin: 0 20px; /* Add margin to the left and right of the VS to space out team 1 and team 2 */
-}
-
-/* Styling for the left side of the form (Team 1 and Score 1) */
-.team-left, .score-left {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.score-inputs {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-/* Styling for the right side of the form (Team 2 and Score 2) */
-.team-right, .score-right {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  margin-right: auto; /* Align to the right */
-}
-
-.score-inputs input {
-  width: 80px;
-  padding: 5px;
-  margin-bottom: 10px;
-}
-
-.upload-section {
-  margin-bottom: 20px;
-}
-
-.submit-section {
-  text-align: center;
-}
-
-.rslt-btn {
-  padding: 10px 20px;
+.upload-result-form button {
+  background-color: rgb(226, 14, 14);
+  color: #fff;
+  padding: 12px 24px;
   font-size: 16px;
-  background-color: rgb(245, 42, 15);
-  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
-.rslt-btn:hover {
-  background-color: rgb(245, 42, 15);
+.upload-result-form button:hover {
+  background-color: rgb(226, 14, 14);
 }
 
-.rslt-btn:active {
-  background-color: #3e8e41;
+/* Match Selection */
+.form-row.match-selection {
+  display: flex;
+  flex-direction: column;
 }
 
-.upload-section input {
+.schedule-toggle-stripe {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.schedule-toggle-stripe .toggle-stripe {
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.schedule-toggle-stripe .toggle-stripe.active {
+  background-color:rgb(226, 14, 14);
+  color: #fff;
+}
+
+/* Team Selection */
+.form-row.team-selection {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Score Input Box */
+.form-row.score-inputs {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.score-left, .score-right {
+  width: 48%;
+}
+
+.score-left input, .score-right input {
   width: 100%;
-  padding: 10px;
-  margin-top: 10px;
 }
+
+/* Image Upload */
+.form-row.image-upload {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  /* Stack score inputs vertically on smaller screens */
+  .form-row.score-inputs {
+    flex-direction: column;
+  }
+
+  .score-left, .score-right {
+    width: 100%;
+  }
+
+  .form-row.team-selection {
+    margin-top: 20px;
+  }
+
+  .upload-result-form {
+    padding: 10px;
+  }
+
+  .schedule-toggle-stripe {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .schedule-toggle-stripe .toggle-stripe {
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Adjusting button and form spacing for very small screens */
+  .upload-result-form button {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
 
 </style>
 <!-- Your main content continues here -->
@@ -387,12 +412,10 @@
             <label for="match_title">Match:</label>
             <select name="match_title" id="match_title" required onchange="populateTeams()">
                 <option value="">Select Match</option>
-                <!-- Loop through matches and populate the dropdown -->
                 <?php if (!empty($matches_by_division)) { ?>
                     <?php foreach ($matches_by_division as $division => $matches) { ?>
                         <optgroup label="<?php echo htmlspecialchars(ucfirst($division)); ?>">
                             <?php foreach ($matches as $match) { 
-                                // Generate unique match ID for each match
                                 $match_id = $match['team_a_id'] . '-' . $match['team_b_id'];
                             ?>
                             <option value="<?php echo $match_id; ?>" 
@@ -430,15 +453,25 @@
         </div>
     </div>
 
+    <!-- Evidence Image Upload -->
+    <!-- <div class="form-row image-upload">
+        <label for="evidence_image">Upload Evidence (Image):</label>
+        <input type="file" name="evidence_image" id="evidence_image" accept="image/*" required>
+    </div> -->
+    <div class="form-row image-upload">
+        <label for="evidence_image">Upload Evidence (Image):</label>
+        <input type="file" name="evidence_image" id="evidence_image" accept="image/*" required multiple>
+        <small>Max 3 images, each up to 2MB</small>
+    </div>
     <!-- Submit Button -->
     <div class="form-row">
         <button type="submit">Submit Scores</button>
     </div>
 
 </form>
-
   </div>
 </section>
+
 
 
 
@@ -478,7 +511,6 @@
         teamSelection.innerHTML = ''; // Clear previous team details
 
         if (matchId) {
-            // Find the selected match based on matchId
             const [teamAId, teamBId] = matchId.split('-');
             const selectedMatch = matchesByDivision['ml'].concat(matchesByDivision['fifa']).find(function (match) {
                 return (match['team_a_id'] === teamAId && match['team_b_id'] === teamBId) || 

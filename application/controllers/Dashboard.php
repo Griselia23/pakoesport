@@ -64,33 +64,39 @@ class Dashboard extends CI_Controller {
             $team_b_score = $this->input->post('team_2_score');
             $team_a_id = $this->input->post('team_a_id');
             $team_b_id = $this->input->post('team_b_id');
-        
+            $division = $this->input->post('division'); 
+
             list($team_a_id, $team_b_id) = explode('-', $match_id);
-        
+    
             $team_a = $this->db->get_where('register', ['id' => $team_a_id])->row_array();
             $team_b = $this->db->get_where('register', ['id' => $team_b_id])->row_array();
-        
-            // Directly add the score to the team's points without condition
+    
             $team_a_new_points = $team_a['points'] + $team_a_score;
             $team_b_new_points = $team_b['points'] + $team_b_score;
-        
-            // Update the points in the database
-            $update_team_a = $this->db->update('register', ['points' => $team_a_new_points], ['id' => $team_a_id]);
-            $update_team_b = $this->db->update('register', ['points' => $team_b_new_points], ['id' => $team_b_id]);
-        
-            // Check if both updates were successful
-            if ($update_team_a && $update_team_b) {
-                // Set flashdata for success
-                $this->session->set_flashdata('success', 'Scores submitted and points updated successfully!');
-            } else {
-                // Set flashdata for error if something went wrong
-                $this->session->set_flashdata('error', 'There was an issue updating the scores.');
+            $upload_path = './uploads/' . $division . '/'; 
+            if (!is_dir($upload_path)) {
+                mkdir($upload_path, 0777, true);
             }
-        
+            $config['upload_path'] = $upload_path;
+            $config['allowed_types'] = 'jpg|jpeg|png|gif';
+            $config['max_size'] = 2048; // 2MB
+            $this->load->library('upload', $config);
+            if ($this->upload->do_upload('evidence_image')) {
+                $upload_data = $this->upload->data();
+                $image_path = 'uploads/' . $division . '/' . $upload_data['file_name'];
+                $this->db->update('register', ['points' => $team_a_new_points], ['id' => $team_a_id]);
+                $this->db->update('register', ['points' => $team_b_new_points], ['id' => $team_b_id]);
+                $this->session->set_flashdata('success', 'Scores and evidence image uploaded successfully!');
+            } else {
+                $this->session->set_flashdata('error', 'Image upload failed: ' . $this->upload->display_errors());
+            }
+    
             // Redirect to the dashboard
             redirect('dashboard');
         }
     }
+    
+    
     
     
     
