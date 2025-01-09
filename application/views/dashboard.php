@@ -379,23 +379,26 @@
     </div>
 
     <!-- Form to upload result -->
-    <form action="your-action-url-here" method="post" enctype="multipart/form-data" class="upload-result-form">
+    <form action="dashboard/submit_score" method="post" enctype="multipart/form-data" class="upload-result-form">
   
-  <!-- Match Selection Box -->
-  <div class="form-row match-selection">
+    <div class="form-row match-selection">
     <div>
         <label for="match_title">Match:</label>
         <select name="match_title" id="match_title" required>
             <option value="">Select Match</option>
             <!-- Loop through matches and populate the dropdown -->
-            <?php if (!empty($matches)) { ?>
-                <?php foreach ($matches as $match) { 
-                    // Generate unique match ID for each match
-                    $match_id = $match['team_a_id'] . '-' . $match['team_b_id'];
-                    ?>
-                    <option value="<?php echo $match_id; ?>">
-                        <?php echo htmlspecialchars($match['match_title']); ?>
-                    </option>
+            <?php if (!empty($matches_by_division)) { ?>
+                <?php foreach ($matches_by_division as $division => $matches) { ?>
+                    <optgroup label="<?php echo htmlspecialchars(ucfirst($division)); ?>">
+                        <?php foreach ($matches as $match) { 
+                            // Generate unique match ID for each match
+                            $match_id = $match['team_a_id'] . '-' . $match['team_b_id'];
+                        ?>
+                        <option value="<?php echo $match_id; ?>">
+                            <?php echo htmlspecialchars($match['match_title']); ?>
+                        </option>
+                        <?php } ?>
+                    </optgroup>
                 <?php } ?>
             <?php } else { ?>
                 <option value="">No matches available</option>
@@ -409,34 +412,23 @@
     <!-- Teams will be displayed here based on the selected match -->
 </div>
 
-
-
-
-  <!-- Score Input Box -->
-  <div class="form-row score-inputs">
+<!-- Score Input Box -->
+<div class="form-row score-inputs">
     <div class="score-left">
-      <label for="team_1_score">Score Team 1:</label>
-      <input type="number" name="team_1_score" id="team_1_score" required>
+        <label for="team_1_score">Score Team 1:</label>
+        <input type="number" name="team_1_score" id="team_1_score" required>
     </div>
 
     <div class="score-right">
-      <label for="team_2_score">Score Team 2:</label>
-      <input type="number" name="team_2_score" id="team_2_score" required>
+        <label for="team_2_score">Score Team 2:</label>
+        <input type="number" name="team_2_score" id="team_2_score" required>
     </div>
-  </div>
+</div>
 
-  <!-- Upload Evidence Box -->
-  <div class="form-row upload-section">
-    <div>
-      <label for="evidence">Upload Evidence (Image/PDF):</label>
-      <input type="file" name="evidence" id="evidence" accept="image/*,application/pdf" required>
-    </div>
-  </div>
-
-  <!-- Submit Button Box -->
-  <div class="form-row submit-section">
-    <button type="submit" class="rslt-btn">Submit Result</button>
-  </div>
+<!-- Submit Button -->
+<div class="form-row">
+    <button type="submit">Submit Scores</button>
+</div>
 
 </form>
 
@@ -446,89 +438,92 @@
 
 
 <script>
-    // Wait for the page to load
-    document.addEventListener("DOMContentLoaded", function () {
-        const matchSelect = document.getElementById("match_title");
-        const teamSelection = document.getElementById("team-selection");
+   document.addEventListener("DOMContentLoaded", function () {
+    const mlResultBtn = document.getElementById("mlresultbtn");
+    const fifaResultBtn = document.getElementById("fifaresultbtn");
+    const matchSelect = document.getElementById("match_title");
+    const teamSelection = document.getElementById("team-selection");
 
-        // Listen for changes to the match selection
-        matchSelect.addEventListener("change", function () {
-            const matchId = matchSelect.value;
+    // Store matches grouped by division (Mobile Legends and FIFA)
+    const matchesByDivision = <?php echo json_encode($matches_by_division); ?>;
 
-            // Clear the team selection box before populating it with new teams
-            teamSelection.innerHTML = '';
+    // Function to update the match dropdown based on selected division
+    function updateMatchDropdown(division) {
+        matchSelect.innerHTML = '<option value="">Select Match</option>'; // Clear the current options
 
-            if (matchId) {
-                // Find the selected match based on the matchId
-                const selectedMatch = <?php echo json_encode($matches); ?>.find(function(match) {
-                    return match.team_a_id + '-' + match.team_b_id === matchId;
-                });
+        if (matchesByDivision[division]) {
+            // Populate the dropdown with matches from the selected division
+            matchesByDivision[division].forEach(function (match) {
+                const matchId = match['team_a_id'] + '-' + match['team_b_id'];
+                const option = document.createElement('option');
+                option.value = matchId;
+                option.textContent = match['match_title'];
+                matchSelect.appendChild(option);
+            });
+        } else {
+            const noMatchesOption = document.createElement('option');
+            noMatchesOption.value = '';
+            noMatchesOption.textContent = `No ${division} matches available`;
+            matchSelect.appendChild(noMatchesOption);
+        }
+    }
 
-                // If the match exists, populate the team selection box
-                if (selectedMatch) {
-                    // Create the HTML structure for the teams
-                    const teamLeft = document.createElement('div');
-                    teamLeft.classList.add('team-left');
-                    teamLeft.textContent = selectedMatch.team_a_name;  // Team A
+    // Function to populate teams based on the selected match
+    function populateTeams(matchId) {
+        teamSelection.innerHTML = ''; // Clear previous team details
 
-                    const vsSpan = document.createElement('span');
-                    vsSpan.classList.add('vs');
-                    vsSpan.textContent = 'VS';
+        if (matchId) {
+            // Find the selected match based on matchId
+            const [teamAId, teamBId] = matchId.split('-');
+            const selectedMatch = matchesByDivision['ml'].concat(matchesByDivision['fifa']).find(function (match) {
+                return (match['team_a_id'] === teamAId && match['team_b_id'] === teamBId) || 
+                       (match['team_a_id'] === teamBId && match['team_b_id'] === teamAId);
+            });
 
-                    const teamRight = document.createElement('div');
-                    teamRight.classList.add('team-right');
-                    teamRight.textContent = selectedMatch.team_b_name;  // Team B
+            if (selectedMatch) {
+                const teamLeft = document.createElement('div');
+                teamLeft.classList.add('team-left');
+                teamLeft.textContent = selectedMatch['team_a_name'];  // Team A
 
-                    // Append the elements to the team selection div
-                    teamSelection.appendChild(teamLeft);
-                    teamSelection.appendChild(vsSpan);
-                    teamSelection.appendChild(teamRight);
-                }
+                const vsSpan = document.createElement('span');
+                vsSpan.classList.add('vs');
+                vsSpan.textContent = 'VS';
+
+                const teamRight = document.createElement('div');
+                teamRight.classList.add('team-right');
+                teamRight.textContent = selectedMatch['team_b_name'];  // Team B
+
+                teamSelection.appendChild(teamLeft);
+                teamSelection.appendChild(vsSpan);
+                teamSelection.appendChild(teamRight);
             }
-        });
+        }
+    }
+
+    // Event listener for Mobile Legends result button
+    mlResultBtn.addEventListener('click', function () {
+        mlResultBtn.classList.add('active');
+        fifaResultBtn.classList.remove('active');
+        updateMatchDropdown('ml'); // Show matches for Mobile Legends
     });
-</script>
-<script>
-  // Toggle between Mobile Legends and FIFA sections
-  const mlResultBtn = document.getElementById('mlresultbtn');
-  const fifaResultBtn = document.getElementById('fifaresultbtn');
 
-  const mlMatchSelection = document.getElementById('mlmatchSelection');
-  const fifaMatchSelection = document.getElementById('fifamatchSelection');
+    // Event listener for FIFA result button
+    fifaResultBtn.addEventListener('click', function () {
+        fifaResultBtn.classList.add('active');
+        mlResultBtn.classList.remove('active');
+        updateMatchDropdown('fifa'); // Show matches for FIFA
+    });
 
-  const mlTeamSelection = document.getElementById('mlteamSelection');
-  const fifaTeamSelection = document.getElementById('fifateamSelection');
+    // Event listener for match selection
+    matchSelect.addEventListener('change', function () {
+        const matchId = matchSelect.value;
+        populateTeams(matchId);  // Populate teams based on the selected match
+    });
 
-  // Function to show Mobile Legends sections and hide FIFA
-  function showML() {
-    mlResultBtn.classList.add('active');
-    fifaResultBtn.classList.remove('active');
-    
-    mlMatchSelection.style.display = 'block';
-    fifaMatchSelection.style.display = 'none';
+    // Initial setup: Show Mobile Legends matches by default
+    mlResultBtn.click();
+});
 
-    mlTeamSelection.style.display = 'block';
-    fifaTeamSelection.style.display = 'none';
-  }
-
-  // Function to show FIFA sections and hide Mobile Legends
-  function showFIFA() {
-    fifaResultBtn.classList.add('active');
-    mlResultBtn.classList.remove('active');
-    
-    fifaMatchSelection.style.display = 'block';
-    mlMatchSelection.style.display = 'none';
-
-    fifaTeamSelection.style.display = 'block';
-    mlTeamSelection.style.display = 'none';
-  }
-
-  // Event listeners for toggle buttons
-  mlResultBtn.addEventListener('click', showML);
-  fifaResultBtn.addEventListener('click', showFIFA);
-
-  // Initially show Mobile Legends
-  showML();
 </script>
 
 

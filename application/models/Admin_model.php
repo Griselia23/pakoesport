@@ -11,24 +11,31 @@ class Admin_model extends CI_Model {
     public function matchmaking() {
         $query = "
             SELECT 
-                a.id AS team_a_id,
-                a.division AS categ,
-                a.team AS team_a_name,
-                b.id AS team_b_id,
-                b.team AS team_b_name,
-                CONCAT(a.team, ' vs. ', b.team) AS match_title,
-                s.start_date AS match_day
-            FROM 
-                register a
-            CROSS JOIN 
-                register b
-            JOIN 
-                schedule s ON a.division = s.division
-            WHERE 
-                a.id < b.id 
-                AND a.division = b.division
-            ORDER BY 
-                a.division, a.team, b.team;
+    a.id AS team_a_id,
+    b.id AS team_b_id,
+    a.division AS categ,
+    a.team AS team_a_name,
+    b.team AS team_b_name,
+    CONCAT(a.team, ' vs. ', b.team) AS match_title,
+    s.start_date AS match_day,
+    s.team_a_score AS team_a_score,
+    s.team_b_score AS team_b_score,
+    CASE
+        WHEN s.team_a_score > s.team_b_score THEN a.team
+        WHEN s.team_a_score < s.team_b_score THEN b.team
+        ELSE 'Draw' 
+    END AS winner
+FROM 
+    register a
+JOIN 
+    register b ON a.division = b.division
+JOIN 
+    schedule s ON a.division = s.division
+WHERE 
+    a.id < b.id
+    AND s.start_date IS NOT NULL
+    AND a.division IN ('ml', 'fifa');
+
         ";
     
         // Execute the query and fetch results
