@@ -8,8 +8,9 @@
             <ul class="nav-menu">
                 <li><a href="<?php echo base_url('admin'); ?>">Matches Monitor</a></li>
                 <li><a href="<?php echo base_url('setuser'); ?>">Setting User</a></li>
+                <li><a href="<?php echo base_url('uploadresult'); ?>">Upload Result</a></li>
                 <li><a href="<?php echo base_url('dashboard'); ?>">Home</a></li>
-
+                
                 <li class="buy-tickets">
                     <a href="<?php echo base_url('login/logout'); ?>">Logout</a>
                 </li>

@@ -8,6 +8,10 @@ class Login extends CI_Controller {
         $this->load->helper('url');
         $this->load->library('session');
         $this->load->database();
+
+        // if($this->session->userdata('pakoesport') == null){
+        //     redirect('login');
+        // }
     }
 
     public function index() {

@@ -520,9 +520,6 @@
   </div>
 </section>
 
-
-
-
 <script>
    document.addEventListener("DOMContentLoaded", function () {
     const mlResultBtn = document.getElementById("mlresultbtn");
