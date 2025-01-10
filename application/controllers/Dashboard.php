@@ -29,12 +29,14 @@ class Dashboard extends CI_Controller {
     }
 
     public function submit_registration() {
+        $password = $this->input->post('password');
         $data = array(
             'team' => $this->input->post('team'),
             'plant' => $this->input->post('plant'),
             'leadernpk' => $this->input->post('leadernpk'),
             'leadername' => $this->input->post('leadername'),
             'number' => $this->input->post('number'),
+            'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
             'member1npk' => $this->input->post('member1npk'),
             'member1name' => $this->input->post('member1name'),
             'member2npk' => $this->input->post('member2npk'),
@@ -45,9 +47,9 @@ class Dashboard extends CI_Controller {
             'member4name' => $this->input->post('member4name'),
             'member5npk' => $this->input->post('member5npk'),
             'member5name' => $this->input->post('member5name'),
-            'division' => $this->input->post('division'),
+            'division' => $this->input->post('division')
         );
-
+    
         if ($this->Dashboard_model->insert_team($data)) {
             $this->session->set_flashdata('success', 'Team registered successfully.');
             redirect('dashboard');
@@ -56,6 +58,7 @@ class Dashboard extends CI_Controller {
             redirect('dashboard');
         }
     }
+    
 
     public function submit_score() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -92,7 +95,7 @@ class Dashboard extends CI_Controller {
             }
     
             // Redirect to the dashboard
-            redirect('dashboard');
+            redirect('uploadresult');
         }
     }
     

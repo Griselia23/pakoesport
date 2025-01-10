@@ -67,6 +67,7 @@
     </div>
 
     <!-- Login Form -->
+     <div>
     <form action="<?php echo base_url('login/authenticate'); ?>" method="post">
         <div class="mb-3">
             <label for="npk" class="form-label">Username</label>
@@ -78,6 +79,8 @@
         </div>
         <button type="submit" class="btn login-btn">Login</button>
     </form>
+    </div>
+    <br>
 
     <!-- Footer Text -->
     <div class="footer-text">

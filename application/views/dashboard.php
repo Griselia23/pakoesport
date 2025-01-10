@@ -13,7 +13,7 @@
         <li><a href="#leaderboard">Leaderboard</a></li>
         <li><a href="#schedule">Schedule</a></li>
         <li><a href="#venue">Venue</a></li>
-        <li><a href="#teams">Upload Result</a></li>
+        <li><a href="uploadresult">Upload Result</a></li>
         <!-- <li><a href="#gallery">Gallery</a></li> -->
         <li><a href="#buy-tickets">Register</a></li>
         <!-- <li><a href="#contact">Contact</a></li> -->
@@ -439,174 +439,7 @@
   <!--==========================
       Hotels Section
     ============================-->
-    <section id="teams" class="section-with-bg wow fadeInUp">
-  <div class="container smaller-container">
-    <div class="section-header">
-      <h2>Upload Result</h2>
-      <p>Fill this form to upload the match result.</p>
-    </div>
 
-    <div class="schedule-toggle-stripe">
-      <span id="mlresultbtn" class="toggle-stripe active">Mobile Legends</span>
-      <span id="fifaresultbtn" class="toggle-stripe">FIFA</span>
-    </div>
-
-    <!-- Form to upload result -->
-    <form action="dashboard/submit_score" method="post" enctype="multipart/form-data" class="upload-result-form">
-  
-    <!-- Match Selection -->
-    <div class="form-row match-selection">
-        <div>
-            <label for="match_title">Match:</label>
-            <select name="match_title" id="match_title" required onchange="populateTeams()">
-                <option value="">Select Match</option>
-                <?php if (!empty($matches_by_division)) { ?>
-                    <?php foreach ($matches_by_division as $division => $matches) { ?>
-                        <optgroup label="<?php echo htmlspecialchars(ucfirst($division)); ?>">
-                            <?php foreach ($matches as $match) { 
-                                $match_id = $match['team_a_id'] . '-' . $match['team_b_id'];
-                            ?>
-                            <option value="<?php echo $match_id; ?>" 
-                                    data-team-a-id="<?php echo $match['team_a_id']; ?>" 
-                                    data-team-b-id="<?php echo $match['team_b_id']; ?>" 
-                                    data-team-a-name="<?php echo htmlspecialchars($match['team_a_name']); ?>" 
-                                    data-team-b-name="<?php echo htmlspecialchars($match['team_b_name']); ?>">
-                                <?php echo htmlspecialchars($match['match_title']); ?>
-                            </option>
-                            <?php } ?>
-                        </optgroup>
-                    <?php } ?>
-                <?php } else { ?>
-                    <option value="">No matches available</option>
-                <?php } ?>
-            </select>
-        </div>
-    </div>
-
-    <!-- Team Selection Box (Populated dynamically) -->
-    <div class="form-row team-selection" id="team-selection">
-        <!-- Teams will be displayed here based on the selected match -->
-    </div>
-
-    <!-- Score Input Box -->
-    <div class="form-row score-inputs">
-        <div class="score-left">
-            <label for="team_1_score">Score Team 1:</label>
-            <input type="number" name="team_1_score" id="team_1_score" required>
-        </div>
-
-        <div class="score-right">
-            <label for="team_2_score">Score Team 2:</label>
-            <input type="number" name="team_2_score" id="team_2_score" required>
-        </div>
-    </div>
-
-    <!-- Evidence Image Upload -->
-    <!-- <div class="form-row image-upload">
-        <label for="evidence_image">Upload Evidence (Image):</label>
-        <input type="file" name="evidence_image" id="evidence_image" accept="image/*" required>
-    </div> -->
-    <div class="form-row image-upload">
-        <label for="evidence_image">Upload Evidence (Image):</label>
-        <input type="file" name="evidence_image" id="evidence_image" accept="image/*" required multiple>
-        <small>Max 3 images, each up to 2MB</small>
-    </div>
-    <!-- Submit Button -->
-    <div class="form-row">
-        <button type="submit">Submit Scores</button>
-    </div>
-
-</form>
-  </div>
-</section>
-
-<script>
-   document.addEventListener("DOMContentLoaded", function () {
-    const mlResultBtn = document.getElementById("mlresultbtn");
-    const fifaResultBtn = document.getElementById("fifaresultbtn");
-    const matchSelect = document.getElementById("match_title");
-    const teamSelection = document.getElementById("team-selection");
-
-    // Store matches grouped by division (Mobile Legends and FIFA)
-    const matchesByDivision = <?php echo json_encode($matches_by_division); ?>;
-
-    // Function to update the match dropdown based on selected division
-    function updateMatchDropdown(division) {
-        matchSelect.innerHTML = '<option value="">Select Match</option>'; // Clear the current options
-
-        if (matchesByDivision[division]) {
-            // Populate the dropdown with matches from the selected division
-            matchesByDivision[division].forEach(function (match) {
-                const matchId = match['team_a_id'] + '-' + match['team_b_id'];
-                const option = document.createElement('option');
-                option.value = matchId;
-                option.textContent = match['match_title'];
-                matchSelect.appendChild(option);
-            });
-        } else {
-            const noMatchesOption = document.createElement('option');
-            noMatchesOption.value = '';
-            noMatchesOption.textContent = `No ${division} matches available`;
-            matchSelect.appendChild(noMatchesOption);
-        }
-    }
-
-    // Function to populate teams based on the selected match
-    function populateTeams(matchId) {
-        teamSelection.innerHTML = ''; // Clear previous team details
-
-        if (matchId) {
-            const [teamAId, teamBId] = matchId.split('-');
-            const selectedMatch = matchesByDivision['ml'].concat(matchesByDivision['fifa']).find(function (match) {
-                return (match['team_a_id'] === teamAId && match['team_b_id'] === teamBId) || 
-                       (match['team_a_id'] === teamBId && match['team_b_id'] === teamAId);
-            });
-
-            if (selectedMatch) {
-                const teamLeft = document.createElement('div');
-                teamLeft.classList.add('team-left');
-                teamLeft.textContent = selectedMatch['team_a_name'];  // Team A
-
-                const vsSpan = document.createElement('span');
-                vsSpan.classList.add('vs');
-                vsSpan.textContent = 'VS';
-
-                const teamRight = document.createElement('div');
-                teamRight.classList.add('team-right');
-                teamRight.textContent = selectedMatch['team_b_name'];  // Team B
-
-                teamSelection.appendChild(teamLeft);
-                teamSelection.appendChild(vsSpan);
-                teamSelection.appendChild(teamRight);
-            }
-        }
-    }
-
-    // Event listener for Mobile Legends result button
-    mlResultBtn.addEventListener('click', function () {
-        mlResultBtn.classList.add('active');
-        fifaResultBtn.classList.remove('active');
-        updateMatchDropdown('ml'); // Show matches for Mobile Legends
-    });
-
-    // Event listener for FIFA result button
-    fifaResultBtn.addEventListener('click', function () {
-        fifaResultBtn.classList.add('active');
-        mlResultBtn.classList.remove('active');
-        updateMatchDropdown('fifa'); // Show matches for FIFA
-    });
-
-    // Event listener for match selection
-    matchSelect.addEventListener('change', function () {
-        const matchId = matchSelect.value;
-        populateTeams(matchId);  // Populate teams based on the selected match
-    });
-
-    // Initial setup: Show Mobile Legends matches by default
-    mlResultBtn.click();
-});
-
-</script>
 
 
   <!--==========================
@@ -805,60 +638,68 @@
         <div class="card">
           <h3>Register Your Team</h3>
           <form action="<?= base_url('dashboard/submit_registration') ?>" method="POST">
-            <!-- Team Information -->
-            <div class="form-group">
-              <label for="team">Team Name:</label>
-              <input type="text" id="team" name="team" required placeholder="Enter team name">
-            </div>
+  <!-- Team Information -->
+  <div class="form-group">
+    <label for="team">Team Name:</label>
+    <input type="text" id="team" name="team" required placeholder="Enter team name">
+  </div>
 
-            <div class="form-group">
-              <label for="plant">Plant:</label>
-              <input type="text" id="plant" name="plant" required placeholder="Enter plant name">
-            </div>
+  <div class="form-group">
+    <label for="plant">Plant:</label>
+    <input type="text" id="plant" name="plant" required placeholder="Enter plant name">
+  </div>
 
-            <div class="form-group">
-              <label for="leadernpk">Leader NPK:</label>
-              <input type="number" id="leadernpk" name="leadernpk" required placeholder="Enter leader's NPK">
-            </div>
+  <div class="form-group">
+    <label for="leadernpk">Leader NPK:</label>
+    <input type="number" id="leadernpk" name="leadernpk" required placeholder="Enter leader's NPK">
+  </div>
 
-            <div class="form-group">
-              <label for="leadername">Leader Name:</label>
-              <input type="text" id="leadername" name="leadername" required placeholder="Enter leader's name">
-            </div>
+  <div class="form-group">
+    <label for="password">Set Password:</label><br>
+    <input type="password" id="password" name="password" required placeholder="">
+    <br>setting password untuk upload result nantinya
+  </div>
 
-            <div class="form-group">
-              <label for="number">Leader No hp:</label>
-              <input type="text" id="number" name="number" required placeholder="Enter whatsapp number">
-            </div>
+  <div class="form-group">
+    <label for="leadername">Leader Name:</label>
+    <input type="text" id="leadername" name="leadername" required placeholder="Enter leader's name">
+    
+  </div>
 
-            <div class="form-group">
-              <label for="division">Division:</label>
-              <select id="division" name="division" required>
-                <option value="" disabled selected>Select Division</option>
-                <option value="ml">Mobile Legend</option>
-                <option value="fifa">FIFA</option>
-              </select>
-            </div>
+  <div class="form-group">
+    <label for="number">Leader No hp:</label>
+    <input type="text" id="number" name="number" required placeholder="Enter whatsapp number">
+  </div>
 
-            <!-- Member Information -->
-            <h4>Members:</h4>
+  <div class="form-group">
+    <label for="division">Division:</label>
+    <select id="division" name="division" required>
+      <option value="" disabled selected>Select Division</option>
+      <option value="ml">Mobile Legend</option>
+      <option value="fifa">FIFA</option>
+    </select>
+  </div>
 
-            <div id="members-container">
-              <!-- First Member Input -->
-              <div class="form-group member">
-                <label for="member1npk">Member 1 NPK:</label>
-                <input type="number" id="member1npk" name="member1npk" placeholder="Enter member 1 NPK">
-                <label for="member1name">Member 1 Name:</label>
-                <input type="text" id="member1name" name="member1name" placeholder="Enter member 1 name">
-              </div>
-            </div>
+  <!-- Member Information -->
+  <h4>Members:</h4>
 
-            <div class="form-group">
-              <button type="button" id="add-member-btn" style="float: left;">Add Member</button>
-              <button type="submit" style="float: right;">Submit</button>
-            </div>
+  <div id="members-container">
+    <!-- First Member Input -->
+    <div class="form-group member">
+      <label for="member1npk">Member 1 NPK:</label>
+      <input type="number" id="member1npk" name="member1npk" placeholder="Enter member 1 NPK">
+      <label for="member1name">Member 1 Name:</label>
+      <input type="text" id="member1name" name="member1name" placeholder="Enter member 1 name">
+    </div>
+  </div>
 
-          </form>
+  <div class="form-group">
+    <button type="button" id="add-member-btn" style="float: left;">Add Member</button>
+    <button type="submit" style="float: right;">Submit</button>
+  </div>
+</form>
+
+
         </div>
 
   </section>

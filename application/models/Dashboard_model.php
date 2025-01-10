@@ -6,7 +6,7 @@ class Dashboard_model extends CI_Model {
     public function __construct() {
         parent::__construct();
         $this->load->database();
-    }
+    }   
     
     public function insert_team($data) {
         return $this->db->insert('register', $data); 
