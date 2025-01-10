@@ -33,7 +33,7 @@ class Dashboard extends CI_Controller {
         $data = array(
             'team' => $this->input->post('team'),
             'plant' => $this->input->post('plant'),
-            'leadernpk' => $this->input->post('leadernpk'),
+            'npk' => $this->input->post('npk'),
             'leadername' => $this->input->post('leadername'),
             'number' => $this->input->post('number'),
             'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
@@ -98,17 +98,6 @@ class Dashboard extends CI_Controller {
             redirect('uploadresult');
         }
     }
-    
-    
-    
-    
-    
-
-    
-    
-    
-    
-    
     
     
     

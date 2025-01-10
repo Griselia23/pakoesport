@@ -650,15 +650,14 @@
   </div>
 
   <div class="form-group">
-    <label for="leadernpk">Leader NPK:</label>
-    <input type="number" id="leadernpk" name="leadernpk" required placeholder="Enter leader's NPK">
+    <label for="npk">Leader NPK:</label>
+    <input type="number" id="npk" name="npk" required placeholder="Enter leader's NPK">
   </div>
 
   <div class="form-group">
-    <label for="password">Set Password:</label><br>
-    <input type="password" id="password" name="password" required placeholder="">
-    <br>setting password untuk upload result nantinya
-  </div>
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
 
   <div class="form-group">
     <label for="leadername">Leader Name:</label>
