@@ -10,6 +10,10 @@ class Admin extends CI_Controller {
         if (!$this->session->userdata('user_id')) {
             redirect('login');
         }
+        if ($this->session->userdata('role') !== 'admin') {
+            redirect('login');  
+        }
+
         $this->load->model('Dashboard_model'); 
         $this->load->model('Admin_model'); 
     }

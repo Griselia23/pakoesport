@@ -39,6 +39,11 @@ class Dashboard_model extends CI_Model {
         $query = $this->db->get('user');
         return $query->result();
     }
+    public function get_all_members() {
+        $this->db->select('id, leadername, npk');
+        $query = $this->db->get('register');
+        return $query->result();
+    }
 
     public function add_user($data) {
         return $this->db->insert('user', $data);

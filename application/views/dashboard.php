@@ -150,12 +150,14 @@
 }
 
 @media (max-width: 480px) {
-  /* Adjusting button and form spacing for very small screens */
   .upload-result-form button {
     width: 100%;
     font-size: 14px;
     padding: 10px;
   }
+}
+body {
+    zoom: 160%; 
 }
 
 

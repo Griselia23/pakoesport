@@ -12,6 +12,7 @@ class Dashboard extends CI_Controller {
     }
 
     public function index() {
+        $data['users'] = $this->Dashboard_model->get_all_user();
         $matches = $this->Admin_model->matchmaking();
         log_message('debug', 'Matches Query Result: ' . print_r($matches, true));
 
