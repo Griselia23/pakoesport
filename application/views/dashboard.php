@@ -250,7 +250,7 @@ body {
   <!--==========================
       Speakers Section
     ============================-->
-<section id="leaderboard" class="section-with-bg">
+    <section id="leaderboard" class="section-with-bg">
   <div class="container wow fadeInUp">
     <div class="section-header">
       <h2>Leaderboard</h2>
@@ -262,44 +262,40 @@ body {
       <span id="fifabtn1" class="toggle-stripe">FIFA</span>
     </div>
 
-    <!-- Mobile Legends Leaderboard -->
+    <!-- Mobile Legends Table -->
     <div id="mobileLegendsLeaderboard" class="mt-4">
       <h3>Leaderboard - Mobile Legends</h3>
       <table class="table table-striped table-bordered">
         <thead>
           <tr>
             <th scope="col" style="color: black;">Rank</th> 
-            <!-- based on the win -->
             <th scope="col" style="color: black;">Team</th>
             <th scope="col" style="color: black;">Play</th>
-            <!-- based on how many he doin submission score -->
             <th scope="col" style="color: black;">Win</th>
             <th scope="col" style="color: black;">Lose</th>
             <th scope="col" style="color: black;">Points</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Team A</td>
-            <td>10</td>
-            <td>8</td>
-            <td>2</td>
-            <td>24</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Team B</td>
-            <td>10</td>
-            <td>6</td>
-            <td>4</td>
-            <td>18</td>
-          </tr>
+          <?php if (isset($ml_leaderboard) && !empty($ml_leaderboard)): ?>
+            <?php $rank = 1; foreach ($ml_leaderboard as $team): ?>
+              <tr>
+                <td><?php echo $rank++; ?></td>
+                <td><?php echo $team['team']; ?></td>
+                <td><?php echo $team['play']; ?></td>
+                <td><?php echo $team['win']; ?></td>
+                <td><?php echo $team['lose']; ?></td>
+                <td><?php echo $team['points']; ?></td>
+              </tr>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <tr><td colspan="6">No data available</td></tr>
+          <?php endif; ?>
         </tbody>
       </table>
     </div>
 
-    <!-- FIFA Leaderboard -->
+    <!-- FIFA Table -->
     <div id="fifaLeaderboard" class="mt-4" style="display:none;">
       <h3>Leaderboard - FIFA</h3>
       <table class="table table-striped table-bordered">
@@ -314,22 +310,20 @@ body {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Team X</td>
-            <td>8</td>
-            <td>6</td>
-            <td>2</td>
-            <td>18</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Team Y</td>
-            <td>8</td>
-            <td>5</td>
-            <td>3</td>
-            <td>15</td>
-          </tr>
+          <?php if (isset($fifa_leaderboard) && !empty($fifa_leaderboard)): ?>
+            <?php $rank = 1; foreach ($fifa_leaderboard as $team): ?>
+              <tr>
+                <td><?php echo $rank++; ?></td>
+                <td><?php echo $team['team']; ?></td>
+                <td><?php echo $team['play']; ?></td>
+                <td><?php echo $team['win']; ?></td>
+                <td><?php echo $team['lose']; ?></td>
+                <td><?php echo $team['points']; ?></td>
+              </tr>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <tr><td colspan="6">No data available</td></tr>
+          <?php endif; ?>
         </tbody>
       </table>
     </div>
@@ -337,7 +331,32 @@ body {
   </div>
 </section>
 
+<script>
+  const mlbtn1 = document.getElementById('mlbtn1');
+  const fifabtn1 = document.getElementById('fifabtn1');
+  const mobileLegendsLeaderboard = document.getElementById('mobileLegendsLeaderboard');
+  const fifaLeaderboard = document.getElementById('fifaLeaderboard');
 
+  // Add event listeners for the toggle buttons
+  mlbtn1.addEventListener('click', function() {
+    mobileLegendsLeaderboard.style.display = 'block';
+    fifaLeaderboard.style.display = 'none';
+    mlbtn1.classList.add('active');
+    fifabtn1.classList.remove('active');
+  });
+
+  fifabtn1.addEventListener('click', function() {
+    mobileLegendsLeaderboard.style.display = 'none';
+    fifaLeaderboard.style.display = 'block';
+    fifabtn1.classList.add('active');
+    mlbtn1.classList.remove('active');
+  });
+
+  // Trigger the first click event to display the Mobile Legends table by default
+  window.addEventListener('load', function() {
+    mlbtn1.click();
+  });
+</script>
 
   <!--==========================
       Schedule Section

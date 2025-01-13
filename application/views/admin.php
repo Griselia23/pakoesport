@@ -349,7 +349,7 @@
         </div>
 
         <!-- Result Monitoring Section -->
-        <div class="container mt-5">
+        <!-- <div class="container mt-5">
             <div class="container" style="background-color: white; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border-radius: 8px;">
                 <div class="section-header">
                     <h2 style="color: black;">Result Monitoring</h2>
@@ -377,7 +377,7 @@
                 
                 </table>
             </div>
-        </div>
+        </div> -->
     </div>
 </section>
 

@@ -26,6 +26,23 @@ class Dashboard extends CI_Controller {
             $data['matches_by_division'] = [];
         }
 
+        $ml_leaderboard = [];
+        $fifa_leaderboard = [];
+
+        foreach ($matches as $match) {
+            if ($match['categ'] == 'ml') {
+                $this->mlLeaderboard($ml_leaderboard, $match);
+            } elseif ($match['categ'] == 'fifa') {
+                $this->fifaLeaderboard($fifa_leaderboard, $match);
+            }
+        }
+
+        usort($ml_leaderboard, function($a, $b) { return $b['points'] - $a['points']; });
+        usort($fifa_leaderboard, function($a, $b) { return $b['points'] - $a['points']; });
+
+        $data['ml_leaderboard'] = $ml_leaderboard;
+        $data['fifa_leaderboard'] = $fifa_leaderboard;
+
         $this->load->view('dashboard', $data);
     }
 
@@ -50,7 +67,7 @@ class Dashboard extends CI_Controller {
             'member5name' => $this->input->post('member5name'),
             'division' => $this->input->post('division')
         );
-    
+
         if ($this->Dashboard_model->insert_team($data)) {
             $this->session->set_flashdata('success', 'Team registered successfully.');
             redirect('dashboard');
@@ -59,7 +76,6 @@ class Dashboard extends CI_Controller {
             redirect('dashboard');
         }
     }
-    
 
     public function submit_score() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -69,59 +85,146 @@ class Dashboard extends CI_Controller {
             $team_a_id = $this->input->post('team_a_id');
             $team_b_id = $this->input->post('team_b_id');
             $division = $this->input->post('division'); 
-    
+
             list($team_a_id, $team_b_id) = explode('-', $match_id);
-    
+
             $team_a = $this->db->get_where('register', ['id' => $team_a_id])->row_array();
             $team_b = $this->db->get_where('register', ['id' => $team_b_id])->row_array();
-    
-            // Initialize points for both teams
+
             $team_a_new_points = $team_a['points'];
             $team_b_new_points = $team_b['points'];
-    
-            // Determine winner, loser, or draw for FIFA-style scoring
+
             if ($team_a_score > $team_b_score) {
-                $team_a_new_points += 3;  // Team A wins
+                $team_a_new_points += 3;
             } elseif ($team_a_score < $team_b_score) {
-                $team_b_new_points += 3;  // Team B wins
+                $team_b_new_points += 3;
             } else {
-                $team_a_new_points += 1;  // Draw - Team A gets 1 point
-                $team_b_new_points += 1;  // Draw - Team B gets 1 point
+                $team_a_new_points += 1;
+                $team_b_new_points += 1;
             }
-    
-            // Handle image upload logic
+
             $upload_path = './uploads/' . $division . '/'; 
             if (!is_dir($upload_path)) {
                 mkdir($upload_path, 0777, true);
             }
-    
+
             $config['upload_path'] = $upload_path;
             $config['allowed_types'] = 'jpg|jpeg|png|gif';
-            $config['max_size'] = 2048; // 2MB
+            $config['max_size'] = 2048;
             $this->load->library('upload', $config);
-    
+
             if ($this->upload->do_upload('evidence_image')) {
                 $upload_data = $this->upload->data();
                 $image_path = 'uploads/' . $division . '/' . $upload_data['file_name'];
-    
-                // Update teams with new points
+
                 $this->db->update('register', ['points' => $team_a_new_points], ['id' => $team_a_id]);
                 $this->db->update('register', ['points' => $team_b_new_points], ['id' => $team_b_id]);
-    
+
                 $this->session->set_flashdata('success', 'Scores and evidence image uploaded successfully!');
             } else {
                 $this->session->set_flashdata('error', 'Image upload failed: ' . $this->upload->display_errors());
             }
-    
-            // Redirect to the dashboard
+
             redirect('uploadresult');
         }
     }
+
+    public function leaderboard() {
+        $matches = $this->Admin_model->matchmaking();
+        log_message('debug', 'Matches Query Result: ' . print_r($matches, true));
+
+        if ($matches) {
+            $grouped_matches = [];
+            foreach ($matches as $match) {
+                $grouped_matches[$match['categ']][] = $match;
+            }
+            $data['matches_by_division'] = $grouped_matches;
+        } else {
+            $data['matches_by_division'] = [];
+        }
+
+        $ml_leaderboard = [];
+        $fifa_leaderboard = [];
+
+        foreach ($matches as $match) {
+            if ($match['categ'] == 'ml') {
+                $this->mlLeaderboard($ml_leaderboard, $match);
+            } elseif ($match['categ'] == 'fifa') {
+                $this->fifaLeaderboard($fifa_leaderboard, $match);
+            }
+        }
+
+        usort($ml_leaderboard, function($a, $b) { return $b['points'] - $a['points']; });
+        usort($fifa_leaderboard, function($a, $b) { return $b['points'] - $a['points']; });
+
+        $data['ml_leaderboard'] = $ml_leaderboard;
+        $data['fifa_leaderboard'] = $fifa_leaderboard;
+
+        $this->load->view('dashboard', $data);
+    }
+
+    private function mlLeaderboard(&$leaderboard, $match) {
+        if (!isset($leaderboard[$match['team_a_name']])) {
+            $leaderboard[$match['team_a_name']] = [
+                'team' => $match['team_a_name'],
+                'play' => 0,
+                'win' => 0,
+                'lose' => 0,
+                'points' => 0
+            ];
+        }
+        if (!isset($leaderboard[$match['team_b_name']])) {
+            $leaderboard[$match['team_b_name']] = [
+                'team' => $match['team_b_name'],
+                'play' => 0,
+                'win' => 0,
+                'lose' => 0,
+                'points' => 0
+            ];
+        }
     
+        $leaderboard[$match['team_a_name']]['play']++;
+        $leaderboard[$match['team_b_name']]['play']++;
     
-    public function leaderboard(){      
+        $leaderboard[$match['team_a_name']]['points'] += $match['team_a_points'];
+        $leaderboard[$match['team_b_name']]['points'] += $match['team_b_points'];
     }
     
-    
 
+    private function fifaLeaderboard(&$leaderboard, $match) {
+        if (!isset($leaderboard[$match['team_a_name']])) {
+            $leaderboard[$match['team_a_name']] = [
+                'team' => $match['team_a_name'],
+                'play' => 0,
+                'win' => 0,
+                'lose' => 0,
+                'points' => 0
+            ];
+        }
+        if (!isset($leaderboard[$match['team_b_name']])) {
+            $leaderboard[$match['team_b_name']] = [
+                'team' => $match['team_b_name'],
+                'play' => 0,
+                'win' => 0,
+                'lose' => 0,
+                'points' => 0
+            ];
+        }
+
+        $leaderboard[$match['team_a_name']]['play']++;
+        $leaderboard[$match['team_b_name']]['play']++;
+
+        if ($match['winner'] == $match['team_a_name']) {
+            $leaderboard[$match['team_a_name']]['win']++;
+            $leaderboard[$match['team_b_name']]['lose']++;
+            $leaderboard[$match['team_a_name']]['points'] += 3;
+        } elseif ($match['winner'] == $match['team_b_name']) {
+            $leaderboard[$match['team_b_name']]['win']++;
+            $leaderboard[$match['team_a_name']]['lose']++;
+            $leaderboard[$match['team_b_name']]['points'] += 3;
+        } else {
+            $leaderboard[$match['team_a_name']]['points'] += 1;
+            $leaderboard[$match['team_b_name']]['points'] += 1;
+        }
+    }
 }

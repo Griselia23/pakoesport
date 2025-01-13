@@ -19,7 +19,12 @@ class Admin_model extends CI_Model {
     CONCAT(a.team, ' vs. ', b.team) AS match_title,
     s.start_date AS match_day,
     a.points AS team_a_points,  
-    b.points AS team_b_points  
+    b.points AS team_b_points,
+    CASE
+        WHEN a.points > b.points THEN a.team 
+        WHEN b.points > a.points THEN b.team  
+        ELSE 'Draw'                          
+    END AS winner
 FROM 
     register a
 JOIN 
@@ -43,9 +48,5 @@ WHERE
 
         
     }
-    
-
-
-    
     
 }
