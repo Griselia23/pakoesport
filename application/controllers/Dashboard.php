@@ -213,41 +213,46 @@ class Dashboard extends CI_Controller {
         }
     }
     
-
     private function fifaLeaderboard(&$leaderboard, $match) {
-        if (!isset($leaderboard[$match['team_a_name']])) {
-            $leaderboard[$match['team_a_name']] = [
-                'team' => $match['team_a_name'],
-                'play' => 0,
-                'win' => 0,
-                'lose' => 0,
-                'points' => 0
-            ];
+            // Ensure both teams exist in the leaderboard
+            if (!isset($leaderboard[$match['team_a_name']])) {
+                $leaderboard[$match['team_a_name']] = [
+                    'team' => $match['team_a_name'],
+                    'play' => 0,
+                    'win' => 0,
+                    'lose' => 0,
+                    'points' => 0
+                ];
+            }
+            if (!isset($leaderboard[$match['team_b_name']])) {
+                $leaderboard[$match['team_b_name']] = [
+                    'team' => $match['team_b_name'],
+                    'play' => 0,
+                    'win' => 0,
+                    'lose' => 0,
+                    'points' => 0
+                ];
+            }
+        
+            // Increment play count for both teams
+            $leaderboard[$match['team_a_name']]['play']++;
+            $leaderboard[$match['team_b_name']]['play']++;
+        
+            // Update points for both teams
+            $leaderboard[$match['team_a_name']]['points'] += $match['team_a_points'];
+            $leaderboard[$match['team_b_name']]['points'] += $match['team_b_points'];
+    
+            // Update win/lose based on match result
+            if ($match['team_a_points'] > $match['team_b_points']) {
+                $leaderboard[$match['team_a_name']]['win']++;
+                $leaderboard[$match['team_b_name']]['lose']++;
+            } elseif ($match['team_a_points'] < $match['team_b_points']) {
+                $leaderboard[$match['team_b_name']]['win']++;
+                $leaderboard[$match['team_a_name']]['lose']++;
+            } else {
+                // Draw case: both teams get 1 point
+                $leaderboard[$match['team_a_name']]['points'] += 1;
+                $leaderboard[$match['team_b_name']]['points'] += 1;
+            }
         }
-        if (!isset($leaderboard[$match['team_b_name']])) {
-            $leaderboard[$match['team_b_name']] = [
-                'team' => $match['team_b_name'],
-                'play' => 0,
-                'win' => 0,
-                'lose' => 0,
-                'points' => 0
-            ];
-        }
-
-        $leaderboard[$match['team_a_name']]['play']++;
-        $leaderboard[$match['team_b_name']]['play']++;
-
-        if ($match['winner'] == $match['team_a_name']) {
-            $leaderboard[$match['team_a_name']]['win']++;
-            $leaderboard[$match['team_b_name']]['lose']++;
-            $leaderboard[$match['team_a_name']]['points'] += 3;
-        } elseif ($match['winner'] == $match['team_b_name']) {
-            $leaderboard[$match['team_b_name']]['win']++;
-            $leaderboard[$match['team_a_name']]['lose']++;
-            $leaderboard[$match['team_b_name']]['points'] += 3;
-        } else {
-            $leaderboard[$match['team_a_name']]['points'] += 1;
-            $leaderboard[$match['team_b_name']]['points'] += 1;
-        }
-    }
 }
