@@ -157,8 +157,9 @@
   }
 }
 body {
-    zoom: 160%; 
+    zoom: 120%; 
 }
+
 
 
 </style>
@@ -249,17 +250,92 @@ body {
   <!--==========================
       Speakers Section
     ============================-->
-  <section id="leaderboard" class="wow fadeInUp">
-    <div class="container">
-      <div class="section-header">
-        <h2>Leaderboard</h2>
-        <p>Here is the leaderboard</p>
-      </div>
-
-
+<section id="leaderboard" class="section-with-bg">
+  <div class="container wow fadeInUp">
+    <div class="section-header">
+      <h2>Leaderboard</h2>
+      <p>Join to compete!</p>
     </div>
 
-  </section>
+    <div class="schedule-toggle-stripe">
+      <span id="mlbtn1" class="toggle-stripe active">Mobile Legends</span>
+      <span id="fifabtn1" class="toggle-stripe">FIFA</span>
+    </div>
+
+    <!-- Mobile Legends Leaderboard -->
+    <div id="mobileLegendsLeaderboard" class="mt-4">
+      <h3>Leaderboard - Mobile Legends</h3>
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th scope="col" style="color: black;">Rank</th>
+            <th scope="col" style="color: black;">Team</th>
+            <th scope="col" style="color: black;">Play</th>
+            <th scope="col" style="color: black;">Win</th>
+            <th scope="col" style="color: black;">Lose</th>
+            <th scope="col" style="color: black;">Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Team A</td>
+            <td>10</td>
+            <td>8</td>
+            <td>2</td>
+            <td>24</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Team B</td>
+            <td>10</td>
+            <td>6</td>
+            <td>4</td>
+            <td>18</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- FIFA Leaderboard -->
+    <div id="fifaLeaderboard" class="mt-4" style="display:none;">
+      <h3>Leaderboard - FIFA</h3>
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th scope="col" style="color: black;">Rank</th>
+            <th scope="col" style="color: black;">Team</th>
+            <th scope="col" style="color: black;">Play</th>
+            <th scope="col" style="color: black;">Win</th>
+            <th scope="col" style="color: black;">Lose</th>
+            <th scope="col" style="color: black;">Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Team X</td>
+            <td>8</td>
+            <td>6</td>
+            <td>2</td>
+            <td>18</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Team Y</td>
+            <td>8</td>
+            <td>5</td>
+            <td>3</td>
+            <td>15</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</section>
+
+
 
   <!--==========================
       Schedule Section
@@ -332,11 +408,6 @@ body {
 
   </div>
 </section>
-
-  <!-- Include External JS File -->
-  <script src="script.js"></script>
-
-
   <!--==========================
       Venue Section
     ============================-->
@@ -437,12 +508,6 @@ body {
     </div>
 
   </section>
-
-  <!--==========================
-      Hotels Section
-    ============================-->
-
-
 
   <!--==========================
       Gallery Section
@@ -657,9 +722,11 @@ body {
   </div>
 
   <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
+  <label for="password">Password</label>
+  <input type="password" class="form-control" id="password" name="password" required>
+  <h7 style="font-size: 0.8em; color: rgba(0, 0, 0, 0.6); font-style: italic;">*ingat password untuk login upload result nantinya</h7>
+</div>
+
 
   <div class="form-group">
     <label for="leadername">Leader Name:</label>

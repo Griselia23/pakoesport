@@ -13,7 +13,6 @@ body {
   background: #fff;
   color: #2f3138;
   font-family: "Open Sans", sans-serif;
-  
 }
 
 a {
@@ -1161,7 +1160,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 #subscribe {
   padding: 60px;
   background: url(../img/subscribe-bg.jpg) center center no-repeat;
-  background-size: cover;
+  background-size: contain;
   overflow: hidden;
   position: relative;
 }
@@ -1214,6 +1213,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 #buy-tickets {
   padding: 60px 0;
+  
 }
 
 #buy-tickets .card {

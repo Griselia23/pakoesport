@@ -161,7 +161,7 @@
   <div class="container smaller-container">
     <div class="section-header">
       <h2>Upload Result</h2>
-      <p>Fill this form to upload the match result.</p>
+      <p style="color: black;">Hai <?php echo $this->session->userdata('leadername'); ?>, Tolong isi hasil dengan jujur</p>
     </div>
 
     <div class="schedule-toggle-stripe">

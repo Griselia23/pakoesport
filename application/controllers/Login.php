@@ -29,17 +29,19 @@ class Login extends CI_Controller {
         if ($register && password_verify($password, $register->password)) {
             $this->session->set_userdata('user_id', $register->id);
             $this->session->set_userdata('role', 'member'); 
+            $this->session->set_userdata('leadername', $register->leadername);
             $this->session->set_flashdata('success', 'Login successful! Welcome, ' . $register->npk . '.');
             redirect('uploadresult');
         }
     
-        $user = $this->db->get_where('user', ['npk' => $npk])->row();
-        
-        if ($user && password_verify($password, $user->password)) {
-            $this->session->set_userdata('user_id', $user->id);
-            $this->session->set_userdata('role', 'admin'); 
-            $this->session->set_flashdata('success', 'Login successful! Welcome, ' . $user->npk . '.');
-            redirect('admin');
+            $user = $this->db->get_where('user', ['npk' => $npk])->row();
+            
+            if ($user && password_verify($password, $user->password)) {
+                $this->session->set_userdata('user_id', $user->id);
+                $this->session->set_userdata('role', 'admin'); 
+                $this->session->set_userdata('username', $user->username);
+                $this->session->set_flashdata('success', 'Login successful! Welcome, ' . $user->npk . '.');
+                redirect('admin');
         }
     
         $this->session->set_flashdata('error', 'Invalid NPK or password!');
