@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 13 Jan 2025 pada 03.24
+-- Waktu pembuatan: 13 Jan 2025 pada 09.22
 -- Versi server: 10.1.38-MariaDB
 -- Versi PHP: 5.6.40
 
@@ -58,10 +58,35 @@ CREATE TABLE `register` (
 --
 
 INSERT INTO `register` (`id`, `creation_date`, `team`, `points`, `plant`, `npk`, `password`, `leadername`, `number`, `member1npk`, `member1name`, `member2npk`, `member2name`, `member3npk`, `member3name`, `member4npk`, `member4name`, `member5npk`, `member5name`, `division`, `evidence`, `role`) VALUES
-(2, '2025-01-10 04:30:24', 'mipan', 0, 'inko', '123456', '$2y$10$CjXtnjfDqkaP/Sj.S/jIHeYU6uaf0rRGCHk.btxk6b1HD/LAiBJFC', 'guguaga', '23145124', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ml', NULL, 'member'),
-(3, '2025-01-10 04:43:20', 'abysss', 0, '2w', '12345', '$2y$10$6TSmSbU4zezUFFl5xRYQR.N.ScK4yles7WYOxjwIcvsPgIkPymn7O', 'bababab', '2341451231', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ml', NULL, 'member'),
-(4, '2025-01-13 00:58:47', 'akutuh', 3, 'inko', '11111', '$2y$10$sn6itFkOrNGlIxri3kZcQecZMxIabfUvHbi4nfcTJZybfpWblGGai', 'bagus', '4124131', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'fifa', NULL, 'member'),
-(5, '2025-01-13 01:25:44', 'Drowner', 0, 'inko', '09876', '$2y$10$I6AJSa6P1Ag3gOHZhB0HzuL1RLay9xhxmPQbNRsNnq1t.9d9Cshha', 'dawad', '3142131', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'fifa', NULL, 'member');
+(1, '2025-01-01 03:00:00', 'ml1', 0, 'Plant A', 'NPK123', 'password123', 'Leader1', '001', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ml', NULL, 'member'),
+(2, '2025-01-02 04:00:00', 'ml2', 3, 'Plant B', 'NPK124', 'password124', 'Leader2', '002', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ml', NULL, 'member'),
+(3, '2025-01-03 05:00:00', 'ml3', 0, 'Plant C', 'NPK125', 'password125', 'Leader3', '003', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ml', NULL, 'member'),
+(4, '2025-01-04 06:00:00', 'ml4', 0, 'Plant D', 'NPK126', 'password126', 'Leader4', '004', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ml', NULL, 'member'),
+(5, '2025-01-05 07:00:00', 'fifa1', 0, 'Plant E', 'NPK127', 'password127', 'Leader5', '005', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'fifa', NULL, 'member'),
+(6, '2025-01-06 08:00:00', 'fifa2', 0, 'Plant F', 'NPK128', 'password128', 'Leader6', '006', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'fifa', NULL, 'member'),
+(7, '2025-01-07 09:00:00', 'fifa3', 0, 'Plant G', 'NPK129', 'password129', 'Leader7', '007', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'fifa', NULL, 'member'),
+(8, '2025-01-08 10:00:00', 'fifa4', 0, 'Plant H', 'NPK130', 'password130', 'Leader8', '008', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'fifa', NULL, 'member');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `results`
+--
+
+CREATE TABLE `results` (
+  `id` int(11) NOT NULL,
+  `creation_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `division` varchar(50) DEFAULT NULL,
+  `match_title` varchar(255) DEFAULT NULL,
+  `team_a_id` int(11) DEFAULT NULL,
+  `team_b_id` int(11) DEFAULT NULL,
+  `match_day` date DEFAULT NULL,
+  `team_a_name` varchar(255) DEFAULT NULL,
+  `team_b_name` varchar(255) DEFAULT NULL,
+  `team_a_points` int(11) DEFAULT NULL,
+  `team_b_points` int(11) DEFAULT NULL,
+  `winner` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -86,8 +111,8 @@ CREATE TABLE `schedule` (
 --
 
 INSERT INTO `schedule` (`id`, `match_number`, `division`, `start_date`, `team_a_id`, `team_b_id`, `team_a_score`, `team_b_score`, `winner`) VALUES
-(1, 1, 'ml', '2025-01-09', 0, 0, 0, 0, NULL),
-(2, 1, 'fifa', '2025-01-14', 0, 0, 0, 0, NULL);
+(1, 1, 'ml', '2025-01-13', 0, 0, 0, 0, NULL),
+(2, 1, 'fifa', '2025-01-13', 0, 0, 0, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -124,6 +149,12 @@ ALTER TABLE `register`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `results`
+--
+ALTER TABLE `results`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `schedule`
 --
 ALTER TABLE `schedule`
@@ -143,7 +174,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `register`
 --
 ALTER TABLE `register`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT untuk tabel `results`
+--
+ALTER TABLE `results`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `schedule`

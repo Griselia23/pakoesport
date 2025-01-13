@@ -29,6 +29,7 @@ class Dashboard extends CI_Controller {
         $ml_leaderboard = [];
         $fifa_leaderboard = [];
 
+        // Process the matches to update the leaderboards
         foreach ($matches as $match) {
             if ($match['categ'] == 'ml') {
                 $this->mlLeaderboard($ml_leaderboard, $match);
@@ -37,9 +38,15 @@ class Dashboard extends CI_Controller {
             }
         }
 
-        usort($ml_leaderboard, function($a, $b) { return $b['points'] - $a['points']; });
-        usort($fifa_leaderboard, function($a, $b) { return $b['points'] - $a['points']; });
+        // Sort both leaderboards based on points, then wins if points are equal
+        usort($ml_leaderboard, function($a, $b) { 
+            return $b['points'] - $a['points'] ?: $b['win'] - $a['win']; 
+        });
+        usort($fifa_leaderboard, function($a, $b) { 
+            return $b['points'] - $a['points'] ?: $b['win'] - $a['win']; 
+        });
 
+        // Pass the leaderboard data to the view
         $data['ml_leaderboard'] = $ml_leaderboard;
         $data['fifa_leaderboard'] = $fifa_leaderboard;
 
@@ -164,6 +171,7 @@ class Dashboard extends CI_Controller {
     }
 
     private function mlLeaderboard(&$leaderboard, $match) {
+        // Ensure both teams exist in the leaderboard
         if (!isset($leaderboard[$match['team_a_name']])) {
             $leaderboard[$match['team_a_name']] = [
                 'team' => $match['team_a_name'],
@@ -183,11 +191,26 @@ class Dashboard extends CI_Controller {
             ];
         }
     
+        // Increment play count for both teams
         $leaderboard[$match['team_a_name']]['play']++;
         $leaderboard[$match['team_b_name']]['play']++;
     
+        // Update points for both teams
         $leaderboard[$match['team_a_name']]['points'] += $match['team_a_points'];
         $leaderboard[$match['team_b_name']]['points'] += $match['team_b_points'];
+
+        // Update win/lose based on match result
+        if ($match['team_a_points'] > $match['team_b_points']) {
+            $leaderboard[$match['team_a_name']]['win']++;
+            $leaderboard[$match['team_b_name']]['lose']++;
+        } elseif ($match['team_a_points'] < $match['team_b_points']) {
+            $leaderboard[$match['team_b_name']]['win']++;
+            $leaderboard[$match['team_a_name']]['lose']++;
+        } else {
+            // Draw case: both teams get 1 point
+            $leaderboard[$match['team_a_name']]['points'] += 1;
+            $leaderboard[$match['team_b_name']]['points'] += 1;
+        }
     }
     
 
