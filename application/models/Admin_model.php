@@ -32,11 +32,7 @@ WHERE
     AND a.division IN ('ml', 'fifa')
     AND s.team_a_score IS NOT NULL
     AND s.team_b_score IS NOT NULL;
-
-
         ";
-    
-        // Execute the query and fetch results
         $result = $this->db->query($query);
     
         if ($result->num_rows() > 0) {

@@ -268,9 +268,11 @@ body {
       <table class="table table-striped table-bordered">
         <thead>
           <tr>
-            <th scope="col" style="color: black;">Rank</th>
+            <th scope="col" style="color: black;">Rank</th> 
+            <!-- based on the win -->
             <th scope="col" style="color: black;">Team</th>
             <th scope="col" style="color: black;">Play</th>
+            <!-- based on how many he doin submission score -->
             <th scope="col" style="color: black;">Win</th>
             <th scope="col" style="color: black;">Lose</th>
             <th scope="col" style="color: black;">Points</th>
