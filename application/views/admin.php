@@ -217,14 +217,14 @@
     $(document).ready(function() {
         // Initialize DataTable
         $('#mlscheduleTable').DataTable({
-            "paging": true, // Enable pagination
-            "searching": true, // Enable search functionality
-            "ordering": true, // Enable column sorting
-            "order": [[0, 'asc']], // Default sorting (by match number, ascending)
-            "lengthMenu": [10, 25, 50, 100], // Set page length options
+            "paging": true, 
+            "searching": true, 
+            "ordering": true, 
+            "order": [[0, 'asc']], 
+            "lengthMenu": [1, 2, 10, 25], 
             "columnDefs": [
                 {
-                    "targets": 4, // Disable sorting on the Action column
+                    "targets": 4, 
                     "orderable": false
                 }
             ]
@@ -256,7 +256,7 @@
                         <th scope="col" style="color: black;">Plant</th>
                         <th scope="col" style="color: black;">Leader Name</th>
                         <th scope="col" style="color: black;">Division</th>
-                        <th scope="col" style="color: black;">Points</th>
+                        
                         <th scope="col" style="color: black;">Action</th>
                     </tr>
                 </thead>
@@ -268,7 +268,7 @@
                                 <td><?php echo $team->plant; ?></td>
                                 <td><?php echo $team->leadername; ?></td>
                                 <td><?php echo $team->division; ?></td>
-                                <td><?php echo $team->points; ?></td>
+                                
                                 <td>
                                     <!-- Edit Button -->
                                     <button class="btn btn-primary" data-toggle="modal" data-target="#editModal<?php echo $team->id; ?>">Edit</button>

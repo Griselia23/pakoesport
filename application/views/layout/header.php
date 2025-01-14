@@ -10,7 +10,6 @@
 
   <!-- Favicons -->
   <link href="<?php echo base_url('application/template/img/favicon.jpeg'); ?>" rel="icon">
-  <link href="<?php echo base_url('application/template/img/apple-touch-icon.png'); ?>" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800" rel="stylesheet">
