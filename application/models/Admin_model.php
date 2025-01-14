@@ -18,11 +18,13 @@ class Admin_model extends CI_Model {
     b.team AS team_b_name,  
     CONCAT(a.team, ' vs. ', b.team) AS match_title,
     s.start_date AS match_day,
-    a.points AS team_a_points,  
-    b.points AS team_b_points,
+    -- Get points from match_results (mr)
+    COALESCE(mr.points_a, 0) AS team_a_points,  
+    COALESCE(mr.points_b, 0) AS team_b_points,
+    -- Determine winner based on match result
     CASE
-        WHEN a.points > b.points THEN a.team 
-        WHEN b.points > a.points THEN b.team  
+        WHEN mr.points_a > mr.points_b THEN a.team 
+        WHEN mr.points_b > mr.points_a THEN b.team  
         ELSE 'Draw'                          
     END AS winner
 FROM 
@@ -31,12 +33,14 @@ JOIN
     register b ON a.division = b.division
 JOIN 
     schedule s ON a.division = s.division
+LEFT JOIN 
+    match_results mr ON (a.id = mr.team_id_a AND b.id = mr.team_id_b) 
+    OR (a.id = mr.team_id_b AND b.id = mr.team_id_a)
 WHERE 
     a.id < b.id
     AND s.start_date IS NOT NULL
-    AND a.division IN ('ml', 'fifa')
-    AND s.team_a_score IS NOT NULL
-    AND s.team_b_score IS NOT NULL;
+    AND a.division IN ('ml', 'fifa');
+
 
         ";
         $result = $this->db->query($query);

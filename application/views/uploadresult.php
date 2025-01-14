@@ -171,7 +171,6 @@
 
     <!-- Form to upload result -->
     <form action="dashboard/submit_score" method="post" enctype="multipart/form-data" class="upload-result-form">
-  
     <!-- Match Selection -->
     <div class="form-row match-selection">
         <div>
@@ -187,6 +186,7 @@
                             <option value="<?php echo $match_id; ?>" 
                                     data-team-a-id="<?php echo $match['team_a_id']; ?>" 
                                     data-team-b-id="<?php echo $match['team_b_id']; ?>" 
+                                    data-division="<?php echo $match['categ']; ?>"
                                     data-team-a-name="<?php echo htmlspecialchars($match['team_a_name']); ?>" 
                                     data-team-b-name="<?php echo htmlspecialchars($match['team_b_name']); ?>">
                                 <?php echo htmlspecialchars($match['match_title']); ?>
@@ -220,24 +220,22 @@
     </div>
 
     <!-- Evidence Image Upload -->
-    <!-- <div class="form-row image-upload">
-        <label for="evidence_image">Upload Evidence (Image):</label>
-        <input type="file" name="evidence_image" id="evidence_image" accept="image/*" required>
-    </div> -->
     <div class="form-row image-upload">
         <label for="evidence_image">Upload Evidence (Image):</label>
         <input type="file" name="evidence_image" id="evidence_image" accept="image/*" required multiple>
         <small>Max 3 images, each up to 2MB</small>
     </div>
+
     <!-- Submit Button -->
     <div class="form-row">
         <button type="submit">Submit Scores</button>
     </div>
 
 </form>
+
   </div>
 </section>
-
+<!--  -->
 <script>
    document.addEventListener("DOMContentLoaded", function () {
     const mlResultBtn = document.getElementById("mlresultbtn");
