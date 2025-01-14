@@ -22,195 +22,10 @@
       
     </nav>
   </div>
-</header><!-- #header -->
-<style>
- /* General Form Styles */
-.upload-result-form {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background: #fff;
-  border-radius: 8px;
-  
-  /* Adding drop shadow */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
-}
+</header>
 
-.upload-result-form .form-row {
-  margin-bottom: 20px;
-}
-
-.upload-result-form label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 8px;
-}
-
-.upload-result-form select,
-.upload-result-form input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
-
-.upload-result-form button {
-  background-color: rgb(226, 14, 14);
-  color: #fff;
-  padding: 12px 24px;
-  font-size: 16px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.upload-result-form button:hover {
-  background-color: rgb(226, 14, 14);
-}
-
-/* Match Selection */
-.form-row.match-selection {
-  display: flex;
-  flex-direction: column;
-}
-
-.schedule-toggle-stripe {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.schedule-toggle-stripe .toggle-stripe {
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 5px;
-  margin-right: 10px;
-}
-
-.schedule-toggle-stripe .toggle-stripe.active {
-  background-color:rgb(226, 14, 14);
-  color: #fff;
-}
-
-/* Team Selection */
-.form-row.team-selection {
-  display: flex;
-  flex-direction: column;
-}
-
-/* Score Input Box */
-.form-row.score-inputs {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-}
-
-.score-left, .score-right {
-  width: 48%;
-}
-
-.score-left input, .score-right input {
-  width: 100%;
-}
-
-/* Image Upload */
-.form-row.image-upload {
-  display: flex;
-  flex-direction: column;
-}
-
-/* Media Queries for Responsiveness */
-@media (max-width: 768px) {
-  /* Stack score inputs vertically on smaller screens */
-  .form-row.score-inputs {
-    flex-direction: column;
-  }
-
-  .score-left, .score-right {
-    width: 100%;
-  }
-
-  .form-row.team-selection {
-    margin-top: 20px;
-  }
-
-  .upload-result-form {
-    padding: 10px;
-  }
-
-  .schedule-toggle-stripe {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .schedule-toggle-stripe .toggle-stripe {
-    margin-bottom: 10px;
-  }
-}
-
-@media (max-width: 480px) {
-  .upload-result-form button {
-    width: 100%;
-    font-size: 14px;
-    padding: 10px;
-  }
-}
-body {
-    zoom: 120%; 
-}
-
-
-
-</style>
-<!-- Your main content continues here -->
 <section id="intro">
-  <div class="intro-container wow fadeIn">
-    <!-- Carousel Section -->
-    <!-- <div id="matchCarousel" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <?php if (!empty($matches_by_division)): ?>
-          <?php
-           
-            $all_matches = [];
-            foreach ($matches_by_division as $division => $matches) {
-                $all_matches = array_merge($all_matches, $matches);
-            }
-          ?>
-
-         
-          <?php foreach ($all_matches as $index => $match): ?>
-            <div class="carousel-item <?php echo ($index == 0) ? 'active' : ''; ?>">
-              <div class="card text-center">
-                <div class="card-body">
-                  <h5 class="card-title"><?php echo $match['match_title']; ?></h5>
-                  
-                </div>
-              </div>
-            </div>
-          <?php endforeach; ?>
-
-        <?php else: ?>
-          <div class="carousel-item active">
-            <div class="card text-center">
-              <div class="card-body">
-                <h5 class="card-title">No Matches Available</h5>
-              </div>
-            </div>
-          </div>
-        <?php endif; ?>
-      </div>
-
-
-      <button class="carousel-control-prev" type="button" data-bs-target="#matchCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#matchCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div> -->
+  <div class="intro-container wow fadeIn"> 
 
     <!-- Intro Text -->
     <h1 class="mb-4 pb-0">The Annual<br><span>Gaming</span> League</h1>
@@ -648,19 +463,19 @@ body {
           <ul id="faq-list">
 
             <li>
-              <a data-toggle="collapse" class="collapsed" href="#faq1">Non consectetur a erat nam at lectus urna duis? <i class="fa fa-minus-circle"></i></a>
+              <a data-toggle="collapse" class="collapsed" href="#faq1">Registrasi cukup 1 kali diwakili oleh leader perteam<i class="fa fa-minus-circle"></i></a>
               <div id="faq1" class="collapse" data-parent="#faq-list">
                 <p>
-                  Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
+                  Isi data team, masukkan npk dan password yang mudah diingat, catat jika perlu!
                 </p>
               </div>
             </li>
 
             <li>
-              <a data-toggle="collapse" href="#faq2" class="collapsed">Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque? <i class="fa fa-minus-circle"></i></a>
+              <a data-toggle="collapse" href="#faq2" class="collapsed">Upload hasil diwakili oleh team yang menang dalam masing masing pertandingan <i class="fa fa-minus-circle"></i></a>
               <div id="faq2" class="collapse" data-parent="#faq-list">
                 <p>
-                  Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
+                  Pilih match secara bijak untuk upload hasil dan pastikan untuk jujur.
                 </p>
               </div>
             </li>
@@ -736,6 +551,7 @@ body {
         <!-- Card for registration form -->
         <div class="card">
           <h3>Register Your Team</h3>
+          <p style="font-size: 0.8em; color: rgba(0, 0, 0, 0.6); font-style: bold;">Baca <a href="#faq">peraturan</a> sebelum mendaftar!</p>
           <form action="<?= base_url('dashboard/submit_registration') ?>" method="POST">
   <!-- Team Information -->
   <div class="form-group">
@@ -968,3 +784,5 @@ body {
     mlbtn.click();
   });
 </script>
+
+<!-- nav -->
