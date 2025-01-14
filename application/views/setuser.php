@@ -30,12 +30,12 @@
             <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#addUserModal" style="padding: 5px 10px;">Add User</button>
         </div>
 
-        <table class="table table-bordered table-striped" id="usersTable">
-    <thead>
+        <table class="table table-bordered table-striped mt-4" id="usersTable">
+    <thead style="background-color:rgb(255, 255, 255);">
         <tr>
-            <th>Username</th>
-            <th>NPK</th>
-            <th>Action</th>
+            <th style="color: black;">Username</th>
+            <th style="color: black;">NPK</th>
+            <th style="color: black;">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -63,6 +63,24 @@
         <?php endif; ?>
     </tbody>
 </table>
+
+<script>
+    $(document).ready(function() {
+        $('#usersTable').DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "order": [[0, 'asc']],
+            "lengthMenu": [10, 25, 50, 100],
+            "columnDefs": [
+                {
+                    "targets": 2, // Disable sorting for the Action column
+                    "orderable": false
+                }
+            ]
+        });
+    });
+</script>
 
     </div>
 </section>
@@ -171,3 +189,4 @@
 
 </body>
 </html>
+<?php include(APPPATH . 'views/layout/footer.php'); ?>
