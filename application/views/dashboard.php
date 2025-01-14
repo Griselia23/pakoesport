@@ -262,74 +262,82 @@ body {
       <span id="fifabtn1" class="toggle-stripe">FIFA</span>
     </div>
 
-    <!-- Mobile Legends Table -->
-    <div id="mobileLegendsLeaderboard" class="mt-4">
-      <h3>Leaderboard - Mobile Legends</h3>
-      <table class="table table-striped table-bordered">
-        <thead>
+    <!-- Mobile Legends Leaderboard -->
+<div id="mobileLegendsLeaderboard" class="mt-4">
+  <h3>Leaderboard - Mobile Legends</h3>
+  <table id="mlLeaderboard" class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th scope="col" style="color: black;">Rank</th> 
+        <th scope="col" style="color: black;">Team</th>
+        <th scope="col" style="color: black;">Play</th>
+        <th scope="col" style="color: black;">Win</th>
+        <th scope="col" style="color: black;">Lose</th>
+        <th scope="col" style="color: black;">Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php if (isset($ml_leaderboard) && !empty($ml_leaderboard)): ?>
+        <?php $rank = 1; foreach ($ml_leaderboard as $team): ?>
           <tr>
-            <th scope="col" style="color: black;">Rank</th> 
-            <th scope="col" style="color: black;">Team</th>
-            <th scope="col" style="color: black;">Play</th>
-            <th scope="col" style="color: black;">Win</th>
-            <th scope="col" style="color: black;">Lose</th>
-            <th scope="col" style="color: black;">Points</th>
+            <td><?php echo $rank++; ?></td>
+            <td><?php echo $team['team']; ?></td>
+            <td><?php echo $team['play']; ?></td>
+            <td><?php echo $team['win']; ?></td>
+            <td><?php echo $team['lose']; ?></td>
+            <td><?php echo $team['points']; ?></td>
           </tr>
-        </thead>
-        <tbody>
-          <?php if (isset($ml_leaderboard) && !empty($ml_leaderboard)): ?>
-            <?php $rank = 1; foreach ($ml_leaderboard as $team): ?>
-              <tr>
-                <td><?php echo $rank++; ?></td>
-                <td><?php echo $team['team']; ?></td>
-                <td><?php echo $team['play']; ?></td>
-                <td><?php echo $team['win']; ?></td>
-                <td><?php echo $team['lose']; ?></td>
-                <td><?php echo $team['points']; ?></td>
-              </tr>
-            <?php endforeach; ?>
-          <?php else: ?>
-            <tr><td colspan="6">No data available</td></tr>
-          <?php endif; ?>
-        </tbody>
-      </table>
-    </div>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <tr><td colspan="6">No data available</td></tr>
+      <?php endif; ?>
+    </tbody>
+  </table>
+</div>
 
-    <!-- FIFA Table -->
-    <div id="fifaLeaderboard" class="mt-4" style="display:none;">
-      <h3>Leaderboard - FIFA</h3>
-      <table class="table table-striped table-bordered">
-        <thead>
+<!-- FIFA Leaderboard -->
+<div id="fifaLeaderboard" class="mt-4" style="display:none;">
+  <h3>Leaderboard - FIFA</h3>
+  <table id="fifaLeaderboardTable" class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th scope="col" style="color: black;">Rank</th>
+        <th scope="col" style="color: black;">Team</th>
+        <th scope="col" style="color: black;">Play</th>
+        <th scope="col" style="color: black;">Win</th>
+        <th scope="col" style="color: black;">Lose</th>
+        <th scope="col" style="color: black;">Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php if (isset($fifa_leaderboard) && !empty($fifa_leaderboard)): ?>
+        <?php $rank = 1; foreach ($fifa_leaderboard as $team): ?>
           <tr>
-            <th scope="col" style="color: black;">Rank</th>
-            <th scope="col" style="color: black;">Team</th>
-            <th scope="col" style="color: black;">Play</th>
-            <th scope="col" style="color: black;">Win</th>
-            <th scope="col" style="color: black;">Lose</th>
-            <th scope="col" style="color: black;">Points</th>
+            <td><?php echo $rank++; ?></td>
+            <td><?php echo $team['team']; ?></td>
+            <td><?php echo $team['play']; ?></td>
+            <td><?php echo $team['win']; ?></td>
+            <td><?php echo $team['lose']; ?></td>
+            <td><?php echo $team['points']; ?></td>
           </tr>
-        </thead>
-        <tbody>
-          <?php if (isset($fifa_leaderboard) && !empty($fifa_leaderboard)): ?>
-            <?php $rank = 1; foreach ($fifa_leaderboard as $team): ?>
-              <tr>
-                <td><?php echo $rank++; ?></td>
-                <td><?php echo $team['team']; ?></td>
-                <td><?php echo $team['play']; ?></td>
-                <td><?php echo $team['win']; ?></td>
-                <td><?php echo $team['lose']; ?></td>
-                <td><?php echo $team['points']; ?></td>
-              </tr>
-            <?php endforeach; ?>
-          <?php else: ?>
-            <tr><td colspan="6">No data available</td></tr>
-          <?php endif; ?>
-        </tbody>
-      </table>
-    </div>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <tr><td colspan="6">No data available</td></tr>
+      <?php endif; ?>
+    </tbody>
+  </table>
+</div>
+
 
   </div>
 </section>
+<!-- DataTables Initialization -->
+<script>
+  $(document).ready(function() {
+    $('#mlLeaderboard').DataTable();
+    $('#fifaLeaderboardTable').DataTable();
+  });
+</script>
 
 <script>
   const mlbtn1 = document.getElementById('mlbtn1');
@@ -373,59 +381,67 @@ body {
       <span id="fifabtn" class="toggle-stripe">FIFA</span>
     </div>
 
-    <!-- Mobile Legends Table -->
-    <div id="mobileLegendsTable" class="schedule-table">
-      <h3>Mobile Legends Schedule</h3>
-      <table id="mlTable" class="table table-striped table-bordered">
-        <thead>
+<!-- Mobile Legends Table -->
+<div id="mobileLegendsTable" class="schedule-table">
+  <h3>Mobile Legends Schedule</h3>
+  <table id="mlTable" class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th scope="col" style="color: black;">Date</th>
+        <th scope="col" style="color: black;">Match</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php if (isset($matches_by_division['ml']) && !empty($matches_by_division['ml'])): ?>
+        <?php foreach ($matches_by_division['ml'] as $match): ?>
           <tr>
-            <th scope="col" style="color: black;">Date</th>
-            <th scope="col" style="color: black;">Match</th>
+            <td><?php echo date('Y-m-d', strtotime($match['match_day'])); ?></td>
+            <td><?php echo $match['match_title']; ?></td>
           </tr>
-        </thead>
-        <tbody>
-          <?php if (isset($matches_by_division['ml']) && !empty($matches_by_division['ml'])): ?>
-            <?php foreach ($matches_by_division['ml'] as $match): ?>
-              <tr>
-                <td><?php echo date('Y-m-d', strtotime($match['match_day'])); ?></td>
-                <td><?php echo $match['match_title']; ?></td>
-              </tr>
-            <?php endforeach; ?>
-          <?php else: ?>
-            <tr>
-              <td colspan="2">No matches scheduled.</td>
-            </tr>
-          <?php endif; ?>
-        </tbody>
-      </table>
-    </div>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <tr>
+          <td colspan="2">No matches scheduled.</td>
+        </tr>
+      <?php endif; ?>
+    </tbody>
+  </table>
+</div>
 
-    <!-- FIFA Table -->
-    <div id="fifaTable" class="schedule-table" style="display:none;">
-      <h3>FIFA Schedule</h3>
-      <table id="fifaTableData" class="table table-striped table-bordered">
-        <thead>
+<!-- FIFA Table -->
+<div id="fifaTable" class="schedule-table" style="display:none;">
+  <h3>FIFA Schedule</h3>
+  <table id="fifaTableData" class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th scope="col" style="color: black;">Date</th>
+        <th scope="col" style="color: black;">Match</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php if (isset($matches_by_division['fifa']) && !empty($matches_by_division['fifa'])): ?>
+        <?php foreach ($matches_by_division['fifa'] as $match): ?>
           <tr>
-            <th scope="col" style="color: black;">Date</th>
-            <th scope="col" style="color: black;">Match</th>
+            <td><?php echo date('Y-m-d', strtotime($match['match_day'])); ?></td>
+            <td><?php echo $match['match_title']; ?></td>
           </tr>
-        </thead>
-        <tbody>
-          <?php if (isset($matches_by_division['fifa']) && !empty($matches_by_division['fifa'])): ?>
-            <?php foreach ($matches_by_division['fifa'] as $match): ?>
-              <tr>
-                <td><?php echo date('Y-m-d', strtotime($match['match_day'])); ?></td>
-                <td><?php echo $match['match_title']; ?></td>
-              </tr>
-            <?php endforeach; ?>
-          <?php else: ?>
-            <tr>
-              <td colspan="2">No matches scheduled.</td>
-            </tr>
-          <?php endif; ?>
-        </tbody>
-      </table>
-    </div>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <tr>
+          <td colspan="2">No matches scheduled.</td>
+        </tr>
+      <?php endif; ?>
+    </tbody>
+  </table>
+</div>
+<script>
+  $(document).ready(function() {
+    $('#mlTable').DataTable();
+    $('#fifaTableData').DataTable();
+  });
+</script>
+
+
 
   </div>
 </section>
