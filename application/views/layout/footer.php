@@ -65,6 +65,10 @@
   <script src="<?php echo base_url('application/template/lib/wow/wow.min.js'); ?>"></script>
   <script src="<?php echo base_url('application/template/lib/venobox/venobox.min.js'); ?>"></script>
   <script src="<?php echo base_url('application/template/lib/owlcarousel/owl.carousel.min.js'); ?>"></script>
+  <!-- DataTables JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
   <!-- Contact Form JavaScript File -->
   <script src="<?php echo base_url('application/template/contactform/contactform.js'); ?>"></script>

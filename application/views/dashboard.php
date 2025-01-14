@@ -376,24 +376,24 @@ body {
     <!-- Mobile Legends Table -->
     <div id="mobileLegendsTable" class="schedule-table">
       <h3>Mobile Legends Schedule</h3>
-      <table style="border-collapse: collapse; width: 100%;">
+      <table id="mlTable" class="table table-striped table-bordered">
         <thead>
           <tr>
-            <th style="border: none; padding: 8px;">Date</th>
-            <th style="border: none; padding: 8px;">Match</th>
+            <th scope="col" style="color: black;">Date</th>
+            <th scope="col" style="color: black;">Match</th>
           </tr>
         </thead>
         <tbody>
           <?php if (isset($matches_by_division['ml']) && !empty($matches_by_division['ml'])): ?>
             <?php foreach ($matches_by_division['ml'] as $match): ?>
               <tr>
-                <td style="border: none; padding: 8px;"><?php echo date('Y-m-d', strtotime($match['match_day'])); ?></td>
-                <td style="border: none; padding: 8px;"><?php echo $match['match_title']; ?></td>
+                <td><?php echo date('Y-m-d', strtotime($match['match_day'])); ?></td>
+                <td><?php echo $match['match_title']; ?></td>
               </tr>
             <?php endforeach; ?>
           <?php else: ?>
             <tr>
-              <td colspan="2" style="border: none; padding: 8px;">No matches scheduled.</td>
+              <td colspan="2">No matches scheduled.</td>
             </tr>
           <?php endif; ?>
         </tbody>
@@ -403,24 +403,24 @@ body {
     <!-- FIFA Table -->
     <div id="fifaTable" class="schedule-table" style="display:none;">
       <h3>FIFA Schedule</h3>
-      <table style="border-collapse: collapse; width: 100%;">
+      <table id="fifaTableData" class="table table-striped table-bordered">
         <thead>
           <tr>
-            <th style="border: none; padding: 8px;">Date</th>
-            <th style="border: none; padding: 8px;">Match</th>
+            <th scope="col" style="color: black;">Date</th>
+            <th scope="col" style="color: black;">Match</th>
           </tr>
         </thead>
         <tbody>
           <?php if (isset($matches_by_division['fifa']) && !empty($matches_by_division['fifa'])): ?>
             <?php foreach ($matches_by_division['fifa'] as $match): ?>
               <tr>
-                <td style="border: none; padding: 8px;"><?php echo date('Y-m-d', strtotime($match['match_day'])); ?></td>
-                <td style="border: none; padding: 8px;"><?php echo $match['match_title']; ?></td>
+                <td><?php echo date('Y-m-d', strtotime($match['match_day'])); ?></td>
+                <td><?php echo $match['match_title']; ?></td>
               </tr>
             <?php endforeach; ?>
           <?php else: ?>
             <tr>
-              <td colspan="2" style="border: none; padding: 8px;">No matches scheduled.</td>
+              <td colspan="2">No matches scheduled.</td>
             </tr>
           <?php endif; ?>
         </tbody>
@@ -429,6 +429,7 @@ body {
 
   </div>
 </section>
+
   <!--==========================
       Venue Section
     ============================-->
