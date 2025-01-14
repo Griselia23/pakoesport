@@ -226,6 +226,9 @@
         <small>Max 3 images, each up to 2MB</small>
     </div>
 
+    <!-- Hidden input to store the division -->
+    <input type="hidden" id="division" name="division" value="">
+
     <!-- Submit Button -->
     <div class="form-row">
         <button type="submit">Submit Scores</button>
@@ -235,28 +238,30 @@
 
   </div>
 </section>
-<!--  -->
+
 <script>
-   document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
     const mlResultBtn = document.getElementById("mlresultbtn");
     const fifaResultBtn = document.getElementById("fifaresultbtn");
     const matchSelect = document.getElementById("match_title");
     const teamSelection = document.getElementById("team-selection");
 
-    // Store matches grouped by division (Mobile Legends and FIFA)
     const matchesByDivision = <?php echo json_encode($matches_by_division); ?>;
 
-    // Function to update the match dropdown based on selected division
     function updateMatchDropdown(division) {
-        matchSelect.innerHTML = '<option value="">Select Match</option>'; // Clear the current options
+        matchSelect.innerHTML = '<option value="">Select Match</option>';
 
         if (matchesByDivision[division]) {
-            // Populate the dropdown with matches from the selected division
             matchesByDivision[division].forEach(function (match) {
                 const matchId = match['team_a_id'] + '-' + match['team_b_id'];
                 const option = document.createElement('option');
                 option.value = matchId;
                 option.textContent = match['match_title'];
+                option.setAttribute('data-team-a-id', match['team_a_id']);
+                option.setAttribute('data-team-b-id', match['team_b_id']);
+                option.setAttribute('data-division', match['categ']);
+                option.setAttribute('data-team-a-name', match['team_a_name']);
+                option.setAttribute('data-team-b-name', match['team_b_name']);
                 matchSelect.appendChild(option);
             });
         } else {
@@ -267,9 +272,8 @@
         }
     }
 
-    // Function to populate teams based on the selected match
     function populateTeams(matchId) {
-        teamSelection.innerHTML = ''; // Clear previous team details
+        teamSelection.innerHTML = '';
 
         if (matchId) {
             const [teamAId, teamBId] = matchId.split('-');
@@ -281,7 +285,7 @@
             if (selectedMatch) {
                 const teamLeft = document.createElement('div');
                 teamLeft.classList.add('team-left');
-                teamLeft.textContent = selectedMatch['team_a_name'];  // Team A
+                teamLeft.textContent = selectedMatch['team_a_name'];
 
                 const vsSpan = document.createElement('span');
                 vsSpan.classList.add('vs');
@@ -289,7 +293,7 @@
 
                 const teamRight = document.createElement('div');
                 teamRight.classList.add('team-right');
-                teamRight.textContent = selectedMatch['team_b_name'];  // Team B
+                teamRight.textContent = selectedMatch['team_b_name'];
 
                 teamSelection.appendChild(teamLeft);
                 teamSelection.appendChild(vsSpan);
@@ -298,31 +302,36 @@
         }
     }
 
-    // Event listener for Mobile Legends result button
     mlResultBtn.addEventListener('click', function () {
         mlResultBtn.classList.add('active');
         fifaResultBtn.classList.remove('active');
-        updateMatchDropdown('ml'); // Show matches for Mobile Legends
+        updateMatchDropdown('ml');
     });
 
-    // Event listener for FIFA result button
     fifaResultBtn.addEventListener('click', function () {
         fifaResultBtn.classList.add('active');
         mlResultBtn.classList.remove('active');
-        updateMatchDropdown('fifa'); // Show matches for FIFA
+        updateMatchDropdown('fifa');
     });
 
-    // Event listener for match selection
     matchSelect.addEventListener('change', function () {
         const matchId = matchSelect.value;
-        populateTeams(matchId);  // Populate teams based on the selected match
+        populateTeams(matchId);
     });
 
-    // Initial setup: Show Mobile Legends matches by default
     mlResultBtn.click();
 });
 
+function populateDivision() {
+    const matchSelect = document.getElementById('match_title');
+    const selectedOption = matchSelect.options[matchSelect.selectedIndex];
+    const division = selectedOption.getAttribute('data-division');
+    document.getElementById('division').value = division;
+}
+
+document.getElementById('match_title').addEventListener('change', populateDivision);
 </script>
+
 
 </main>
 

@@ -276,22 +276,7 @@ body {
         <th scope="col" style="color: black;">Points</th>
       </tr>
     </thead>
-    <tbody>
-      <?php if (isset($ml_leaderboard) && !empty($ml_leaderboard)): ?>
-        <?php $rank = 1; foreach ($ml_leaderboard as $team): ?>
-          <tr>
-            <td><?php echo $rank++; ?></td>
-            <td><?php echo $team['team']; ?></td>
-            <td><?php echo $team['play']; ?></td>
-            <td><?php echo $team['win']; ?></td>
-            <td><?php echo $team['lose']; ?></td>
-            <td><?php echo $team['points']; ?></td>
-          </tr>
-        <?php endforeach; ?>
-      <?php else: ?>
-        <tr><td colspan="6">No data available</td></tr>
-      <?php endif; ?>
-    </tbody>
+    
   </table>
 </div>
 
@@ -309,22 +294,7 @@ body {
         <th scope="col" style="color: black;">Points</th>
       </tr>
     </thead>
-    <tbody>
-      <?php if (isset($fifa_leaderboard) && !empty($fifa_leaderboard)): ?>
-        <?php $rank = 1; foreach ($fifa_leaderboard as $team): ?>
-          <tr>
-            <td><?php echo $rank++; ?></td>
-            <td><?php echo $team['team']; ?></td>
-            <td><?php echo $team['play']; ?></td>
-            <td><?php echo $team['win']; ?></td>
-            <td><?php echo $team['lose']; ?></td>
-            <td><?php echo $team['points']; ?></td>
-          </tr>
-        <?php endforeach; ?>
-      <?php else: ?>
-        <tr><td colspan="6">No data available</td></tr>
-      <?php endif; ?>
-    </tbody>
+    
   </table>
 </div>
 
