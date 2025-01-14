@@ -25,7 +25,7 @@ class Admin_model extends CI_Model {
                 WHEN mr.points_b > mr.points_a THEN b.team  
                 ELSE 'Draw'                          
             END AS winner,
-            mr.id AS match_id  -- Changed to use 'id' instead of 'match_list_id'
+            mr.id AS match_id  
         FROM 
             register a
         JOIN 

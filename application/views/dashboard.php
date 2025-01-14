@@ -263,44 +263,68 @@ body {
     </div>
 
     <!-- Mobile Legends Leaderboard -->
-<div id="mobileLegendsLeaderboard" class="mt-4">
-  <h3>Leaderboard - Mobile Legends</h3>
-  <table id="mlLeaderboard" class="table table-striped table-bordered">
-    <thead>
-      <tr>
-        <th scope="col" style="color: black;">Rank</th> 
-        <th scope="col" style="color: black;">Team</th>
-        <th scope="col" style="color: black;">Play</th>
-        <th scope="col" style="color: black;">Win</th>
-        <th scope="col" style="color: black;">Lose</th>
-        <th scope="col" style="color: black;">Points</th>
-      </tr>
-    </thead>
-    
-  </table>
-</div>
+    <div id="mobileLegendsLeaderboard" class="mt-4">
+      <h3>Leaderboard - Mobile Legends</h3>
+      <table id="mlLeaderboard" class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th scope="col" style="color: black;">Rank</th> 
+            <th scope="col" style="color: black;">Team</th>
+            <th scope="col" style="color: black;">Play</th>
+            <th scope="col" style="color: black;">Win</th>
+            <th scope="col" style="color: black;">Lose</th>
+            <th scope="col" style="color: black;">Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($ml_leaderboard as $team): ?>
+          <tr>
+            <td><?php echo $team['rank']; ?></td>
+            <td><?php echo $team['team']; ?></td>
+            <td><?php echo $team['play']; ?></td>
+            <td><?php echo $team['win']; ?></td>
+            <td><?php echo $team['lose']; ?></td>
+            <td><?php echo $team['points']; ?></td>
+          </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
 
-<!-- FIFA Leaderboard -->
-<div id="fifaLeaderboard" class="mt-4" style="display:none;">
-  <h3>Leaderboard - FIFA</h3>
-  <table id="fifaLeaderboardTable" class="table table-striped table-bordered">
-    <thead>
-      <tr>
-        <th scope="col" style="color: black;">Rank</th>
-        <th scope="col" style="color: black;">Team</th>
-        <th scope="col" style="color: black;">Play</th>
-        <th scope="col" style="color: black;">Win</th>
-        <th scope="col" style="color: black;">Lose</th>
-        <th scope="col" style="color: black;">Points</th>
-      </tr>
-    </thead>
-    
-  </table>
-</div>
-
+    <!-- FIFA Leaderboard -->
+    <div id="fifaLeaderboard" class="mt-4" style="display:none;">
+      <h3>Leaderboard - FIFA</h3>
+      <table id="fifaLeaderboardTable" class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th scope="col" style="color: black;">Rank</th>
+            <th scope="col" style="color: black;">Team</th>
+            <th scope="col" style="color: black;">Play</th>
+            <th scope="col" style="color: black;">Win</th>
+            <th scope="col" style="color: black;">Lose</th>
+            <th scope="col" style="color: black;">Draw</th>
+            <th scope="col" style="color: black;">Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($fifa_leaderboard as $team): ?>
+          <tr>
+            <td><?php echo $team['rank']; ?></td>
+            <td><?php echo $team['team']; ?></td>
+            <td><?php echo $team['play']; ?></td>
+            <td><?php echo $team['win']; ?></td>
+            <td><?php echo $team['lose']; ?></td>
+            <td><?php echo $team['draw']; ?></td>
+            <td><?php echo $team['points']; ?></td>
+          </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
 
   </div>
 </section>
+
 <!-- DataTables Initialization -->
 <script>
   $(document).ready(function() {
