@@ -122,6 +122,9 @@ class Dashboard extends CI_Controller {
                 $upload_data = $this->upload->data();
                 $image_path = 'uploads/' . $division . '/' . $upload_data['file_name'];
     
+                // Create the match title
+                $match_title = $team_a['team'] . ' vs. ' . $team_b['team'];
+    
                 $match_result_data = [
                     'team_id_a' => $team_a_id,
                     'team_id_b' => $team_b_id,
@@ -129,7 +132,8 @@ class Dashboard extends CI_Controller {
                     'points_b' => $team_b_score,
                     'match_date' => date('Y-m-d H:i:s'),
                     'evidence_image' => $image_path,
-                    'division' => $division
+                    'division' => $division,
+                    'match_title' => $match_title // Add match_title to the data
                 ];
     
                 $existing_match_result = $this->db->get_where('match_results', [
@@ -138,9 +142,9 @@ class Dashboard extends CI_Controller {
                 ])->row_array();
     
                 if ($existing_match_result) {
-                    // Update existing match result
+                    // Update existing match result and match_title
                     $this->db->update('match_results', $match_result_data, [
-                        'match_list_id' => $existing_match_result['match_list_id'] // Corrected here
+                        'match_list_id' => $existing_match_result['match_list_id']
                     ]);
                 } else {
                     // Insert new match result and get the match_list_id
@@ -160,6 +164,7 @@ class Dashboard extends CI_Controller {
             redirect('uploadresult');
         }
     }
+    
     
     
     
