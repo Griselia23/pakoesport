@@ -94,6 +94,38 @@ class Admin extends CI_Controller {
         redirect('admin');
     }
 
+    public function update_results($id) {
+        $teamnumber1 = $this->input->post('teamnumber1');
+        $teamnumber2 = $this->input->post('teamnumber2');
+        $teampoints1 = $this->input->post('teampoints1');
+        $teampoints2 = $this->input->post('teampoints2');
+        $division = $this->input->post('division');
+        $matchdate = $this->input->post('matchdate');
+        $title = $this->input->post('title');
+        $evidence = $this->input->post('evidence');
+        
+        
+        $data = array(
+            'team_id_a' => $teamnumber1,
+            'team_id_b' => $teamnumber2,
+            'points_a' => $teampoints1,
+            'points_b' => $teampoints2,
+            'division' => $division,
+            'match_date' => $matchdate,
+            'evidence_image' => $evidence,
+            'match_title' => $title,
+
+        );
+        
+        $this->Dashboard_model->update_match_results($id, $data);
+        redirect('admin');
+    }
+
+    public function delete_results($id) {
+        $this->Dashboard_model->delete_match_results($id);
+        redirect('admin');
+    }
+
 
     }
 

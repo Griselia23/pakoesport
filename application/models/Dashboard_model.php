@@ -97,22 +97,24 @@ class Dashboard_model extends CI_Model {
         $query = $this->db->get();
         
         if ($query->num_rows() > 0) {
-            return $query->row_array(); // Return the team IDs
+            return $query->row_array(); 
         }
         
         return null; 
     }
     // match results
     public function get_all_match_results(){
-        return $this->db->get('match_results');
+        $query = $this->db->get('match_results');
+        return $query->result(); 
     }
     
+
     public function update_match_results($id,$data) {
         $this->db -> where('id',$id);
         $this->db->update('match_results',$data);
     }
 
-    public function delete_match_results(){
+    public function delete_match_results($id){
         $this->db->where('id',$id);
         $this->db->delete('match_results');
     }
