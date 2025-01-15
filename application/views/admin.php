@@ -221,7 +221,7 @@
             "searching": true, 
             "ordering": true, 
             "order": [[0, 'asc']], 
-            "lengthMenu": [1, 2, 10, 25], 
+            "lengthMenu": [10, 20, 30, 40], 
             "columnDefs": [
                 {
                     "targets": 4, 
@@ -256,7 +256,6 @@
                         <th scope="col" style="color: black;">Plant</th>
                         <th scope="col" style="color: black;">Leader Name</th>
                         <th scope="col" style="color: black;">Division</th>
-                        
                         <th scope="col" style="color: black;">Action</th>
                     </tr>
                 </thead>
@@ -334,37 +333,137 @@
     });
 </script>
 
-        <!-- Result Monitoring Section -->
-        <!-- <div class="container mt-5">
-            <div class="container" style="background-color: white; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border-radius: 8px;">
-                <div class="section-header">
-                    <h2 style="color: black;">Result Monitoring</h2>
-                    <p style="color: black;">Hai <?php echo $this->session->userdata('username'); ?>, Here you can monitor match results</p>
-                </div>
+<!-- results -->
+<div class="container mt-5">
+    <div class="container" style="background-color: white; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border-radius: 8px;">
+        <div class="section-header">
+            <h2 style="color: black;">Registered Teams</h2>
+            <p style="color: black;">Hai <?php echo $this->session->userdata('username'); ?>, Here are the details of the registered teams:</p>
+        </div>
 
-                <div class="period-toggle-stripe mt-4">
-                    <span id="mlResultBtn" class="period-btn active">Mobile Legends</span>
-                    <span id="fifaResultBtn" class="period-btn">FIFA</span>
-                </div>
+        <!-- Period Toggle Buttons -->
+        <div class="period-toggle-stripe mt-4">
+            <span id="mlresultbtn" class="period-btn active">Mobile Legends</span>
+            <span id="fifaresultbtn" class="period-btn">FIFA</span>
+        </div>
 
-                <table class="table table-bordered table-striped mt-4" id="resultTable">
-                    <thead>
-                        <tr style="background-color:rgb(190, 11, 11);">
-                            <th>Match</th>
-                            <th>Team 1</th>
-                            <th>Team 2</th>
-                            <th>Score</th>
-                            <th>Division</th>
-                            <th>Evidences</th>
+        <!-- Teams Table -->
+        <div id="teamsLeaderboard" class="mt-4">
+            <h3>Teams Table</h3>
+            <table id="resulttable" class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col" style="color: black;">Date</th>
+                        <th scope="col" style="color: black;">Team 1</th>
+                        <th scope="col" style="color: black;">Team 2</th>
+                        <th scope="col" style="color: black;">Points 1</th>
+                        <th scope="col" style="color: black;">Points 2</th>
+                        <th scope="col" style="color: black;">Titles </th>
+                        <th scope="col" style="color: black;">Evidences</th>
+                        <th scope="col" style="color: black;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if (!empty($teams)): ?>
+                        <?php foreach ($teams as $team): ?>
+                            <tr class="team" data-division="<?php echo $team->division; ?>" id="team-<?php echo $team->id; ?>">
+                                <td><?php echo $team->team; ?></td>
+                                <td><?php echo $team->plant; ?></td>
+                                <td><?php echo $team->leadername; ?></td>
+                                <td><?php echo $team->division; ?></td>
+                                
+                                <td>
+                                    <!-- Edit Button -->
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#editModal<?php echo $team->id; ?>">Edit</button>
+
+                                    <!-- Delete Button -->
+                                    <form method="POST" action="<?php echo site_url('admin/delete_team/' . $team->id); ?>" style="display:inline;">
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this team?');">Del</button>
+                                    </form>
+                                </td>
+                            </tr>
+
+                            <!-- Edit Modal for this team -->
+                            <div class="modal fade" id="editModal<?php echo $team->id; ?>" tabindex="-1" aria-labelledby="editModalLabel<?php echo $team->id; ?>" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editModalLabel<?php echo $team->id; ?>">Edit Team</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form method="POST" action="<?php echo site_url('admin/update_team'); ?>">
+                                                <input type="hidden" name="team_id" value="<?php echo $team->id; ?>" />
+                                                <div class="mb-3">
+                                                    <label for="teamName" class="form-label">Team</label>
+                                                    <input type="text" class="form-control" id="teamName" name="teamName" value="<?php echo $team->team; ?>" required />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="plant" class="form-label">Plant</label>
+                                                    <input type="text" class="form-control" id="plant" name="plant" value="<?php echo $team->plant; ?>" required />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="leaderName" class="form-label">Leader Name</label>
+                                                    <input type="text" class="form-control" id="leaderName" name="leaderName" value="<?php echo $team->leadername; ?>" required />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="division" class="form-label">Division</label>
+                                                    <input type="text" class="form-control" id="division" name="division" value="<?php echo $team->division; ?>" required />
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="points" class="form-label">Points</label>
+                                                    <input type="number" class="form-control" id="points" name="points" value="<?php echo $team->points; ?>" required />
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="8">No teams registered</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                
-                </table>
-            </div>
-        </div> -->
+                    <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
+    <script>
+    $(document).ready(function() {
+        $('.team').each(function() {
+            if ($(this).data('division') !== 'ml') {
+                $(this).hide();
+            }
+        });
+
+        $('#mlresultbtn').click(function() {
+            $(this).addClass('active');
+            $('#fifaresultbtn').removeClass('active');
+            $('#resulttable .team').each(function() {
+                if ($(this).data('division') === 'ml') {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+
+        $('#fifaresultbtn').click(function() {
+            $(this).addClass('active');
+            $('#mlresultbtn').removeClass('active');
+            $('#resulttable .team').each(function() {
+                if ($(this).data('division') === 'fifa') {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    });
+</script>
+</div>
 </section>
 
 

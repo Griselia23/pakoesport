@@ -100,9 +100,21 @@ class Dashboard_model extends CI_Model {
             return $query->row_array(); // Return the team IDs
         }
         
-        return null; // Return null if no match is found
+        return null; 
+    }
+    // match results
+    public function get_all_match_results(){
+        return $this->db->get('match_results');
     }
     
-    
+    public function update_match_results($id,$data) {
+        $this->db -> where('id',$id);
+        $this->db->update('match_results',$data);
+    }
+
+    public function delete_match_results(){
+        $this->db->where('id',$id);
+        $this->db->delete('match_results');
+    }
 
 }

@@ -22,6 +22,7 @@ class Admin extends CI_Controller {
         $data['teams'] = $this->Dashboard_model->get_all_teams();
         $data['schedules'] = $this->Dashboard_model->get_all_schedules();
         $data['match_titles'] = $this->Admin_model->matchmaking();  
+        $data['results'] = $this->Dashboard_model->get_all_match_results();
         $this->load->view('admin', $data);
     }
 
