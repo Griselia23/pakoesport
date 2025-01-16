@@ -157,18 +157,19 @@ class Dashboard extends CI_Controller
 
     public function submit_registration()
     {
+        // Get the input data
         $password = $this->input->post('password');
         $team_name = $this->input->post('team');
         $division = $this->input->post('division');
         $leader_npk = $this->input->post('npk');
         
-        // Check if the leader is already registered in another team within the same division
+        // Check if the leader is already in a team in the same division
         $this->db->where('npk', $leader_npk);
         $this->db->where('division', $division);
         $leader_check = $this->db->get('register')->row();
-        
+    
         if ($leader_check) {
-            // If the leader is already in another team, display an error
+            // If the leader is already in a team in this division, show an error
             $this->session->set_flashdata('error', 'Leader NPK is already registered in a team in this division.');
             redirect('dashboard');
         }
@@ -182,27 +183,26 @@ class Dashboard extends CI_Controller
             $this->input->post('member5npk')
         ];
     
-        // Begin query to check if any of the member NPKs already exist in the division
-        $this->db->where('division', $division); // Check the same division
-    
-        // Loop through each member's NPK and check if they already exist
+        // Loop through each member's NPK and check if they are already registered in this division
         foreach ($npks_to_check as $npk) {
             if (!empty($npk)) {
-                $this->db->or_where('member1npk', $npk);
+                // Check if the member is already in another team within the same division
+                $this->db->where('division', $division); // Check within the same division
+                $this->db->group_start();  // Start grouping the or conditions for the 5 members
+                $this->db->where('member1npk', $npk);
                 $this->db->or_where('member2npk', $npk);
                 $this->db->or_where('member3npk', $npk);
                 $this->db->or_where('member4npk', $npk);
                 $this->db->or_where('member5npk', $npk);
+                $this->db->group_end(); // End grouping the or conditions
+                $member_check = $this->db->get('register')->row();
+    
+                if ($member_check) {
+                    // If any member is already registered in a team in this division, show an error
+                    $this->session->set_flashdata('error', 'One or more members are already registered in a team in this division.');
+                    redirect('dashboard');
+                }
             }
-        }
-    
-        // Execute the query
-        $query = $this->db->get('register');
-    
-        if ($query->num_rows() > 0) {
-            // If any member is already registered in another team in the same division, show an error
-            $this->session->set_flashdata('error', 'One or more members are already registered in a team in this division.');
-            redirect('dashboard');
         }
         
         // Prepare the data to be inserted into the database
@@ -235,7 +235,6 @@ class Dashboard extends CI_Controller
             redirect('dashboard');
         }
     }
-    
     
     
 

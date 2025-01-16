@@ -570,7 +570,7 @@
 
   <div class="form-group">
     <label for="npk">Leader NPK:</label>
-    <input type="number" id="npk" name="npk" required placeholder="Enter leader's NPK">
+    <input type="text" id="npk" name="npk" required placeholder="Enter leader's NPK">
   </div>
 
   <div class="form-group">
@@ -607,7 +607,7 @@
     <!-- First Member Input -->
     <div class="form-group member">
       <label for="member1npk">Member 1 NPK:</label>
-      <input type="number" id="member1npk" name="member1npk" placeholder="Enter member 1 NPK">
+      <input type="text" id="member1npk" name="member1npk" placeholder="Enter member 1 NPK">
       <label for="member1name">Member 1 Name:</label>
       <input type="text" id="member1name" name="member1name" placeholder="Enter member 1 name">
     </div>
@@ -712,7 +712,7 @@
       memberNPKLabel.textContent = "Member " + (memberCount + 1) + " NPK:";
       newMemberDiv.appendChild(memberNPKLabel);
       var memberNPKInput = document.createElement("input");
-      memberNPKInput.setAttribute("type", "number");
+      memberNPKInput.setAttribute("type", "text");
       memberNPKInput.setAttribute("id", "member" + (memberCount + 1) + "npk");
       memberNPKInput.setAttribute("name", "member" + (memberCount + 1) + "npk");
       memberNPKInput.setAttribute("placeholder", "Enter member " + (memberCount + 1) + " NPK");
