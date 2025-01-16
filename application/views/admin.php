@@ -511,17 +511,6 @@
 
 <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
 
-<script src="<?php echo base_url('application/template/lib/jquery/jquery.min.js'); ?>"></script>
-<script src="<?php echo base_url('application/template/lib/jquery/jquery-migrate.min.js'); ?>"></script>
-<script src="<?php echo base_url('application/template/lib/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
-<script src="<?php echo base_url('application/template/lib/easing/easing.min.js'); ?>"></script>
-<script src="<?php echo base_url('application/template/lib/superfish/hoverIntent.js'); ?>"></script>
-<script src="<?php echo base_url('application/template/lib/superfish/superfish.min.js'); ?>"></script>
-<script src="<?php echo base_url('application/template/lib/wow/wow.min.js'); ?>"></script>
-<script src="<?php echo base_url('application/template/lib/venobox/venobox.min.js'); ?>"></script>
-<script src="<?php echo base_url('application/template/lib/owlcarousel/owl.carousel.min.js'); ?>"></script>
-<script src="<?php echo base_url('application/template/contactform/contactform.js'); ?>"></script>
-<script src="<?php echo base_url('application/template/js/main.js'); ?>"></script>
 
 <script>
     $(document).ready(function() {

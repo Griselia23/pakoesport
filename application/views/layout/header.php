@@ -22,6 +22,17 @@
   <link href="<?php echo base_url('application/template/lib/animate/animate.min.css'); ?>" rel="stylesheet">
   <link href="<?php echo base_url('application/template/lib/venobox/venobox.css'); ?>" rel="stylesheet">
   <link href="<?php echo base_url('application/template/lib/owlcarousel/assets/owl.carousel.min.css'); ?>" rel="stylesheet">
+  <script src="<?php echo base_url('application/template/lib/jquery/jquery.min.js'); ?>"></script>
+<script src="<?php echo base_url('application/template/lib/jquery/jquery-migrate.min.js'); ?>"></script>
+<script src="<?php echo base_url('application/template/lib/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
+<script src="<?php echo base_url('application/template/lib/easing/easing.min.js'); ?>"></script>
+<script src="<?php echo base_url('application/template/lib/superfish/hoverIntent.js'); ?>"></script>
+<script src="<?php echo base_url('application/template/lib/superfish/superfish.min.js'); ?>"></script>
+<script src="<?php echo base_url('application/template/lib/wow/wow.min.js'); ?>"></script>
+<script src="<?php echo base_url('application/template/lib/venobox/venobox.min.js'); ?>"></script>
+<script src="<?php echo base_url('application/template/lib/owlcarousel/owl.carousel.min.js'); ?>"></script>
+<script src="<?php echo base_url('application/template/contactform/contactform.js'); ?>"></script>
+<script src="<?php echo base_url('application/template/js/main.js'); ?>"></script>
 
   <!-- Main Stylesheet File -->
   <link href="<?php echo base_url('application/template/css/style.css'); ?>" rel="stylesheet">
@@ -34,6 +45,8 @@
 <!-- DataTables JavaScript Files -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+
 
 </head>
 
