@@ -157,24 +157,29 @@ class Dashboard extends CI_Controller
 
     public function submit_registration()
     {
-        // Get the input data
+    
         $password = $this->input->post('password');
         $team_name = $this->input->post('team');
         $division = $this->input->post('division');
         $leader_npk = $this->input->post('npk');
         
-        // Check if the leader is already in a team in the same division
-        $this->db->where('npk', $leader_npk);
         $this->db->where('division', $division);
+        $this->db->group_start();
+        $this->db->where('npk', $leader_npk);  
+        $this->db->or_where('member1npk', $leader_npk);  
+        $this->db->or_where('member2npk', $leader_npk);
+        $this->db->or_where('member3npk', $leader_npk);
+        $this->db->or_where('member4npk', $leader_npk);
+        $this->db->or_where('member5npk', $leader_npk);
+        $this->db->group_end();
         $leader_check = $this->db->get('register')->row();
-    
+        
         if ($leader_check) {
-            // If the leader is already in a team in this division, show an error
+            
             $this->session->set_flashdata('error', 'Leader NPK is already registered in a team in this division.');
             redirect('dashboard');
         }
-    
-        // Check if any member is already registered in another team within the same division
+        
         $npks_to_check = [
             $this->input->post('member1npk'),
             $this->input->post('member2npk'),
@@ -182,30 +187,27 @@ class Dashboard extends CI_Controller
             $this->input->post('member4npk'),
             $this->input->post('member5npk')
         ];
-    
-        // Loop through each member's NPK and check if they are already registered in this division
+        
         foreach ($npks_to_check as $npk) {
             if (!empty($npk)) {
-                // Check if the member is already in another team within the same division
-                $this->db->where('division', $division); // Check within the same division
-                $this->db->group_start();  // Start grouping the or conditions for the 5 members
+               
+                $this->db->where('division', $division); 
+                $this->db->group_start();  
                 $this->db->where('member1npk', $npk);
                 $this->db->or_where('member2npk', $npk);
                 $this->db->or_where('member3npk', $npk);
                 $this->db->or_where('member4npk', $npk);
                 $this->db->or_where('member5npk', $npk);
-                $this->db->group_end(); // End grouping the or conditions
+                $this->db->or_where('npk', $npk);  
+                $this->db->group_end(); 
                 $member_check = $this->db->get('register')->row();
-    
+        
                 if ($member_check) {
-                    // If any member is already registered in a team in this division, show an error
-                    $this->session->set_flashdata('error', 'One or more members are already registered in a team in this division.');
+                    $this->session->set_flashdata('error', 'One or more members (including leader) are already registered in a team in this division.');
                     redirect('dashboard');
                 }
             }
         }
-        
-        // Prepare the data to be inserted into the database
         $data = array(
             'team' => $this->input->post('team'),
             'plant' => $this->input->post('plant'),
@@ -226,7 +228,6 @@ class Dashboard extends CI_Controller
             'division' => $this->input->post('division')
         );
         
-        // Insert team data into the database
         if ($this->Dashboard_model->insert_team($data)) {
             $this->session->set_flashdata('success', 'Team registered successfully.');
             redirect('dashboard');
@@ -235,9 +236,6 @@ class Dashboard extends CI_Controller
             redirect('dashboard');
         }
     }
-    
-    
-
     
     public function submit_score()
     {
