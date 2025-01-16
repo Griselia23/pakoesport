@@ -3,6 +3,7 @@
 <header id="header">
     <div class="container">
         <div id="logo" class="pull-left">
+        <a href="#intro" class="scrollto"><img src="<?php echo base_url('application/template/img/logo.png'); ?>" alt="" title=""></a>
         </div>
         <nav id="nav-menu-container">
             <ul class="nav-menu">
@@ -329,7 +330,19 @@
 </div>
 <script>
     $(document).ready(function() {
-        $('#teamsTable').DataTable();
+        $('#teamsTable').DataTable({
+            "paging": true, 
+            "searching": true, 
+            "ordering": true, 
+            "order": [[0, 'asc']], 
+            "lengthMenu": [10, 20, 30, 50], 
+            "columnDefs": [
+                {
+                    "targets": 4, 
+                    "orderable": false
+                }
+            ]
+        });
     });
 </script>
 
@@ -338,7 +351,7 @@
     <div class="container" style="background-color: white; padding: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); border-radius: 8px;">
         <div class="section-header">
             <h2 style="color: black;">Match Monitor</h2>
-            <p style="color: black;">Hai <?php echo $this->session->userdata('username'); ?>, Here are the details of the registered teams:</p>
+            <p style="color: black;">Hai <?php echo $this->session->userdata('username'); ?>, Make sure everything is under control</p>
         </div>
 
         <!-- Period Toggle Buttons -->
@@ -349,7 +362,6 @@
 
         <!-- Teams Table -->
         <div id="resultteams" class="mt-4">
-            <h3>Teams Table</h3>
             <table id="resulttable" class="table table-striped table-bordered">
                 <thead>
                     <tr>
@@ -372,9 +384,8 @@
                 <td><?php echo $result->match_title; ?></td>    
                 <td><?php echo $result->points_a; ?></td>
                 <td><?php echo $result->points_b; ?></td>
-                
                 <td><?php echo $result->division; ?></td>
-                <td><?php echo $result->evidence_image; ?></td>
+                <td><a href="<?php echo $result->evidence_image; ?>" target="_blank">View Image</a></td>
                 
                 <td>
                     <!-- Edit Button -->
@@ -398,14 +409,7 @@
                         <div class="modal-body">
                             <form method="POST" action="<?php echo site_url('admin/update_results/'.$result->id); ?>">
                                 <input type="hidden" name="id" value="<?php echo $result->id; ?>" />
-                                <div class="mb-3">
-                                    <label for="teamnumber1" class="form-label">Team 1</label>
-                                    <input type="text" class="form-control" id="teamnumber1" name="teamnumber1" value="<?php echo $result->team_id_a; ?>" required />
-                                </div>
-                                <div class="mb-3">
-                                    <label for="teamnumber2" class="form-label">Team 2</label>
-                                    <input type="text" class="form-control" id="teamnumber2" name="teamnumber2" value="<?php echo $result->team_id_b; ?>" required />
-                                </div>
+                                
                                 <div class="mb-3">
                                     <label for="teampoints1" class="form-label">Points 1</label>
                                     <input type="number" class="form-control" id="teampoints1" name="teampoints1" value="<?php echo $result->points_a; ?>" required />
@@ -447,7 +451,7 @@
             </table>
         </div>
     </div>
-    <script>
+    <!-- <script>
     $(document).ready(function() {
         $('.team').each(function() {
             if ($(this).data('division') !== 'ml') {
@@ -479,8 +483,27 @@
             });
         });
     });
-</script>
+</script> -->
 </div>
+
+<script>
+    $(document).ready(function() {
+        // Initialize DataTable
+        $('#resulttable').DataTable({
+            "paging": true, 
+            "searching": true, 
+            "ordering": true, 
+            "order": [[0, 'asc']], 
+            "lengthMenu": [10, 20, 30, 40], 
+            "columnDefs": [
+                {
+                    "targets": 4, 
+                    "orderable": false
+                }
+            ]
+        });
+    });
+</script>
 </section>
 
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 14 Jan 2025 pada 05.09
+-- Waktu pembuatan: 15 Jan 2025 pada 05.08
 -- Versi server: 10.1.38-MariaDB
 -- Versi PHP: 5.6.40
 
@@ -34,16 +34,18 @@ CREATE TABLE `match_results` (
   `team_id_b` int(11) NOT NULL,
   `points_a` int(11) NOT NULL,
   `points_b` int(11) NOT NULL,
-  `start_date` date NOT NULL,
-  `division` varchar(10) NOT NULL
+  `division` varchar(50) DEFAULT NULL,
+  `match_date` datetime NOT NULL,
+  `evidence_image` varchar(255) NOT NULL,
+  `match_title` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `match_results`
 --
 
-INSERT INTO `match_results` (`id`, `team_id_a`, `team_id_b`, `points_a`, `points_b`, `start_date`, `division`) VALUES
-(1, 1, 2, 3, 0, '2025-01-13', 'ml');
+INSERT INTO `match_results` (`id`, `team_id_a`, `team_id_b`, `points_a`, `points_b`, `division`, `match_date`, `evidence_image`, `match_title`) VALUES
+(1, 1, 2, 1, 2, 'ml', '2025-01-15 05:04:41', 'uploads/ml/han3.jpg', 'ml1 vs. ml21');
 
 -- --------------------------------------------------------
 
@@ -81,15 +83,12 @@ CREATE TABLE `register` (
 --
 
 INSERT INTO `register` (`id`, `creation_date`, `team`, `points`, `plant`, `npk`, `password`, `leadername`, `number`, `member1npk`, `member1name`, `member2npk`, `member2name`, `member3npk`, `member3name`, `member4npk`, `member4name`, `member5npk`, `member5name`, `division`, `evidence`, `role`) VALUES
-(1, '2025-01-01 03:00:00', 'ml1', 0, 'Plant A', 'NPK123', 'password123', 'Leader1', '001', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ml', NULL, 'member'),
-(2, '2025-01-02 04:00:00', 'ml2', 3, 'Plant B', 'NPK124', 'password124', 'Leader2', '002', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ml', NULL, 'member'),
-(3, '2025-01-03 05:00:00', 'ml3', 0, 'Plant C', 'NPK125', 'password125', 'Leader3', '003', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ml', NULL, 'member'),
-(4, '2025-01-04 06:00:00', 'ml4', 0, 'Plant D', 'NPK126', 'password126', 'Leader4', '004', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ml', NULL, 'member'),
-(5, '2025-01-05 07:00:00', 'fifa1', 0, 'Plant E', 'NPK127', 'password127', 'Leader4', '005', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'fifa', NULL, 'member'),
-(6, '2025-01-06 08:00:00', 'fifa2', 6, 'Plant F', 'NPK128', 'password128', 'Leader6', '006', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'fifa', NULL, 'member'),
-(7, '2025-01-07 09:00:00', 'fifa3', 0, 'Plant G', 'NPK129', 'password129', 'Leader7', '007', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'fifa', NULL, 'member'),
-(8, '2025-01-08 10:00:00', 'fifa4', 0, 'Plant H', 'NPK130', 'password130', 'Leader8', '008', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'fifa', NULL, 'member'),
-(9, '2025-01-14 00:54:09', 'fifa6', 0, 'inko', '1313', '$2y$10$llsRIRvDDLkYdTwxKlH1Z.uZt4M0BVaaII/KXYROUl3VuIhf520iu', 'bagas', '2131412', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'fifa', NULL, 'member');
+(1, '2025-01-14 04:24:10', 'ml1', 0, 'inko', '1313', '$2y$10$OKVJtltktKH/6m1YB31e8eZZ/OfSrVOEekUBz4MdqJWYU9lenT9Yi', 'bagus', '8127183', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ml', NULL, 'member'),
+(2, '2025-01-14 04:24:34', 'ml21', 0, 'assy', '1414', '$2y$10$gpTnvce3IyqdoatLnmRFjO0nGmMUcSJeOv73ZQ/uCVLkCdQFu6eMO', 'bagus', '231412341', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ml', NULL, 'member'),
+(3, '2025-01-14 04:25:17', 'ml3', 0, 'assy', '1515', '$2y$10$yRfJm71EoMLZOxzJsn3gV.AszAPuL6TIINu9as34sGDlSGQMUu9Xy', 'bagus', '7381638817', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ml', NULL, 'member'),
+(4, '2025-01-14 06:20:25', 'fifa1', 0, 'inko', '7171', '$2y$10$S6g2R66EK4YzOat3VUG/zuUsXD8hBFITqcdGDplTZVCVLJMhI7x4W', 'bagus', '28391031', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'fifa', NULL, 'member'),
+(5, '2025-01-14 06:20:45', 'fifa2', 0, 'inko', '7272', '$2y$10$5hI2JDTXT66RqtM08YMkDO0KdsAJ1hxBehC/3wUESROCDjy3QSaO6', 'bagus', '2412413', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'fifa', NULL, 'member'),
+(6, '2025-01-14 06:21:14', 'fifa3', 0, 'inko', '7373', '$2y$10$BxXeXd1HspAzjyANXAyJoePB/8dhzBWtjFpG.5nIE.9ZUU8KqOq56', 'bagus', '1723617', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'fifa', NULL, 'member');
 
 -- --------------------------------------------------------
 
@@ -185,13 +184,13 @@ ALTER TABLE `match_results`
 -- AUTO_INCREMENT untuk tabel `register`
 --
 ALTER TABLE `register`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`

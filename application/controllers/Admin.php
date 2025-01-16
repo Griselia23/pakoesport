@@ -30,7 +30,7 @@ class Admin extends CI_Controller {
         $data['team'] = $this->Dashboard_model->get_team_by_id($team_id);
         $this->load->view('edit_modal', $data); 
     }
-
+    
     public function update_team() {
         $team_id = $this->input->post('team_id');
         $team_name = $this->input->post('teamName');

@@ -1,5 +1,5 @@
 <?php include(APPPATH . 'views/layout/header.php'); ?>
-<!-- Main content here, like the body of the page -->
+<link href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" rel="stylesheet" />
 <header id="header">
   <div class="container">
     <div id="logo" class="pull-left">
@@ -23,13 +23,18 @@
     </nav>
   </div>
 </header>
+<style>
+  body {
+    zoom: 120%;
+  }
+</style>
 
 <section id="intro">
   <div class="intro-container wow fadeIn"> 
 
     <!-- Intro Text -->
     <h1 class="mb-4 pb-0">The Annual<br><span>Gaming</span> League</h1>
-    <p class="mb-4 pb-0">29-31 February, Pako Group, Karawang</p>
+    <p class="mb-4 pb-0">Pako Group, Karawang</p>
     <a href="https://www.youtube.com/watch?v=rYBjPWV3esY" class="venobox play-btn mb-4" data-vbtype="video"
       data-autoplay="true"></a>
     <a href="#about" class="about-btn scrollto">About The Event</a>
@@ -784,4 +789,14 @@
   });
 </script>
 
-<!-- nav -->
+<script src="<?php echo base_url('application/template/lib/jquery/jquery.min.js'); ?>"></script>
+<script src="<?php echo base_url('application/template/lib/jquery/jquery-migrate.min.js'); ?>"></script>
+<script src="<?php echo base_url('application/template/lib/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
+<script src="<?php echo base_url('application/template/lib/easing/easing.min.js'); ?>"></script>
+<script src="<?php echo base_url('application/template/lib/superfish/hoverIntent.js'); ?>"></script>
+<script src="<?php echo base_url('application/template/lib/superfish/superfish.min.js'); ?>"></script>
+<script src="<?php echo base_url('application/template/lib/wow/wow.min.js'); ?>"></script>
+<script src="<?php echo base_url('application/template/lib/venobox/venobox.min.js'); ?>"></script>
+<script src="<?php echo base_url('application/template/lib/owlcarousel/owl.carousel.min.js'); ?>"></script>
+<script src="<?php echo base_url('application/template/contactform/contactform.js'); ?>"></script>
+<script src="<?php echo base_url('application/template/js/main.js'); ?>"></script>
