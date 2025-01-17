@@ -60,12 +60,14 @@ class Admin extends CI_Controller {
         $matchNumber = $this->input->post('matchNumber');
         $division = $this->input->post('division');
         $startDate = $this->input->post('startDate');
+        $endDate = $this->input->post('endDate');
         
         
         $data = array(
             'match_number' => $matchNumber,
             'division' => $division,
-            'start_date' => $startDate
+            'start_date' => $startDate,
+            'end_date' => $startDate
             
         );
         
@@ -77,12 +79,14 @@ class Admin extends CI_Controller {
         $matchNumber = $this->input->post('matchNumber');
         $division = $this->input->post('division');
         $startDate = $this->input->post('startDate');
+        $endDate = $this->input->post('endDate');
         
         
         $data = array(
             'match_number' => $matchNumber,
             'division' => $division,
-            'start_date' => $startDate
+            'start_date' => $startDate,
+            'end_date' => $endDate
         );
         
         $this->Dashboard_model->update_schedule($id, $data);
