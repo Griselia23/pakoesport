@@ -176,28 +176,29 @@
         <div>
             <label for="match_title">Match:</label>
             <select name="match_title" id="match_title" required onchange="populateTeams()">
-                <option value="">Select Match</option>
-                <?php if (!empty($matches_by_division)) { ?>
-                    <?php foreach ($matches_by_division as $division => $matches) { ?>
-                        <optgroup label="<?php echo htmlspecialchars(ucfirst($division)); ?>">
-                            <?php foreach ($matches as $match) { 
-                                $match_id = $match['team_a_id'] . '-' . $match['team_b_id'];
-                            ?>
-                            <option value="<?php echo $match_id; ?>" 
-                                    data-team-a-id="<?php echo $match['team_a_id']; ?>" 
-                                    data-team-b-id="<?php echo $match['team_b_id']; ?>" 
-                                    data-division="<?php echo $match['categ']; ?>"
-                                    data-team-a-name="<?php echo htmlspecialchars($match['team_a_name']); ?>" 
-                                    data-team-b-name="<?php echo htmlspecialchars($match['team_b_name']); ?>">
-                                <?php echo htmlspecialchars($match['match_title']); ?>
-                            </option>
-                            <?php } ?>
-                        </optgroup>
-                    <?php } ?>
-                <?php } else { ?>
-                    <option value="">No matches available</option>
+    <option value="">Select Match</option>
+    <?php if (!empty($matches_by_division)) { ?>
+        <?php foreach ($matches_by_division as $division => $matches) { ?>
+            <optgroup label="<?php echo htmlspecialchars(ucfirst($division)); ?>">
+                <?php foreach ($matches as $match) { 
+                    $match_id = $match['team_a_id'] . '-' . $match['team_b_id'];
+                ?>
+                <option value="<?php echo $match_id; ?>" 
+                        data-team-a-id="<?php echo $match['team_a_id']; ?>" 
+                        data-team-b-id="<?php echo $match['team_b_id']; ?>" 
+                        data-division="<?php echo $match['categ']; ?>"
+                        data-team-a-name="<?php echo htmlspecialchars($match['team_a_name']); ?>" 
+                        data-team-b-name="<?php echo htmlspecialchars($match['team_b_name']); ?>">
+                    <?php echo htmlspecialchars($match['match_title']); ?>
+                </option>
                 <?php } ?>
-            </select>
+            </optgroup>
+        <?php } ?>
+    <?php } else { ?>
+        <option value="">No matches available</option>
+    <?php } ?>
+</select>
+
         </div>
     </div>
 

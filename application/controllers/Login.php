@@ -31,6 +31,7 @@ class Login extends CI_Controller {
             $this->session->set_userdata('role', 'member'); 
             $this->session->set_userdata('leadername', $register->leadername);
             $this->session->set_flashdata('success', 'Login successful! Welcome, ' . $register->npk . '.');
+            $this->session->set_userdata('user_team', $register->team);
             redirect('uploadresult');
         }
     
