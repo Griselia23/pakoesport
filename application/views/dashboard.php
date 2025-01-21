@@ -70,195 +70,161 @@
   <!--==========================
       Speakers Section
     ============================-->
-  <section id="leaderboard" class="section-with-bg">
-    <div class="container wow fadeInUp">
-      <div class="section-header">
-        <h2>Leaderboard</h2>
-        <p>Join to compete!</p>
-      </div>
+    <section id="leaderboard" class="section-with-bg">
+  <div class="container wow fadeInUp">
+    <div class="section-header">
+      <h2>Leaderboard & Event Schedule</h2>
+      <p>Join to compete and check out the event schedule!</p>
+    </div>
 
-      <div class="schedule-toggle-stripe">
-        <span id="mlbtn1" class="toggle-stripe active">Mobile Legends</span>
-        <span id="fifabtn1" class="toggle-stripe">FIFA</span>
-      </div>
+    <div class="card" style="border: none; padding: 30px; max-width: 100%; margin: 0 auto;">
+      <div class="card-body">
+        <div class="d-flex flex-wrap justify-content-between" style="gap: 20px;">
 
-      <!-- Mobile Legends Leaderboard -->
-      <div id="mobileLegendsLeaderboard" class="mt-4">
-        <h3>Leaderboard - Mobile Legends</h3>
-        <table id="mlLeaderboard" class="table table-striped table-bordered">
-          <thead>
+        <div style="flex: 1 1 60%; max-width: 60%;">
+  <div class="section-header">
+    <h3>Leaderboard</h3>
+  </div>
+
+  <div class="schedule-toggle-stripe">
+    <span id="mlbtn1" class="toggle-stripe active">Mobile Legends</span>
+    <span id="fifabtn1" class="toggle-stripe">FIFA</span>
+  </div>
+
+  <div id="mobileLegendsLeaderboard" class="mt-4">
+    <h4>Leaderboard - Mobile Legends</h4>
+    <div class="table-responsive">
+      <table id="mlLeaderboard" class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th scope="col" style="color: black;">Rank</th>
+            <th scope="col" style="color: black;">Team</th>
+            <th scope="col" style="color: black;">Play</th>
+            <th scope="col" style="color: black;">Win</th>
+            <th scope="col" style="color: black;">Lose</th>
+            <th scope="col" style="color: black;">Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($ml_leaderboard as $team): ?>
             <tr>
-              <th scope="col" style="color: black;">Rank</th>
-              <th scope="col" style="color: black;">Team</th>
-              <th scope="col" style="color: black;">Play</th>
-              <th scope="col" style="color: black;">Win</th>
-              <th scope="col" style="color: black;">Lose</th>
-              <th scope="col" style="color: black;">Points</th>
+              <td><?php echo $team['rank']; ?></td>
+              <td><?php echo $team['team']; ?></td>
+              <td><?php echo $team['play']; ?></td>
+              <td><?php echo $team['win']; ?></td>
+              <td><?php echo $team['lose']; ?></td>
+              <td><?php echo $team['points']; ?></td>
             </tr>
-          </thead>
-          <tbody>
-            <?php foreach ($ml_leaderboard as $team): ?>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="fifaLeaderboard" class="mt-4" style="display:none;">
+    <h4>Leaderboard - FIFA</h4>
+    <div class="table-responsive">
+      <table id="fifaLeaderboardTable" class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th scope="col" style="color: black;">Rank</th>
+            <th scope="col" style="color: black;">Team</th>
+            <th scope="col" style="color: black;">Play</th>
+            <th scope="col" style="color: black;">Win</th>
+            <th scope="col" style="color: black;">Lose</th>
+            <th scope="col" style="color: black;">Draw</th>
+            <th scope="col" style="color: black;">Points</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($fifa_leaderboard as $team): ?>
+            <tr>
+              <td><?php echo $team['rank']; ?></td>
+              <td><?php echo $team['team']; ?></td>
+              <td><?php echo $team['play']; ?></td>
+              <td><?php echo $team['win']; ?></td>
+              <td><?php echo $team['lose']; ?></td>
+              <td><?php echo $team['draw']; ?></td>
+              <td><?php echo $team['points']; ?></td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div style="flex: 1 1 35%; max-width: 35%;">
+  <div class="section-header">
+    <h3>Schedule</h3>
+  </div>
+
+  <div class="schedule-toggle-stripe">
+    <span id="mlbtn" class="toggle-stripe active">Mobile Legends</span>
+    <span id="fifabtn" class="toggle-stripe">FIFA</span>
+  </div>
+
+  <div id="mobileLegendsTable" class="schedule-table">
+    <div class="table-responsive">
+      <table id="mlTable" class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th scope="col" style="color: black;">Date</th>
+            <th scope="col" style="color: black;">Match</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php if (isset($matches_by_division['ml']) && !empty($matches_by_division['ml'])): ?>
+            <?php foreach ($matches_by_division['ml'] as $match): ?>
               <tr>
-                <td><?php echo $team['rank']; ?></td>
-                <td><?php echo $team['team']; ?></td>
-                <td><?php echo $team['play']; ?></td>
-                <td><?php echo $team['win']; ?></td>
-                <td><?php echo $team['lose']; ?></td>
-                <td><?php echo $team['points']; ?></td>
+                <td><?php echo date('Y-m-d', strtotime($match['match_day'])); ?></td>
+                <td><?php echo $match['match_title']; ?></td>
               </tr>
             <?php endforeach; ?>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- FIFA Leaderboard -->
-      <div id="fifaLeaderboard" class="mt-4" style="display:none;">
-        <h3>Leaderboard - FIFA</h3>
-        <table id="fifaLeaderboardTable" class="table table-striped table-bordered">
-          <thead>
+          <?php else: ?>
             <tr>
-              <th scope="col" style="color: black;">Rank</th>
-              <th scope="col" style="color: black;">Team</th>
-              <th scope="col" style="color: black;">Play</th>
-              <th scope="col" style="color: black;">Win</th>
-              <th scope="col" style="color: black;">Lose</th>
-              <th scope="col" style="color: black;">Draw</th>
-              <th scope="col" style="color: black;">Points</th>
+              <td colspan="2">No matches scheduled.</td>
             </tr>
-          </thead>
-          <tbody>
-            <?php foreach ($fifa_leaderboard as $team): ?>
+          <?php endif; ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="fifaTable" class="schedule-table" style="display:none;">
+    <div class="table-responsive">
+      <table id="fifaTableData" class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th scope="col" style="color: black;">Date</th>
+            <th scope="col" style="color: black;">Match</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php if (isset($matches_by_division['fifa']) && !empty($matches_by_division['fifa'])): ?>
+            <?php foreach ($matches_by_division['fifa'] as $match): ?>
               <tr>
-                <td><?php echo $team['rank']; ?></td>
-                <td><?php echo $team['team']; ?></td>
-                <td><?php echo $team['play']; ?></td>
-                <td><?php echo $team['win']; ?></td>
-                <td><?php echo $team['lose']; ?></td>
-                <td><?php echo $team['draw']; ?></td>
-                <td><?php echo $team['points']; ?></td>
+                <td><?php echo date('Y-m-d', strtotime($match['match_day'])); ?></td>
+                <td><?php echo $match['match_title']; ?></td>
               </tr>
             <?php endforeach; ?>
-          </tbody>
-        </table>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- DataTables Initialization -->
-  <script>
-    $(document).ready(function() {
-      $('#mlLeaderboard').DataTable();
-      $('#fifaLeaderboardTable').DataTable();
-    });
-  </script>
-
-  <script>
-    const mlbtn1 = document.getElementById('mlbtn1');
-    const fifabtn1 = document.getElementById('fifabtn1');
-    const mobileLegendsLeaderboard = document.getElementById('mobileLegendsLeaderboard');
-    const fifaLeaderboard = document.getElementById('fifaLeaderboard');
-
-    // Add event listeners for the toggle buttons
-    mlbtn1.addEventListener('click', function() {
-      mobileLegendsLeaderboard.style.display = 'block';
-      fifaLeaderboard.style.display = 'none';
-      mlbtn1.classList.add('active');
-      fifabtn1.classList.remove('active');
-    });
-
-    fifabtn1.addEventListener('click', function() {
-      mobileLegendsLeaderboard.style.display = 'none';
-      fifaLeaderboard.style.display = 'block';
-      fifabtn1.classList.add('active');
-      mlbtn1.classList.remove('active');
-    });
-
-    // Trigger the first click event to display the Mobile Legends table by default
-    window.addEventListener('load', function() {
-      mlbtn1.click();
-    });
-  </script>
-
-  <!--==========================
-      Schedule Section
-    ============================-->
-  <section id="schedule" class="section-with-bg">
-    <div class="container wow fadeInUp">
-      <div class="section-header">
-        <h2>Event Schedule</h2>
-        <p>Here is our event schedule</p>
-      </div>
-
-      <div class="schedule-toggle-stripe">
-        <span id="mlbtn" class="toggle-stripe active">Mobile Legends</span>
-        <span id="fifabtn" class="toggle-stripe">FIFA</span>
-      </div>
-
-      <!-- Mobile Legends Table -->
-      <div id="mobileLegendsTable" class="schedule-table">
-        <h3>Mobile Legends Schedule</h3>
-        <table id="mlTable" class="table table-striped table-bordered">
-          <thead>
+          <?php else: ?>
             <tr>
-              <th scope="col" style="color: black;">Date</th>
-              <th scope="col" style="color: black;">Match</th>
+              <td colspan="2">No matches scheduled.</td>
             </tr>
-          </thead>
-          <tbody>
-            <?php if (isset($matches_by_division['ml']) && !empty($matches_by_division['ml'])): ?>
-              <?php foreach ($matches_by_division['ml'] as $match): ?>
-                <tr>
-                  <td><?php echo date('Y-m-d', strtotime($match['match_day'])); ?></td>
-                  <td><?php echo $match['match_title']; ?></td>
-                </tr>
-              <?php endforeach; ?>
-            <?php else: ?>
-              <tr>
-                <td colspan="2">No matches scheduled.</td>
-              </tr>
-            <?php endif; ?>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- FIFA Table -->
-      <div id="fifaTable" class="schedule-table" style="display:none;">
-        <h3>FIFA Schedule</h3>
-        <table id="fifaTableData" class="table table-striped table-bordered">
-          <thead>
-            <tr>
-              <th scope="col" style="color: black;">Date</th>
-              <th scope="col" style="color: black;">Match</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php if (isset($matches_by_division['fifa']) && !empty($matches_by_division['fifa'])): ?>
-              <?php foreach ($matches_by_division['fifa'] as $match): ?>
-                <tr>
-                  <td><?php echo date('Y-m-d', strtotime($match['match_day'])); ?></td>
-                  <td><?php echo $match['match_title']; ?></td>
-                </tr>
-              <?php endforeach; ?>
-            <?php else: ?>
-              <tr>
-                <td colspan="2">No matches scheduled.</td>
-              </tr>
-            <?php endif; ?>
-          </tbody>
-        </table>
-      </div>
-      <script>
-        $(document).ready(function() {
-          $('#mlTable').DataTable();
-          $('#fifaTableData').DataTable();
-        });
-      </script>
-
-
-
+          <?php endif; ?>
+        </tbody>
+      </table>
     </div>
-  </section>
+  </div>
+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 
   <!--==========================
       Venue Section
@@ -548,7 +514,7 @@
 
     <div class="section-header">
       <h2>Registration</h2>
-      <p>Dare to lose is the winner!</p>
+      <p>Only Available In February</p>
     </div>
 
     <div class="row justify-content-center">
@@ -836,4 +802,42 @@
     }
   };
 </script>
+  <script>
+    $(document).ready(function() {
+      $('#mlLeaderboard').DataTable();
+      $('#fifaLeaderboardTable').DataTable();
+    });
+  </script>
 
+  <script>
+    const mlbtn1 = document.getElementById('mlbtn1');
+    const fifabtn1 = document.getElementById('fifabtn1');
+    const mobileLegendsLeaderboard = document.getElementById('mobileLegendsLeaderboard');
+    const fifaLeaderboard = document.getElementById('fifaLeaderboard');
+
+    // Add event listeners for the toggle buttons
+    mlbtn1.addEventListener('click', function() {
+      mobileLegendsLeaderboard.style.display = 'block';
+      fifaLeaderboard.style.display = 'none';
+      mlbtn1.classList.add('active');
+      fifabtn1.classList.remove('active');
+    });
+
+    fifabtn1.addEventListener('click', function() {
+      mobileLegendsLeaderboard.style.display = 'none';
+      fifaLeaderboard.style.display = 'block';
+      fifabtn1.classList.add('active');
+      mlbtn1.classList.remove('active');
+    });
+
+    window.addEventListener('load', function() {
+      mlbtn1.click();
+    });
+  </script>
+
+<script>
+        $(document).ready(function() {
+          $('#mlTable').DataTable();
+          $('#fifaTableData').DataTable();
+        });
+      </script>
