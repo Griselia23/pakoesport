@@ -14,6 +14,7 @@
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Raleway:300,400,500,700,800" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css" rel="stylesheet">
+
   <!-- Bootstrap CSS File -->
   <link href="<?php echo base_url('application/template/lib/bootstrap/css/bootstrap.min.css'); ?>" rel="stylesheet">
 
@@ -33,6 +34,7 @@
 <script src="<?php echo base_url('application/template/lib/owlcarousel/owl.carousel.min.js'); ?>"></script>
 <script src="<?php echo base_url('application/template/contactform/contactform.js'); ?>"></script>
 <script src="<?php echo base_url('application/template/js/main.js'); ?>"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- Main Stylesheet File -->
   <link href="<?php echo base_url('application/template/css/style.css'); ?>" rel="stylesheet">

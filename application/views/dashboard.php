@@ -19,7 +19,7 @@
         <!-- <li><a href="#contact">Contact</a></li> -->
         <li class="buy-tickets"><a href="admin">Admin</a></li>
       </ul>
-      
+
     </nav>
   </div>
 </header>
@@ -30,7 +30,7 @@
 </style>
 
 <section id="intro">
-  <div class="intro-container wow fadeIn"> 
+  <div class="intro-container wow fadeIn">
 
     <!-- Intro Text -->
     <h1 class="mb-4 pb-0">The Annual<br><span>Gaming</span> League</h1>
@@ -70,195 +70,195 @@
   <!--==========================
       Speakers Section
     ============================-->
-    <section id="leaderboard" class="section-with-bg">
-  <div class="container wow fadeInUp">
-    <div class="section-header">
-      <h2>Leaderboard</h2>
-      <p>Join to compete!</p>
+  <section id="leaderboard" class="section-with-bg">
+    <div class="container wow fadeInUp">
+      <div class="section-header">
+        <h2>Leaderboard</h2>
+        <p>Join to compete!</p>
+      </div>
+
+      <div class="schedule-toggle-stripe">
+        <span id="mlbtn1" class="toggle-stripe active">Mobile Legends</span>
+        <span id="fifabtn1" class="toggle-stripe">FIFA</span>
+      </div>
+
+      <!-- Mobile Legends Leaderboard -->
+      <div id="mobileLegendsLeaderboard" class="mt-4">
+        <h3>Leaderboard - Mobile Legends</h3>
+        <table id="mlLeaderboard" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th scope="col" style="color: black;">Rank</th>
+              <th scope="col" style="color: black;">Team</th>
+              <th scope="col" style="color: black;">Play</th>
+              <th scope="col" style="color: black;">Win</th>
+              <th scope="col" style="color: black;">Lose</th>
+              <th scope="col" style="color: black;">Points</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($ml_leaderboard as $team): ?>
+              <tr>
+                <td><?php echo $team['rank']; ?></td>
+                <td><?php echo $team['team']; ?></td>
+                <td><?php echo $team['play']; ?></td>
+                <td><?php echo $team['win']; ?></td>
+                <td><?php echo $team['lose']; ?></td>
+                <td><?php echo $team['points']; ?></td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- FIFA Leaderboard -->
+      <div id="fifaLeaderboard" class="mt-4" style="display:none;">
+        <h3>Leaderboard - FIFA</h3>
+        <table id="fifaLeaderboardTable" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th scope="col" style="color: black;">Rank</th>
+              <th scope="col" style="color: black;">Team</th>
+              <th scope="col" style="color: black;">Play</th>
+              <th scope="col" style="color: black;">Win</th>
+              <th scope="col" style="color: black;">Lose</th>
+              <th scope="col" style="color: black;">Draw</th>
+              <th scope="col" style="color: black;">Points</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($fifa_leaderboard as $team): ?>
+              <tr>
+                <td><?php echo $team['rank']; ?></td>
+                <td><?php echo $team['team']; ?></td>
+                <td><?php echo $team['play']; ?></td>
+                <td><?php echo $team['win']; ?></td>
+                <td><?php echo $team['lose']; ?></td>
+                <td><?php echo $team['draw']; ?></td>
+                <td><?php echo $team['points']; ?></td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+
     </div>
+  </section>
 
-    <div class="schedule-toggle-stripe">
-      <span id="mlbtn1" class="toggle-stripe active">Mobile Legends</span>
-      <span id="fifabtn1" class="toggle-stripe">FIFA</span>
-    </div>
+  <!-- DataTables Initialization -->
+  <script>
+    $(document).ready(function() {
+      $('#mlLeaderboard').DataTable();
+      $('#fifaLeaderboardTable').DataTable();
+    });
+  </script>
 
-    <!-- Mobile Legends Leaderboard -->
-    <div id="mobileLegendsLeaderboard" class="mt-4">
-      <h3>Leaderboard - Mobile Legends</h3>
-      <table id="mlLeaderboard" class="table table-striped table-bordered">
-        <thead>
-          <tr>
-            <th scope="col" style="color: black;">Rank</th> 
-            <th scope="col" style="color: black;">Team</th>
-            <th scope="col" style="color: black;">Play</th>
-            <th scope="col" style="color: black;">Win</th>
-            <th scope="col" style="color: black;">Lose</th>
-            <th scope="col" style="color: black;">Points</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($ml_leaderboard as $team): ?>
-          <tr>
-            <td><?php echo $team['rank']; ?></td>
-            <td><?php echo $team['team']; ?></td>
-            <td><?php echo $team['play']; ?></td>
-            <td><?php echo $team['win']; ?></td>
-            <td><?php echo $team['lose']; ?></td>
-            <td><?php echo $team['points']; ?></td>
-          </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
-    </div>
+  <script>
+    const mlbtn1 = document.getElementById('mlbtn1');
+    const fifabtn1 = document.getElementById('fifabtn1');
+    const mobileLegendsLeaderboard = document.getElementById('mobileLegendsLeaderboard');
+    const fifaLeaderboard = document.getElementById('fifaLeaderboard');
 
-    <!-- FIFA Leaderboard -->
-    <div id="fifaLeaderboard" class="mt-4" style="display:none;">
-      <h3>Leaderboard - FIFA</h3>
-      <table id="fifaLeaderboardTable" class="table table-striped table-bordered">
-        <thead>
-          <tr>
-            <th scope="col" style="color: black;">Rank</th>
-            <th scope="col" style="color: black;">Team</th>
-            <th scope="col" style="color: black;">Play</th>
-            <th scope="col" style="color: black;">Win</th>
-            <th scope="col" style="color: black;">Lose</th>
-            <th scope="col" style="color: black;">Draw</th>
-            <th scope="col" style="color: black;">Points</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($fifa_leaderboard as $team): ?>
-          <tr>
-            <td><?php echo $team['rank']; ?></td>
-            <td><?php echo $team['team']; ?></td>
-            <td><?php echo $team['play']; ?></td>
-            <td><?php echo $team['win']; ?></td>
-            <td><?php echo $team['lose']; ?></td>
-            <td><?php echo $team['draw']; ?></td>
-            <td><?php echo $team['points']; ?></td>
-          </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
-    </div>
+    // Add event listeners for the toggle buttons
+    mlbtn1.addEventListener('click', function() {
+      mobileLegendsLeaderboard.style.display = 'block';
+      fifaLeaderboard.style.display = 'none';
+      mlbtn1.classList.add('active');
+      fifabtn1.classList.remove('active');
+    });
 
-  </div>
-</section>
+    fifabtn1.addEventListener('click', function() {
+      mobileLegendsLeaderboard.style.display = 'none';
+      fifaLeaderboard.style.display = 'block';
+      fifabtn1.classList.add('active');
+      mlbtn1.classList.remove('active');
+    });
 
-<!-- DataTables Initialization -->
-<script>
-  $(document).ready(function() {
-    $('#mlLeaderboard').DataTable();
-    $('#fifaLeaderboardTable').DataTable();
-  });
-</script>
-
-<script>
-  const mlbtn1 = document.getElementById('mlbtn1');
-  const fifabtn1 = document.getElementById('fifabtn1');
-  const mobileLegendsLeaderboard = document.getElementById('mobileLegendsLeaderboard');
-  const fifaLeaderboard = document.getElementById('fifaLeaderboard');
-
-  // Add event listeners for the toggle buttons
-  mlbtn1.addEventListener('click', function() {
-    mobileLegendsLeaderboard.style.display = 'block';
-    fifaLeaderboard.style.display = 'none';
-    mlbtn1.classList.add('active');
-    fifabtn1.classList.remove('active');
-  });
-
-  fifabtn1.addEventListener('click', function() {
-    mobileLegendsLeaderboard.style.display = 'none';
-    fifaLeaderboard.style.display = 'block';
-    fifabtn1.classList.add('active');
-    mlbtn1.classList.remove('active');
-  });
-
-  // Trigger the first click event to display the Mobile Legends table by default
-  window.addEventListener('load', function() {
-    mlbtn1.click();
-  });
-</script>
+    // Trigger the first click event to display the Mobile Legends table by default
+    window.addEventListener('load', function() {
+      mlbtn1.click();
+    });
+  </script>
 
   <!--==========================
       Schedule Section
     ============================-->
-    <section id="schedule" class="section-with-bg">
-  <div class="container wow fadeInUp">
-    <div class="section-header">
-      <h2>Event Schedule</h2>
-      <p>Here is our event schedule</p>
+  <section id="schedule" class="section-with-bg">
+    <div class="container wow fadeInUp">
+      <div class="section-header">
+        <h2>Event Schedule</h2>
+        <p>Here is our event schedule</p>
+      </div>
+
+      <div class="schedule-toggle-stripe">
+        <span id="mlbtn" class="toggle-stripe active">Mobile Legends</span>
+        <span id="fifabtn" class="toggle-stripe">FIFA</span>
+      </div>
+
+      <!-- Mobile Legends Table -->
+      <div id="mobileLegendsTable" class="schedule-table">
+        <h3>Mobile Legends Schedule</h3>
+        <table id="mlTable" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th scope="col" style="color: black;">Date</th>
+              <th scope="col" style="color: black;">Match</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php if (isset($matches_by_division['ml']) && !empty($matches_by_division['ml'])): ?>
+              <?php foreach ($matches_by_division['ml'] as $match): ?>
+                <tr>
+                  <td><?php echo date('Y-m-d', strtotime($match['match_day'])); ?></td>
+                  <td><?php echo $match['match_title']; ?></td>
+                </tr>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <tr>
+                <td colspan="2">No matches scheduled.</td>
+              </tr>
+            <?php endif; ?>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- FIFA Table -->
+      <div id="fifaTable" class="schedule-table" style="display:none;">
+        <h3>FIFA Schedule</h3>
+        <table id="fifaTableData" class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th scope="col" style="color: black;">Date</th>
+              <th scope="col" style="color: black;">Match</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php if (isset($matches_by_division['fifa']) && !empty($matches_by_division['fifa'])): ?>
+              <?php foreach ($matches_by_division['fifa'] as $match): ?>
+                <tr>
+                  <td><?php echo date('Y-m-d', strtotime($match['match_day'])); ?></td>
+                  <td><?php echo $match['match_title']; ?></td>
+                </tr>
+              <?php endforeach; ?>
+            <?php else: ?>
+              <tr>
+                <td colspan="2">No matches scheduled.</td>
+              </tr>
+            <?php endif; ?>
+          </tbody>
+        </table>
+      </div>
+      <script>
+        $(document).ready(function() {
+          $('#mlTable').DataTable();
+          $('#fifaTableData').DataTable();
+        });
+      </script>
+
+
+
     </div>
-
-    <div class="schedule-toggle-stripe">
-      <span id="mlbtn" class="toggle-stripe active">Mobile Legends</span>
-      <span id="fifabtn" class="toggle-stripe">FIFA</span>
-    </div>
-
-<!-- Mobile Legends Table -->
-<div id="mobileLegendsTable" class="schedule-table">
-  <h3>Mobile Legends Schedule</h3>
-  <table id="mlTable" class="table table-striped table-bordered">
-    <thead>
-      <tr>
-        <th scope="col" style="color: black;">Date</th>
-        <th scope="col" style="color: black;">Match</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php if (isset($matches_by_division['ml']) && !empty($matches_by_division['ml'])): ?>
-        <?php foreach ($matches_by_division['ml'] as $match): ?>
-          <tr>
-            <td><?php echo date('Y-m-d', strtotime($match['match_day'])); ?></td>
-            <td><?php echo $match['match_title']; ?></td>
-          </tr>
-        <?php endforeach; ?>
-      <?php else: ?>
-        <tr>
-          <td colspan="2">No matches scheduled.</td>
-        </tr>
-      <?php endif; ?>
-    </tbody>
-  </table>
-</div>
-
-<!-- FIFA Table -->
-<div id="fifaTable" class="schedule-table" style="display:none;">
-  <h3>FIFA Schedule</h3>
-  <table id="fifaTableData" class="table table-striped table-bordered">
-    <thead>
-      <tr>
-        <th scope="col" style="color: black;">Date</th>
-        <th scope="col" style="color: black;">Match</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php if (isset($matches_by_division['fifa']) && !empty($matches_by_division['fifa'])): ?>
-        <?php foreach ($matches_by_division['fifa'] as $match): ?>
-          <tr>
-            <td><?php echo date('Y-m-d', strtotime($match['match_day'])); ?></td>
-            <td><?php echo $match['match_title']; ?></td>
-          </tr>
-        <?php endforeach; ?>
-      <?php else: ?>
-        <tr>
-          <td colspan="2">No matches scheduled.</td>
-        </tr>
-      <?php endif; ?>
-    </tbody>
-  </table>
-</div>
-<script>
-  $(document).ready(function() {
-    $('#mlTable').DataTable();
-    $('#fifaTableData').DataTable();
-  });
-</script>
-
-
-
-  </div>
-</section>
+  </section>
 
   <!--==========================
       Venue Section
@@ -515,7 +515,7 @@
               <a data-toggle="collapse" href="#faq6" class="collapsed">Dilarang melontarkan kalimat toxic atau menyangkut rasisme antar tim!<i class="fa fa-minus-circle"></i></a>
               <div id="faq6" class="collapse" data-parent="#faq-list">
                 <p>
-                 Raih juaramu tanpa menyakiti team lain!
+                  Raih juaramu tanpa menyakiti team lain!
                 </p>
               </div>
             </li>
@@ -543,86 +543,121 @@
   <!--==========================
       Buy Ticket Section
     ============================-->
-  <section id="buy-tickets" class="section-with-bg wow fadeInUp">
-    <div class="container">
+    <section id="buy-tickets" class="section-with-bg wow fadeInUp">
+  <div class="container">
 
-      <div class="section-header">
-        <h2>Registration</h2>
-        <p>Dare to lose is the winner!</p>
+    <div class="section-header">
+      <h2>Registration</h2>
+      <p>Dare to lose is the winner!</p>
+    </div>
+
+    <div class="row justify-content-center">
+      <!-- Card for registration form -->
+      <div class="card registration-card" id="registration-form">
+        <h3>Register Your Team</h3>
+        <p style="font-size: 0.8em; color: rgba(0, 0, 0, 0.6); font-style: bold;">Baca <a href="#faq">peraturan</a> sebelum mendaftar!</p>
+        <form action="<?= base_url('dashboard/submit_registration') ?>" method="POST">
+          <!-- Team Information -->
+          <div class="form-group">
+            <label for="team">Team Name:</label>
+            <input type="text" id="team" name="team" required placeholder="Enter team name">
+          </div>
+
+          <div class="form-group">
+            <label for="plant">Plant:</label>
+            <input type="text" id="plant" name="plant" required placeholder="Enter plant name">
+          </div>
+
+          <div class="form-group">
+            <label for="npk">Leader NPK:</label>
+            <input type="text" id="npk" name="npk" required placeholder="Enter leader's NPK">
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+            <h7 style="font-size: 0.8em; color: rgba(0, 0, 0, 0.6); font-style: italic;">*ingat password untuk login upload result nantinya</h7>
+          </div>
+
+          <div class="form-group">
+            <label for="leadername">Leader Name:</label>
+            <input type="text" id="leadername" name="leadername" required placeholder="Enter leader's name">
+          </div>
+
+          <div class="form-group">
+            <label for="number">Leader No hp:</label>
+            <input type="text" id="number" name="number" required placeholder="Enter whatsapp number">
+          </div>
+
+          <div class="form-group">
+            <label for="division">Division:</label>
+            <select id="division" name="division" required>
+              <option value="" disabled selected>Select Division</option>
+              <option value="ml">Mobile Legend</option>
+              <option value="fifa">FIFA</option>
+            </select>
+          </div>
+
+          <!-- Member Information -->
+          <h4>Members:</h4>
+
+          <div id="members-container">
+            <!-- First Member Input -->
+            <div class="form-group member">
+              <label for="member1npk">Member 1 NPK:</label>
+              <input type="text" id="member1npk" name="member1npk" placeholder="Enter member 1 NPK">
+              <label for="member1name">Member 1 Name:</label>
+              <input type="text" id="member1name" name="member1name" placeholder="Enter member 1 name">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <button type="button" id="add-member-btn" style="float: left;">Add Member</button>
+            <button type="submit" style="float: right;">Submit</button>
+          </div>
+        </form>
       </div>
 
-      <div class="row">
-        <!-- Card for registration form -->
-        <div class="card">
-          <h3>Register Your Team</h3>
-          <p style="font-size: 0.8em; color: rgba(0, 0, 0, 0.6); font-style: bold;">Baca <a href="#faq">peraturan</a> sebelum mendaftar!</p>
-          <form action="<?= base_url('dashboard/submit_registration') ?>" method="POST">
-  <!-- Team Information -->
-  <div class="form-group">
-    <label for="team">Team Name:</label>
-    <input type="text" id="team" name="team" required placeholder="Enter team name">
-  </div>
-
-  <div class="form-group">
-    <label for="plant">Plant:</label>
-    <input type="text" id="plant" name="plant" required placeholder="Enter plant name">
-  </div>
-
-  <div class="form-group">
-    <label for="npk">Leader NPK:</label>
-    <input type="text" id="npk" name="npk" required placeholder="Enter leader's NPK">
-  </div>
-
-  <div class="form-group">
-  <label for="password">Password</label>
-  <input type="password" class="form-control" id="password" name="password" required>
-  <h7 style="font-size: 0.8em; color: rgba(0, 0, 0, 0.6); font-style: italic;">*ingat password untuk login upload result nantinya</h7>
-</div>
-
-
-  <div class="form-group">
-    <label for="leadername">Leader Name:</label>
-    <input type="text" id="leadername" name="leadername" required placeholder="Enter leader's name">
-    
-  </div>
-
-  <div class="form-group">
-    <label for="number">Leader No hp:</label>
-    <input type="text" id="number" name="number" required placeholder="Enter whatsapp number">
-  </div>
-
-  <div class="form-group">
-    <label for="division">Division:</label>
-    <select id="division" name="division" required>
-      <option value="" disabled selected>Select Division</option>
-      <option value="ml">Mobile Legend</option>
-      <option value="fifa">FIFA</option>
-    </select>
-  </div>
-
-  <!-- Member Information -->
-  <h4>Members:</h4>
-
-  <div id="members-container">
-    <!-- First Member Input -->
-    <div class="form-group member">
-      <label for="member1npk">Member 1 NPK:</label>
-      <input type="text" id="member1npk" name="member1npk" placeholder="Enter member 1 NPK">
-      <label for="member1name">Member 1 Name:</label>
-      <input type="text" id="member1name" name="member1name" placeholder="Enter member 1 name">
     </div>
   </div>
+</section>
 
-  <div class="form-group">
-    <button type="button" id="add-member-btn" style="float: left;">Add Member</button>
-    <button type="submit" style="float: right;">Submit</button>
-  </div>
-</form>
+<style>
+  
+  .registration-card {
+    max-width: 500px; 
+    margin: 0 auto; 
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
 
+  
+  .form-group {
+    margin-bottom: 1em;
+  }
 
-        </div>
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+  }
 
-  </section>
+  .section-header h2 {
+    font-size: 2em;
+  }
+
+  
+  @media (max-width: 768px) {
+    .registration-card {
+      width: 90%; 
+    }
+  }
+</style>
+
 
   <!--==========================
       Contact Section
@@ -736,7 +771,7 @@
   });
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+
 
 <script>
   // Check if there's flashdata for success or error
@@ -787,5 +822,18 @@
   window.addEventListener('load', function() {
     mlbtn.click();
   });
+</script>
+
+<script>
+  window.onload = function() {
+    var form = document.getElementById('registration-form');
+    var formState = sessionStorage.getItem('hideRegistrationForm');
+
+    if (formState === 'true') {
+      form.style.display = 'none';  // Hide the form
+    } else {
+      form.style.display = 'block';  // Show the form
+    }
+  };
 </script>
 

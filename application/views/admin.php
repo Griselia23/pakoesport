@@ -1,5 +1,6 @@
 <?php include(APPPATH . 'views/layout/header.php'); ?>
 <link href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" rel="stylesheet" />
+
 <header id="header">
     <div class="container">
         <div id="logo" class="pull-left">
@@ -86,6 +87,53 @@
 
                 <!-- Add Schedule Button -->
                 <a href="#addScheduleModal" class="btn btn-primary mt-4">Add Schedule</a>
+                <a id="hideregister" class="btn btn-primary mt-4" style="color: white;">Hide Registration Form</a>
+
+                
+
+<script>
+  window.onload = function() {
+    var button = document.getElementById('hideregister');
+    var currentState = sessionStorage.getItem('hideRegistrationForm');
+
+    if (currentState === 'true') {
+      button.textContent = 'Unhide Registration Form';
+    } else {
+      button.textContent = 'Hide Registration Form';
+    }
+  };
+
+  document.getElementById('hideregister').addEventListener('click', function() {
+    var currentState = sessionStorage.getItem('hideRegistrationForm');
+
+    if (currentState === 'true') {
+      sessionStorage.setItem('hideRegistrationForm', 'false');
+      Swal.fire({
+        icon: 'success',
+        title: 'Registration Form Shown',
+        text: 'Form is now visible',
+        confirmButtonText: 'OK',
+        timer: 4000, 
+        timerProgressBar: true,
+      }).then(() => {
+        window.location.reload(); 
+      });
+    } else {
+      sessionStorage.setItem('hideRegistrationForm', 'true');
+      Swal.fire({
+        icon: 'success',
+        title: 'Registration Form Hidden',
+        text: 'Form is now hidden',
+        confirmButtonText: 'OK',
+        timer: 4000, 
+        timerProgressBar: true,
+      }).then(() => {
+        window.location.reload(); /
+      });
+    }
+  });
+</script>
+
 
                 <!-- Period Toggle Buttons -->
                 <div class="period-toggle-stripe mt-4">
@@ -648,6 +696,7 @@
         });
     });
 </script>
+
 
 </html>
 

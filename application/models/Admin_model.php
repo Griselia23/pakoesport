@@ -56,13 +56,12 @@ FROM (
     WHERE 
         a.id < b.id
         AND a.division IN ('ml', 'fifa')
-        AND s.start_date >= CURDATE()
-        AND s.end_date >= CURDATE()
 ) AS match_list
 WHERE 
     match_day <= match_end_day
 ORDER BY 
     categ, match_day;
+
         ";
         $result = $this->db->query($query);
     
