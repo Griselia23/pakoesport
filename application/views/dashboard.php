@@ -82,148 +82,158 @@
         <div class="d-flex flex-wrap justify-content-between" style="gap: 20px;">
 
         <div style="flex: 1 1 60%; max-width: 60%;">
-  <div class="section-header">
-    <h3>Leaderboard</h3>
-  </div>
+          <div class="section-header">
+            <h3>Leaderboard</h3>
+          </div>
 
-  <div class="schedule-toggle-stripe">
-    <span id="mlbtn1" class="toggle-stripe active">Mobile Legends</span>
-    <span id="fifabtn1" class="toggle-stripe">FIFA</span>
-  </div>
+          <div class="schedule-toggle-stripe">
+            <span id="mlbtn1" class="toggle-stripe active">Mobile Legends</span>
+            <span id="fifabtn1" class="toggle-stripe">FIFA</span>
+          </div>
 
-  <div id="mobileLegendsLeaderboard" class="mt-4">
-    <h4>Leaderboard - Mobile Legends</h4>
-    <div class="table-responsive">
-      <table id="mlLeaderboard" class="table table-striped table-bordered">
-        <thead>
-          <tr>
-            <th scope="col" style="color: black;">Rank</th>
-            <th scope="col" style="color: black;">Team</th>
-            <th scope="col" style="color: black;">Play</th>
-            <th scope="col" style="color: black;">Win</th>
-            <th scope="col" style="color: black;">Lose</th>
-            <th scope="col" style="color: black;">Points</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($ml_leaderboard as $team): ?>
-            <tr>
-              <td><?php echo $team['rank']; ?></td>
-              <td><?php echo $team['team']; ?></td>
-              <td><?php echo $team['play']; ?></td>
-              <td><?php echo $team['win']; ?></td>
-              <td><?php echo $team['lose']; ?></td>
-              <td><?php echo $team['points']; ?></td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
-    </div>
-  </div>
+          <div id="mobileLegendsLeaderboard" class="mt-4">
+            <h4>Leaderboard - Mobile Legends</h4>
+            <div class="table-responsive">
+              <table id="mlLeaderboard" class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col" style="color: black;">Rank</th>
+                    <th scope="col" style="color: black;">Team</th>
+                    <th scope="col" style="color: black;">Play</th>
+                    <th scope="col" style="color: black;">Win</th>
+                    <th scope="col" style="color: black;">Lose</th>
+                    <th scope="col" style="color: black;">Points</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php foreach ($ml_leaderboard as $team): ?>
+                    <tr>
+                      <td><?php echo $team['rank']; ?></td>
+                      <td><?php echo $team['team']; ?></td>
+                      <td><?php echo $team['play']; ?></td>
+                      <td><?php echo $team['win']; ?></td>
+                      <td><?php echo $team['lose']; ?></td>
+                      <td><?php echo $team['points']; ?></td>
+                    </tr>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
-  <div id="fifaLeaderboard" class="mt-4" style="display:none;">
-    <h4>Leaderboard - FIFA</h4>
-    <div class="table-responsive">
-      <table id="fifaLeaderboardTable" class="table table-striped table-bordered">
-        <thead>
-          <tr>
-            <th scope="col" style="color: black;">Rank</th>
-            <th scope="col" style="color: black;">Team</th>
-            <th scope="col" style="color: black;">Play</th>
-            <th scope="col" style="color: black;">Win</th>
-            <th scope="col" style="color: black;">Lose</th>
-            <th scope="col" style="color: black;">Draw</th>
-            <th scope="col" style="color: black;">Points</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($fifa_leaderboard as $team): ?>
-            <tr>
-              <td><?php echo $team['rank']; ?></td>
-              <td><?php echo $team['team']; ?></td>
-              <td><?php echo $team['play']; ?></td>
-              <td><?php echo $team['win']; ?></td>
-              <td><?php echo $team['lose']; ?></td>
-              <td><?php echo $team['draw']; ?></td>
-              <td><?php echo $team['points']; ?></td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+          <div id="fifaLeaderboard" class="mt-4" style="display:none;">
+            <h4>Leaderboard - FIFA</h4>
+            <div class="table-responsive">
+              <table id="fifaLeaderboardTable" class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col" style="color: black;">Rank</th>
+                    <th scope="col" style="color: black;">Team</th>
+                    <th scope="col" style="color: black;">Play</th>
+                    <th scope="col" style="color: black;">Win</th>
+                    <th scope="col" style="color: black;">Lose</th>
+                    <th scope="col" style="color: black;">Draw</th>
+                    <th scope="col" style="color: black;">Points</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php foreach ($fifa_leaderboard as $team): ?>
+                    <tr>
+                      <td><?php echo $team['rank']; ?></td>
+                      <td><?php echo $team['team']; ?></td>
+                      <td><?php echo $team['play']; ?></td>
+                      <td><?php echo $team['win']; ?></td>
+                      <td><?php echo $team['lose']; ?></td>
+                      <td><?php echo $team['draw']; ?></td>
+                      <td><?php echo $team['points']; ?></td>
+                    </tr>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
 
-<div style="flex: 1 1 35%; max-width: 35%;">
-  <div class="section-header">
-    <h3>Schedule</h3>
-  </div>
+        <div style="flex: 1 1 35%; max-width: 35%;">
+          <div class="section-header">
+            <h3>Schedule</h3>
+          </div>
 
-  <div class="schedule-toggle-stripe">
-    <span id="mlbtn" class="toggle-stripe active">Mobile Legends</span>
-    <span id="fifabtn" class="toggle-stripe">FIFA</span>
-  </div>
+          <div class="schedule-toggle-stripe">
+            <span id="mlbtn" class="toggle-stripe active">Mobile Legends</span>
+            <span id="fifabtn" class="toggle-stripe">FIFA</span>
+          </div>
 
-  <div id="mobileLegendsTable" class="schedule-table">
-    <div class="table-responsive">
-      <table id="mlTable" class="table table-striped table-bordered">
-        <thead>
-          <tr>
-            <th scope="col" style="color: black;">Date</th>
-            <th scope="col" style="color: black;">Match</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php if (isset($matches_by_division['ml']) && !empty($matches_by_division['ml'])): ?>
-            <?php foreach ($matches_by_division['ml'] as $match): ?>
-              <tr>
-                <td><?php echo date('Y-m-d', strtotime($match['match_day'])); ?></td>
-                <td><?php echo $match['match_title']; ?></td>
-              </tr>
-            <?php endforeach; ?>
-          <?php else: ?>
-            <tr>
-              <td colspan="2">No matches scheduled.</td>
-            </tr>
-          <?php endif; ?>
-        </tbody>
-      </table>
-    </div>
-  </div>
+          <div id="mobileLegendsTable" class="schedule-table">
+            <div class="table-responsive">
+              <table id="mlTable" class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col" style="color: black;">Date</th>
+                    <th scope="col" style="color: black;">Match</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php if (isset($matches_by_division['ml']) && !empty($matches_by_division['ml'])): ?>
+                    <?php foreach ($matches_by_division['ml'] as $match): ?>
+                      <tr>
+                        <td><?php echo date('Y-m-d', strtotime($match['match_day'])); ?></td>
+                        <td><?php echo $match['match_title']; ?></td>
+                      </tr>
+                    <?php endforeach; ?>
+                  <?php else: ?>
+                    <tr>
+                      <td colspan="2">No matches scheduled.</td>
+                    </tr>
+                  <?php endif; ?>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
-  <div id="fifaTable" class="schedule-table" style="display:none;">
-    <div class="table-responsive">
-      <table id="fifaTableData" class="table table-striped table-bordered">
-        <thead>
-          <tr>
-            <th scope="col" style="color: black;">Date</th>
-            <th scope="col" style="color: black;">Match</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php if (isset($matches_by_division['fifa']) && !empty($matches_by_division['fifa'])): ?>
-            <?php foreach ($matches_by_division['fifa'] as $match): ?>
-              <tr>
-                <td><?php echo date('Y-m-d', strtotime($match['match_day'])); ?></td>
-                <td><?php echo $match['match_title']; ?></td>
-              </tr>
-            <?php endforeach; ?>
-          <?php else: ?>
-            <tr>
-              <td colspan="2">No matches scheduled.</td>
-            </tr>
-          <?php endif; ?>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+          <div id="fifaTable" class="schedule-table" style="display:none;">
+            <div class="table-responsive">
+              <table id="fifaTableData" class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col" style="color: black;">Date</th>
+                    <th scope="col" style="color: black;">Match</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php if (isset($matches_by_division['fifa']) && !empty($matches_by_division['fifa'])): ?>
+                    <?php foreach ($matches_by_division['fifa'] as $match): ?>
+                      <tr>
+                        <td><?php echo date('Y-m-d', strtotime($match['match_day'])); ?></td>
+                        <td><?php echo $match['match_title']; ?></td>
+                      </tr>
+                    <?php endforeach; ?>
+                  <?php else: ?>
+                    <tr>
+                      <td colspan="2">No matches scheduled.</td>
+                    </tr>
+                  <?php endif; ?>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
         </div>
       </div>
     </div>
   </div>
 </section>
+<style>
+  table.table, table.table th, table.table td {
+    border: none !important;
+}
 
+table.table th, table.table td {
+    padding: 12px;
+}
+
+</style>
 
 
   <!--==========================

@@ -7,10 +7,6 @@
 
     <!-- Bootstrap 5 CDN for styling -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css" rel="stylesheet">
-    <!-- SweetAlert2 CDN for popup notifications -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Custom CSS for login page -->
     <style>
@@ -93,9 +89,9 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 
-<!-- SweetAlert2 Popup (for any message you want to show, e.g., failed login or success) -->
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    // Ensure this script is at the bottom to make sure the page and session data are loaded
     <?php if ($this->session->flashdata('error')): ?>
         Swal.fire({
             icon: 'error',
