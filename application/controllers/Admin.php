@@ -61,38 +61,74 @@ class Admin extends CI_Controller {
         $division = $this->input->post('division');
         $startDate = $this->input->post('startDate');
         $endDate = $this->input->post('endDate');
-        
-        
-        $data = array(
-            'match_number' => $matchNumber,
-            'division' => $division,
-            'start_date' => $startDate,
-            'end_date' => $startDate
-            
-        );
-        
-        $this->Dashboard_model->save_schedule($data);
+    
+        $matches = $this->db->query("
+            SELECT 
+                a.id AS team_a_id,
+                b.id AS team_b_id,
+                CONCAT(a.team, ' vs. ', b.team) AS match_title
+            FROM 
+                register a
+            JOIN 
+                register b ON a.division = b.division
+            WHERE 
+                a.division = ? AND a.id < b.id
+        ", [$division])->result_array();
+    
+        $currentDate = $startDate;
+        $matchesIndex = 0;
+    
+        while (strtotime($currentDate) <= strtotime($endDate)) {
+            $matchesScheduled = 0;
+    
+            while ($matchesScheduled < 2 && $matchesIndex < count($matches)) {
+                $match = $matches[$matchesIndex];
+                $data = [
+                    'match_number' => $matchNumber,
+                    'division' => $division,
+                    'start_date' => $currentDate,
+                    'end_date' => $currentDate,
+                    'match_title' => $match['match_title'],
+                    'team_a_id' => $match['team_a_id'],
+                    'team_b_id' => $match['team_b_id'],
+                ];
+                $this->Dashboard_model->save_schedule($data);
+                $matchesScheduled++;
+                $matchesIndex++;
+            }
+    
+            $currentDate = date('Y-m-d', strtotime($currentDate . ' +1 day'));
+        }
+    
         redirect('admin');
     }
+    
 
     public function update_schedule($id) {
-        $matchNumber = $this->input->post('matchNumber');
-        $division = $this->input->post('division');
         $startDate = $this->input->post('startDate');
         $endDate = $this->input->post('endDate');
-        
-        
-        $data = array(
-            'match_number' => $matchNumber,
-            'division' => $division,
-            'start_date' => $startDate,
-            'end_date' => $endDate
-        );
-        
-        $this->Dashboard_model->update_schedule($id, $data);
+    
+        // Get the schedule to update by its ID
+        $schedule = $this->db->get_where('schedule', ['id' => $id])->row();
+    
+        // Check if the schedule exists
+        if ($schedule) {
+            $data = [
+                'start_date' => $startDate,
+                'end_date' => $endDate
+            ];
+    
+            // Update the schedule in the database using the ID
+            $this->db->where('id', $id);
+            $this->db->update('schedule', $data);
+        }
+    
         redirect('admin');
     }
-
+    
+    
+    
+    
     public function delete_schedule($id) {
         $this->Dashboard_model->delete_schedule($id);
         redirect('admin');
@@ -132,6 +168,8 @@ class Admin extends CI_Controller {
 
 
     }
+
+    //
 
 
     

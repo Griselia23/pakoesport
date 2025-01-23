@@ -11,7 +11,7 @@
         <li class="menu-active"><a href="#intro">Home</a></li>
         <li><a href="#about">About</a></li>
         <li><a href="#leaderboard">Leaderboard</a></li>
-        <li><a href="#schedule">Schedule</a></li>
+        <!-- <li><a href="#schedule">Schedule</a></li> -->
         <li><a href="#venue">Venue</a></li>
         <li><a href="uploadresult">Upload Result</a></li>
         <!-- <li><a href="#gallery">Gallery</a></li> -->

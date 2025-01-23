@@ -70,8 +70,21 @@ class Dashboard_model extends CI_Model {
     // scheduling
 
     public function get_all_schedules() {
-        return $this->db->get('schedule')->result();
+        $this->db->select('
+            schedule.id,
+            schedule.match_number,
+            schedule.division,
+            schedule.start_date,
+            schedule.end_date,
+            schedule.match_title,  
+            schedule.team_a_id,
+            schedule.team_b_id
+        ');
+        $this->db->from('schedule');
+        $query = $this->db->get();
+        return $query->result();
     }
+    
     
     public function save_schedule($data) {
         $this->db->insert('schedule', $data);

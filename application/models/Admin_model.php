@@ -32,13 +32,14 @@ FROM (
         b.team AS team_b_name,  
         CONCAT(a.team, ' vs. ', b.team) AS match_title,
         DATE_ADD(s.start_date, INTERVAL ((@row_num := IF(@prev_division = a.division, @row_num + 1, 1)) - 1) DIV 2 DAY) AS match_day,
-        s.end_date AS match_end_day,
+        -- Here, we join the schedule table again to get the latest end_date for the division
+        (SELECT MAX(end_date) FROM schedule WHERE division = a.division) AS match_end_day,
         COALESCE(mr.points_a, 0) AS team_a_points,  
         COALESCE(mr.points_b, 0) AS team_b_points,  
         CASE
             WHEN mr.points_a > mr.points_b THEN a.team 
             WHEN mr.points_b > mr.points_a THEN b.team  
-            ELSE 'Draw'                          
+            ELSE 'Draw'                           
         END AS winner,
         mr.id AS match_id,
         @prev_division := a.division
@@ -61,7 +62,6 @@ WHERE
     match_day <= match_end_day
 ORDER BY 
     categ, match_day;
-
         ";
         $result = $this->db->query($query);
     

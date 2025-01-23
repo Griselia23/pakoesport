@@ -89,51 +89,6 @@
                 <a href="#addScheduleModal" class="btn btn-primary mt-4">Add Schedule</a>
                 <a id="hideregister" class="btn btn-primary mt-4" style="color: white;">Hide Registration Form</a>
 
-
-
-                <script>
-                    window.onload = function() {
-                        var button = document.getElementById('hideregister');
-                        var currentState = sessionStorage.getItem('hideRegistrationForm');
-
-                        if (currentState === 'true') {
-                            button.textContent = 'Unhide Registration Form';
-                        } else {
-                            button.textContent = 'Hide Registration Form';
-                        }
-                    };
-
-                    document.getElementById('hideregister').addEventListener('click', function() {
-                        var currentState = sessionStorage.getItem('hideRegistrationForm');
-
-                        if (currentState === 'true') {
-                            sessionStorage.setItem('hideRegistrationForm', 'false');
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Registration Form is Shown',
-                                confirmButtonText: 'OK',
-                                timer: 4000,
-                                timerProgressBar: true,
-                            }).then(() => {
-                                window.location.reload();
-                            });
-                        } else {
-                            sessionStorage.setItem('hideRegistrationForm', 'true');
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Registration Form is Hidden',
-                                confirmButtonText: 'OK',
-                                timer: 4000,
-                                timerProgressBar: true,
-                            }).then(() => {
-                                window.location.reload();
-                            });
-                        }
-                    });
-                </script>
-
-
-                <!-- Period Toggle Buttons -->
                 <div class="period-toggle-stripe mt-4">
                     <span id="mlschedulebtn" class="period-btn active">Mobile Legends</span>
                     <span id="fifaschedulebtn" class="period-btn">FIFA</span>
@@ -141,93 +96,78 @@
 
                 <!-- Schedules Table -->
                 <table class="table table-bordered table-striped mt-4" id="mlscheduleTable">
-                    <thead>
-                        <tr style="background-color: #f4f4f4;">
-                            <th scope="col" style="color: black;">Match Number</th>
-                            <th scope="col" style="color: black;">Starts in</th>
-                            <th scope="col" style="color: black;">Teams</th>
-                            <th scope="col" style="color: black;">Division</th>
-                            <th scope="col" style="color: black;">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (!empty($schedules)): ?>
-                            <?php foreach ($schedules as $schedule): ?>
-                                <tr data-division="<?php echo $schedule->division; ?>">
-                                    <td><?php echo $schedule->match_number; ?></td>
-                                    <td><?php echo $schedule->start_date; ?></td>
-                                    <td>
-                                        <?php foreach ($match_titles as $match_title) {
-                                            if ($match_title['categ'] == $schedule->division) {
-                                                echo $match_title['match_title'] . '<br>';
-                                            }
-                                        } ?>
-                                    </td>
-                                    <td><?php echo ($schedule->division == 'ml') ? 'Mobile Legends' : 'FIFA'; ?></td>
-                                    <td>
-                                        <!-- Edit Button -->
-                                        <button class="btn btn-primary" data-toggle="modal" data-target="#editschedule<?php echo $schedule->id; ?>">Edit</button>
+    <thead>
+        <tr style="background-color: #f4f4f4;">
+            <th scope="col" style="color: black;">Start Date</th>
+            <th scope="col" style="color: black;">Match Title</th> <!-- Add Match Title column -->
+            <th scope="col" style="color: black;">Division</th>
+            <th scope="col" style="color: black;">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php if (!empty($schedules)): ?>
+            <?php foreach ($schedules as $schedule): ?>
+                <tr data-division="<?php echo $schedule->division; ?>">
+                    <!-- Ensure 4 td elements corresponding to the 4 th headers -->
+                    <td><?php echo $schedule->start_date; ?></td>
+                    <td><?php echo $schedule->match_title; ?></td> <!-- Display Match Title -->
+                    <td><?php echo ($schedule->division == 'ml') ? 'Mobile Legends' : 'FIFA'; ?></td>
+                    <td>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#editschedule<?php echo $schedule->id; ?>">Edit</button>
 
-                                        <!-- Delete Button -->
-                                        <form method="POST" action="<?php echo site_url('admin/delete_schedule/' . $schedule->id); ?>" style="display:inline;">
-                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this schedule?');">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
+                        <form method="POST" action="<?php echo site_url('admin/delete_schedule/' . $schedule->id); ?>" style="display:inline;">
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this schedule?');">Delete</button>
+                        </form>
+                    </td>
+                </tr>
 
-                                <!-- Edit Modal -->
-                                <div class="modal fade" id="editschedule<?php echo $schedule->id; ?>" tabindex="-1" aria-labelledby="editscheduleLabel<?php echo $schedule->id; ?>" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="editscheduleLabel<?php echo $schedule->id; ?>">Edit Match Schedule</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form method="POST" action="<?php echo base_url('admin/update_schedule/' . $schedule->id); ?>">
+                <!-- Ensure that the modal is outside the table structure -->
+                <!-- Modal should not affect the column count of the table -->
+                <div class="modal fade" id="editschedule<?php echo $schedule->id; ?>" tabindex="-1" aria-labelledby="editscheduleLabel<?php echo $schedule->id; ?>" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editscheduleLabel<?php echo $schedule->id; ?>">Edit Match Schedule</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="POST" action="<?php echo base_url('admin/update_schedule/' . $schedule->id); ?>">
 
-                                                    <div class="mb-3">
-                                                        <label for="matchNumber" class="form-label">Match Number</label>
-                                                        <input type="text" class="form-control" id="matchNumber" name="matchNumber" value="<?php echo $schedule->match_number; ?>" required>
-                                                    </div>
-
-                                                    <div class="mb-3">
-                                                        <label for="division" class="form-label">Division</label>
-                                                        <select class="form-control" id="division" name="division" required>
-                                                            <option value="ml" <?php echo ($schedule->division == 'ml' ? 'selected' : ''); ?>>Mobile Legends</option>
-                                                            <option value="fifa" <?php echo ($schedule->division == 'fifa' ? 'selected' : ''); ?>>FIFA</option>
-                                                        </select>
-                                                    </div>
-
-                                                    <div class="mb-3">
-                                                        <label for="startDate" class="form-label">Start Date</label>
-                                                        <input type="date" class="form-control" id="startDate" name="startDate" value="<?php echo $schedule->start_date; ?>" required>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="endDate" class="form-label">End Date</label>
-                                                        <input type="date" class="form-control" id="endDate" name="endDate" required>
-                                                    </div>
-
-                                                    <div class="mb-3">
-                                                        <label for="teams" class="form-label">Teams</label>
-                                                        <p><?php echo !empty($schedule->team_1_name) && !empty($schedule->team_2_name) ? $schedule->team_1_name . ' vs ' . $schedule->team_2_name : 'TBD'; ?></p>
-                                                    </div>
-
-                                                    <button type="submit" class="btn btn-primary">Save</button>
-                                                </form>
-                                            </div>
-                                        </div>
+                                    <div class="mb-3">
+                                        <label for="division" class="form-label">Division</label>
+                                        <select class="form-control" id="division" name="division" required>
+                                            <option value="ml" <?php echo ($schedule->division == 'ml' ? 'selected' : ''); ?>>Mobile Legends</option>
+                                            <option value="fifa" <?php echo ($schedule->division == 'fifa' ? 'selected' : ''); ?>>FIFA</option>
+                                        </select>
                                     </div>
-                                </div>
 
-                            <?php endforeach; ?>
-                        <?php else: ?>
-                            <tr>
-                                <td colspan="5">No schedules available</td>
-                            </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
+                                    <div class="mb-3">
+                                        <label for="startDate" class="form-label">Start Date</label>
+                                        <input type="date" class="form-control" id="startDate" name="startDate" value="<?php echo $schedule->start_date; ?>" required>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="endDate" class="form-label">End Date</label>
+                                        <input type="date" class="form-control" id="endDate" name="endDate" value="<?php echo $schedule->end_date; ?>" required>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+                <td colspan="4">No schedules available</td>
+            </tr>
+        <?php endif; ?>
+    </tbody>
+</table>
+
+
             </div>
 
             <!-- Add Schedule Modal -->
@@ -239,10 +179,7 @@
                     </div>
                     <div class="modal-body">
                         <form method="POST" action="<?php echo base_url('admin/save_schedule'); ?>">
-                            <div class="mb-3">
-                                <label for="matchNumber" class="form-label">Match Number</label>
-                                <input type="text" class="form-control" id="matchNumber" name="matchNumber" required placeholder="Enter match number (e.g., 1)">
-                            </div>
+
 
                             <div class="mb-3">
                                 <label for="division" class="form-label">Division</label>
@@ -271,7 +208,6 @@
         </div>
         <script>
             $(document).ready(function() {
-                // Initialize DataTable
                 $('#mlscheduleTable').DataTable({
                     "paging": true,
                     "searching": true,
@@ -281,7 +217,7 @@
                     ],
                     "lengthMenu": [10, 20, 30, 40],
                     "columnDefs": [{
-                        "targets": 4,
+                        "targets": 3,
                         "orderable": false
                     }]
                 });
@@ -695,6 +631,46 @@
     });
 </script>
 
+<script>
+                    window.onload = function() {
+                        var button = document.getElementById('hideregister');
+                        var currentState = sessionStorage.getItem('hideRegistrationForm');
+
+                        if (currentState === 'true') {
+                            button.textContent = 'Unhide Registration Form';
+                        } else {
+                            button.textContent = 'Hide Registration Form';
+                        }
+                    };
+
+                    document.getElementById('hideregister').addEventListener('click', function() {
+                        var currentState = sessionStorage.getItem('hideRegistrationForm');
+
+                        if (currentState === 'true') {
+                            sessionStorage.setItem('hideRegistrationForm', 'false');
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Registration Form is Shown',
+                                confirmButtonText: 'OK',
+                                timer: 4000,
+                                timerProgressBar: true,
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        } else {
+                            sessionStorage.setItem('hideRegistrationForm', 'true');
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Registration Form is Hidden',
+                                confirmButtonText: 'OK',
+                                timer: 4000,
+                                timerProgressBar: true,
+                            }).then(() => {
+                                window.location.reload();
+                            });
+                        }
+                    });
+                </script>
 
 </html>
 
