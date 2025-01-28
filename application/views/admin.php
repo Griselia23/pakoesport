@@ -85,21 +85,18 @@
                     <p style="color: black;">Hai <?php echo $this->session->userdata('username'); ?>, Here you can set the schedules</p>
                 </div>
 
-                <!-- Add Schedule Button -->
                 <a href="#addScheduleModal" class="btn btn-primary mt-4">Add Schedule</a>
                 <a id="hideregister" class="btn btn-primary mt-4" style="color: white;">Hide Registration Form</a>
-
-                <div class="period-toggle-stripe mt-4">
-                    <span id="mlschedulebtn" class="period-btn active">Mobile Legends</span>
-                    <span id="fifaschedulebtn" class="period-btn">FIFA</span>
+                
+                <div>
+                    <br>
                 </div>
 
-                <!-- Schedules Table -->
                 <table class="table table-bordered table-striped mt-4" id="mlscheduleTable">
     <thead>
         <tr style="background-color: #f4f4f4;">
             <th scope="col" style="color: black;">Start Date</th>
-            <th scope="col" style="color: black;">Match Title</th> <!-- Add Match Title column -->
+            <th scope="col" style="color: black;">Match Title</th> 
             <th scope="col" style="color: black;">Division</th>
             <th scope="col" style="color: black;">Action</th>
         </tr>
@@ -170,7 +167,6 @@
 
             </div>
 
-            <!-- Add Schedule Modal -->
             <div id="addScheduleModal" class="modal">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -215,7 +211,7 @@
                     "order": [
                         [0, 'asc']
                     ],
-                    "lengthMenu": [10, 20, 30, 40],
+                    "lengthMenu": [5, 20, 30, 40],
                     "columnDefs": [{
                         "targets": 3,
                         "orderable": false
@@ -232,11 +228,10 @@
                     <p style="color: black;">Hai <?php echo $this->session->userdata('username'); ?>, Here are the details of the registered teams:</p>
                 </div>
 
-                <!-- Period Toggle Buttons -->
-                <div class="period-toggle-stripe mt-4">
+                <!-- <div class="period-toggle-stripe mt-4">
                     <span id="mobileLegendsPeriodBtn" class="period-btn active">Mobile Legends</span>
                     <span id="fifaPeriodBtn" class="period-btn">FIFA</span>
-                </div>
+                </div> -->
 
                 <!-- Teams Table -->
                 <div id="teamsLeaderboard" class="mt-4">
@@ -328,7 +323,7 @@
                     "order": [
                         [0, 'asc']
                     ],
-                    "lengthMenu": [10, 20, 30, 50],
+                    "lengthMenu": [5, 20, 30, 50],
                     "columnDefs": [{
                         "targets": 4,
                         "orderable": false
@@ -435,42 +430,10 @@
                     </table>
                 </div>
             </div>
-            <!-- <script>
-    $(document).ready(function() {
-        $('.team').each(function() {
-            if ($(this).data('division') !== 'ml') {
-                $(this).hide();
-            }
-        });
-
-        $('#mlresultbtn').click(function() {
-            $(this).addClass('active');
-            $('#fifaresultbtn').removeClass('active');
-            $('#resulttable .team').each(function() {
-                if ($(this).data('division') === 'ml') {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
-        });
-
-        $('#fifaresultbtn').click(function() {
-            $(this).addClass('active');
-            $('#mlresultbtn').removeClass('active');
-            $('#resulttable .team').each(function() {
-                if ($(this).data('division') === 'fifa') {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
-        });
-    });
-</script> -->
         </div>
 
         <script>
+            
             $(document).ready(function() {
                 // Initialize DataTable
                 $('#resulttable').DataTable({
@@ -496,39 +459,7 @@
 <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
 
 
-<script>
-    $(document).ready(function() {
-        $('.team').each(function() {
-            if ($(this).data('division') !== 'ml') {
-                $(this).hide();
-            }
-        });
 
-        $('#mobileLegendsPeriodBtn').click(function() {
-            $(this).addClass('active');
-            $('#fifaPeriodBtn').removeClass('active');
-            $('#teamsTable .team').each(function() {
-                if ($(this).data('division') === 'ml') {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
-        });
-
-        $('#fifaPeriodBtn').click(function() {
-            $(this).addClass('active');
-            $('#mobileLegendsPeriodBtn').removeClass('active');
-            $('#teamsTable .team').each(function() {
-                if ($(this).data('division') === 'fifa') {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
-            });
-        });
-    });
-</script>
 <script>
     $(document).ready(function() {
 

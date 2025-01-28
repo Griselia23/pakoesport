@@ -54,5 +54,7 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['setuser'] = 'setuser';
 $route['login/authenticate'] = 'login/authenticate';
+$route['admin/clear_schedule/(:num)'] = 'admin/truncate_schedule_by_id/$1';
+
 
 

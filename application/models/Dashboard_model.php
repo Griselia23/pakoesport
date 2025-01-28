@@ -72,7 +72,6 @@ class Dashboard_model extends CI_Model {
     public function get_all_schedules() {
         $this->db->select('
             schedule.id,
-            schedule.match_number,
             schedule.division,
             schedule.start_date,
             schedule.end_date,
@@ -94,6 +93,7 @@ class Dashboard_model extends CI_Model {
         $this->db->where('id', $id);
         $this->db->update('schedule', $data);
     }
+
     
     public function delete_schedule($id) {
         $this->db->where('id', $id);

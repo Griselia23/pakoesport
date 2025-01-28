@@ -81,10 +81,10 @@ class Admin extends CI_Controller {
         while (strtotime($currentDate) <= strtotime($endDate)) {
             $matchesScheduled = 0;
     
-            while ($matchesScheduled < 2 && $matchesIndex < count($matches)) {
+            while ($matchesScheduled < 4 && $matchesIndex < count($matches)) {
                 $match = $matches[$matchesIndex];
                 $data = [
-                    'match_number' => $matchNumber,
+                    
                     'division' => $division,
                     'start_date' => $currentDate,
                     'end_date' => $currentDate,
@@ -127,8 +127,6 @@ class Admin extends CI_Controller {
     }
     
     
-    
-    
     public function delete_schedule($id) {
         $this->Dashboard_model->delete_schedule($id);
         redirect('admin');
@@ -169,7 +167,72 @@ class Admin extends CI_Controller {
 
     }
 
-    //
+    // public function save_schedule() {
+    //     $matchNumber = $this->input->post('matchNumber');
+    //     $division = $this->input->post('division');
+    //     $startDate = $this->input->post('startDate');
+    //     $endDate = $this->input->post('endDate');
+    
+    //     $matches = $this->db->query("
+    //         SELECT 
+    //             a.id AS team_a_id,
+    //             b.id AS team_b_id,
+    //             CONCAT(a.team, ' vs. ', b.team) AS match_title
+    //         FROM 
+    //             register a
+    //         JOIN 
+    //             register b ON a.division = b.division
+    //         WHERE 
+    //             a.division = ? AND a.id < b.id
+    //     ", [$division])->result_array();
+    
+    //     $scheduledMatches = $this->db->query("
+    //         SELECT match_title
+    //         FROM schedule
+    //         WHERE division = ? AND start_date >= ? AND end_date <= ?
+    //     ", [$division, $startDate, $endDate])->result_array();
+    
+    //     $scheduledMatchTitles = array_map(function($match) {
+    //         return $match['match_title'];
+    //     }, $scheduledMatches);
+    
+    //     // Step 4: Filter out the already scheduled matches
+    //     $unscheduledMatches = array_filter($matches, function($match) use ($scheduledMatchTitles) {
+    //         return !in_array($match['match_title'], $scheduledMatchTitles);
+    //     });
+    
+    //     // Step 5: Sort unscheduled matches by index to continue from the last unscheduled match
+    //     $unscheduledMatches = array_values($unscheduledMatches); // Re-index the array to ensure proper sequence
+    
+    //     // Step 6: Schedule the unscheduled matches for the given date range
+    //     $currentDate = $startDate;
+    //     $matchesIndex = 0;
+    
+    //     while (strtotime($currentDate) <= strtotime($endDate) && $matchesIndex < count($unscheduledMatches)) {
+    //         $matchesScheduled = 0;
+    
+    //         while ($matchesScheduled < 4 && $matchesIndex < count($unscheduledMatches)) {
+    //             $match = $unscheduledMatches[$matchesIndex];
+    //             $data = [
+    //                 'division' => $division,
+    //                 'start_date' => $currentDate,
+    //                 'end_date' => $currentDate,
+    //                 'match_title' => $match['match_title'],
+    //                 'team_a_id' => $match['team_a_id'],
+    //                 'team_b_id' => $match['team_b_id'],
+    //             ];
+    //             $this->Dashboard_model->save_schedule($data);
+    //             $matchesScheduled++;
+    //             $matchesIndex++;
+    //         }
+    
+    //         // Move to the next day
+    //         $currentDate = date('Y-m-d', strtotime($currentDate . ' +1 day'));
+    //     }
+    
+    //     // Step 7: Redirect after scheduling
+    //     redirect('admin');
+    // }
 
 
     

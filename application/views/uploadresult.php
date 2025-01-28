@@ -171,7 +171,6 @@
 
     <!-- Form to upload result -->
     <form action="dashboard/submit_score" method="post" enctype="multipart/form-data" class="upload-result-form">
-    <!-- Match Selection -->
     <div class="form-row match-selection">
         <div>
             <label for="match_title">Match:</label>
@@ -198,7 +197,7 @@
         <option value="">No matches available</option>
     <?php } ?>
 </select>
-
+<!--  -->
         </div>
     </div>
 
