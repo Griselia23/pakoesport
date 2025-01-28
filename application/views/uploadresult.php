@@ -169,45 +169,41 @@
       <span id="fifaresultbtn" class="toggle-stripe">FIFA</span>
     </div>
 
-    <!-- Form to upload result -->
     <form action="dashboard/submit_score" method="post" enctype="multipart/form-data" class="upload-result-form">
-    <div class="form-row match-selection">
+      <div class="form-row match-selection">
         <div>
             <label for="match_title">Match:</label>
             <select name="match_title" id="match_title" required onchange="populateTeams()">
-    <option value="">Select Match</option>
-    <?php if (!empty($matches_by_division)) { ?>
-        <?php foreach ($matches_by_division as $division => $matches) { ?>
-            <optgroup label="<?php echo htmlspecialchars(ucfirst($division)); ?>">
-                <?php foreach ($matches as $match) { 
-                    $match_id = $match['team_a_id'] . '-' . $match['team_b_id'];
-                ?>
-                <option value="<?php echo $match_id; ?>" 
-                        data-team-a-id="<?php echo $match['team_a_id']; ?>" 
-                        data-team-b-id="<?php echo $match['team_b_id']; ?>" 
-                        data-division="<?php echo $match['categ']; ?>"
-                        data-team-a-name="<?php echo htmlspecialchars($match['team_a_name']); ?>" 
-                        data-team-b-name="<?php echo htmlspecialchars($match['team_b_name']); ?>">
-                    <?php echo htmlspecialchars($match['match_title']); ?>
-                </option>
+              <option value="">Select Match</option>
+              <?php if (!empty($matches_by_division)) { ?>
+                <?php foreach ($matches_by_division as $division => $matches) { ?>
+                  <optgroup label="<?php echo htmlspecialchars(ucfirst($division)); ?>">
+                    <?php foreach ($matches as $match) { 
+                      $match_id = $match['team_a_id'] . '-' . $match['team_b_id'];
+                      $match_date = $match['start_date']; 
+                    ?>
+                      <option value="<?php echo $match_id; ?>" 
+                              data-team-a-id="<?php echo $match['team_a_id']; ?>" 
+                              data-team-b-id="<?php echo $match['team_b_id']; ?>" 
+                              data-division="<?php echo $match['categ']; ?>"
+                              data-team-a-name="<?php echo htmlspecialchars($match['team_a_name']); ?>" 
+                              data-team-b-name="<?php echo htmlspecialchars($match['team_b_name']); ?>"
+                              data-match-date="<?php echo $match_date; ?>">
+                        <?php echo htmlspecialchars($match['match_title']); ?> (<?php echo htmlspecialchars($match_date); ?>)
+                      </option>
+                    <?php } ?>
+                  </optgroup>
                 <?php } ?>
-            </optgroup>
-        <?php } ?>
-    <?php } else { ?>
-        <option value="">No matches available</option>
-    <?php } ?>
-</select>
-<!--  -->
+              <?php } else { ?>
+                <option value="">No matches available for today</option>
+              <?php } ?>
+            </select>
         </div>
-    </div>
+      </div>
 
-    <!-- Team Selection Box (Populated dynamically) -->
-    <div class="form-row team-selection" id="team-selection">
-        <!-- Teams will be displayed here based on the selected match -->
-    </div>
+      <div class="form-row team-selection" id="team-selection"></div>
 
-    <!-- Score Input Box -->
-    <div class="form-row score-inputs">
+      <div class="form-row score-inputs">
         <div class="score-left">
             <label for="team_1_score">Score Team 1:</label>
             <input type="number" name="team_1_score" id="team_1_score" required>
@@ -217,28 +213,25 @@
             <label for="team_2_score">Score Team 2:</label>
             <input type="number" name="team_2_score" id="team_2_score" required>
         </div>
-    </div>
+      </div>
 
-    <!-- Evidence Image Upload -->
-    <div class="form-row image-upload">
+      <div class="form-row image-upload">
         <label for="evidence_image">Upload Evidence (Image):</label>
         <input type="file" name="evidence_image" id="evidence_image" accept="image/*" required multiple>
         <small>Max 3 images, each up to 2MB</small>
-    </div>
+      </div>
 
-    <!-- Hidden input to store the division -->
-    <input type="hidden" id="division" name="division" value="">
+      <input type="hidden" id="division" name="division" value="">
 
-    <!-- Submit Button -->
-    <div class="form-row">
+      <div class="form-row">
         <button type="submit">Submit Scores</button>
-    </div>
-
-</form>
+      </div>
+    </form>
 
   </div>
 </section>
 
+<?php include(APPPATH . 'views/layout/footer.php'); ?>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
     const mlResultBtn = document.getElementById("mlresultbtn");
@@ -336,9 +329,3 @@ document.getElementById('match_title').addEventListener('change', populateDivisi
 </main>
 
 <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
-
-
-
-</html>
-
-<?php include(APPPATH . 'views/layout/footer.php'); ?>

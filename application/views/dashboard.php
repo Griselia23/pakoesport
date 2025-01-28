@@ -49,14 +49,14 @@
                 <?php foreach ($chunk as $match): ?>
                     <div class="box p-2 m-1 border rounded" 
                          style="min-width: 100px; max-width: 120px; height: 80px; text-align: center; flex: 0 0 auto;">
-                        <h6 class="text-muted" style="font-size: 15px; margin-bottom: 5px;">
+                        <h6 class="text-muted" style="font-size: 13px; margin-bottom: 5px;">
                             <?php echo htmlspecialchars($match['match_title']); ?>
                         </h6>
                         <p class="text" style="font-size: 10px; margin: 0;">
                             <?php echo date('M d, Y', strtotime($match['start_date'])); ?>
                         </p>
                         
-                        <h6 class="text-muted" style="font-size: 15px; margin-bottom: 5px;">
+                        <h6 class="text-muted" style="font-size: 13px; margin-bottom: 5px;">
                             <?php
                                 $points_a = isset($match['points_a']) ? $match['points_a'] : 0;
                                 $points_b = isset($match['points_b']) ? $match['points_b'] : 0;
@@ -761,6 +761,8 @@
 
 </main>
 
+<?php include(APPPATH . 'views/layout/footer.php'); ?>
+
 <script>
   document.getElementById("add-member-btn").addEventListener("click", function() {
     var memberCount = document.querySelectorAll(".member").length;
@@ -826,7 +828,7 @@
 </script>
 
 
-<?php include(APPPATH . 'views/layout/footer.php'); ?>
+
 
 <!-- schedule script -->
 
@@ -906,3 +908,5 @@
     $('#fifaTableData').DataTable();
   });
 </script>
+
+

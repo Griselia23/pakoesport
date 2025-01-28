@@ -431,7 +431,7 @@
                 </div>
             </div>
         </div>
-
+        <?php include(APPPATH . 'views/layout/footer.php'); ?>
         <script>
             
             $(document).ready(function() {
@@ -605,4 +605,3 @@
 
 </html>
 
-<?php include(APPPATH . 'views/layout/footer.php'); ?>

@@ -1,7 +1,7 @@
 <?php include(APPPATH . 'views/layout/header.php'); ?>
 <!-- Include SweetAlert2 CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+     -->
 
 
 
@@ -15,8 +15,9 @@
         <li><a href="<?php echo base_url('setuser'); ?>">Setting User</a></li>
         <li><a href="<?php echo base_url('uploadresult'); ?>">Upload Result</a></li>
         <li><a href="<?php echo base_url('#home'); ?>">Home</a></li>
-        
-        <li class="buy-tickets"><a href="dashboard">Logout</a></li>
+        <li class="buy-tickets">
+                    <a href="<?php echo base_url('login/logout'); ?>">Logout</a>
+                </li>
       </ul>
     </nav>
   </div>
@@ -171,20 +172,8 @@
 </main>
 
 <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
-
-<script src="<?php echo base_url('application/template/lib/jquery/jquery.min.js'); ?>"></script>
-<script src="<?php echo base_url('application/template/lib/jquery/jquery-migrate.min.js'); ?>"></script>
-<script src="<?php echo base_url('application/template/lib/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
-<script src="<?php echo base_url('application/template/lib/easing/easing.min.js'); ?>"></script>
-<script src="<?php echo base_url('application/template/lib/superfish/hoverIntent.js'); ?>"></script>
-<script src="<?php echo base_url('application/template/lib/superfish/superfish.min.js'); ?>"></script>
-<script src="<?php echo base_url('application/template/lib/wow/wow.min.js'); ?>"></script>
-<script src="<?php echo base_url('application/template/lib/venobox/venobox.min.js'); ?>"></script>
-<script src="<?php echo base_url('application/template/lib/owlcarousel/owl.carousel.min.js'); ?>"></script>
-<script src="<?php echo base_url('application/template/contactform/contactform.js'); ?>"></script>
-<script src="<?php echo base_url('application/template/js/main.js'); ?>"></script>
 <!-- Include SweetAlert2 JS -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script> -->
 
 
 </body>
