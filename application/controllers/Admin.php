@@ -57,11 +57,10 @@ class Admin extends CI_Controller {
     }
 
     public function save_schedule() {
-        $matchNumber = $this->input->post('matchNumber');
         $division = $this->input->post('division');
         $startDate = $this->input->post('startDate');
         $endDate = $this->input->post('endDate');
-    
+        
         $matches = $this->db->query("
             SELECT 
                 a.id AS team_a_id,
@@ -74,17 +73,17 @@ class Admin extends CI_Controller {
             WHERE 
                 a.division = ? AND a.id < b.id
         ", [$division])->result_array();
-    
+        
         $currentDate = $startDate;
         $matchesIndex = 0;
-    
+        $isSaved = false;
+        
         while (strtotime($currentDate) <= strtotime($endDate)) {
             $matchesScheduled = 0;
-    
-            while ($matchesScheduled < 4 && $matchesIndex < count($matches)) {
+        
+            while ($matchesScheduled < 2 && $matchesIndex < count($matches)) {
                 $match = $matches[$matchesIndex];
                 $data = [
-                    
                     'division' => $division,
                     'start_date' => $currentDate,
                     'end_date' => $currentDate,
@@ -92,14 +91,22 @@ class Admin extends CI_Controller {
                     'team_a_id' => $match['team_a_id'],
                     'team_b_id' => $match['team_b_id'],
                 ];
-                $this->Dashboard_model->save_schedule($data);
+                if ($this->Dashboard_model->save_schedule($data)) {
+                    $isSaved = true;
+                }
                 $matchesScheduled++;
                 $matchesIndex++;
             }
-    
+        
             $currentDate = date('Y-m-d', strtotime($currentDate . ' +1 day'));
         }
-    
+        
+        if ($isSaved) {
+            $this->session->set_flashdata('error', 'There was an error saving the schedule.');
+        } else {
+            $this->session->set_flashdata('success', 'Schedule saved successfully!');
+        }
+        
         redirect('admin');
     }
     
@@ -108,30 +115,39 @@ class Admin extends CI_Controller {
         $startDate = $this->input->post('startDate');
         $endDate = $this->input->post('endDate');
     
-        // Get the schedule to update by its ID
         $schedule = $this->db->get_where('schedule', ['id' => $id])->row();
     
-        // Check if the schedule exists
         if ($schedule) {
             $data = [
                 'start_date' => $startDate,
                 'end_date' => $endDate
             ];
     
-            // Update the schedule in the database using the ID
             $this->db->where('id', $id);
-            $this->db->update('schedule', $data);
+            if ($this->db->update('schedule', $data)) {
+                $this->session->set_flashdata('success', 'Schedule updated successfully!');
+            } else {
+                $this->session->set_flashdata('error', 'There was an error updating the schedule.');
+            }
+        } else {
+            $this->session->set_flashdata('error', 'Schedule not found.');
         }
     
         redirect('admin');
     }
     
+    public function clearSchedule()
+    {
+    $this->Dashboard_model->clear_schedule();
+        redirect('admin'); 
+    }
     
     public function delete_schedule($id) {
         $this->Dashboard_model->delete_schedule($id);
+        $this->session->set_flashdata('success', 'Schedule deleted successfully!');
         redirect('admin');
     }
-
+    
     public function update_results($id) {
         $teamnumber1 = $this->input->post('teamnumber1');
         $teamnumber2 = $this->input->post('teamnumber2');
@@ -142,7 +158,6 @@ class Admin extends CI_Controller {
         $title = $this->input->post('title');
         $evidence = $this->input->post('evidence');
         
-        
         $data = array(
             'team_id_a' => $teamnumber1,
             'team_id_b' => $teamnumber2,
@@ -152,17 +167,19 @@ class Admin extends CI_Controller {
             'match_date' => $matchdate,
             'evidence_image' => $evidence,
             'match_title' => $title,
-
         );
         
         $this->Dashboard_model->update_match_results($id, $data);
+        $this->session->set_flashdata('success', 'Results updated successfully!');
         redirect('admin');
     }
-
+    
     public function delete_results($id) {
         $this->Dashboard_model->delete_match_results($id);
+        $this->session->set_flashdata('success', 'Match results deleted successfully!');
         redirect('admin');
     }
+    
 
 
     }

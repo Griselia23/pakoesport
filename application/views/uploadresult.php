@@ -169,65 +169,96 @@
       <span id="fifaresultbtn" class="toggle-stripe">FIFA</span>
     </div>
 
-    <form action="dashboard/submit_score" method="post" enctype="multipart/form-data" class="upload-result-form">
-      <div class="form-row match-selection">
-        <div>
-            <label for="match_title">Match:</label>
-            <select name="match_title" id="match_title" required onchange="populateTeams()">
-              <option value="">Select Match</option>
-              <?php if (!empty($matches_by_division)) { ?>
-                <?php foreach ($matches_by_division as $division => $matches) { ?>
-                  <optgroup label="<?php echo htmlspecialchars(ucfirst($division)); ?>">
-                    <?php foreach ($matches as $match) { 
-                      $match_id = $match['team_a_id'] . '-' . $match['team_b_id'];
-                      $match_date = $match['start_date']; 
-                    ?>
-                      <option value="<?php echo $match_id; ?>" 
-                              data-team-a-id="<?php echo $match['team_a_id']; ?>" 
-                              data-team-b-id="<?php echo $match['team_b_id']; ?>" 
-                              data-division="<?php echo $match['categ']; ?>"
-                              data-team-a-name="<?php echo htmlspecialchars($match['team_a_name']); ?>" 
-                              data-team-b-name="<?php echo htmlspecialchars($match['team_b_name']); ?>"
-                              data-match-date="<?php echo $match_date; ?>">
-                        <?php echo htmlspecialchars($match['match_title']); ?> (<?php echo htmlspecialchars($match_date); ?>)
-                      </option>
-                    <?php } ?>
-                  </optgroup>
+    <form action="dashboard/submit_score" method="post" enctype="multipart/form-data" class="upload-result-form" id="submitscore">
+  <div class="form-row match-selection">
+    <div>
+        <label for="match_title">Match:</label>
+        <select name="match_title" id="match_title" required onchange="populateTeams()">
+          <option value="">Select Match</option>
+          <?php if (!empty($matches_by_division)) { ?>
+            <?php foreach ($matches_by_division as $division => $matches) { ?>
+              <optgroup label="<?php echo htmlspecialchars(ucfirst($division)); ?>">
+                <?php foreach ($matches as $match) { 
+                  $match_id = $match['team_a_id'] . '-' . $match['team_b_id'];
+                  $match_date = $match['start_date']; 
+                ?>
+                  <option value="<?php echo $match_id; ?>" 
+                          data-team-a-id="<?php echo $match['team_a_id']; ?>" 
+                          data-team-b-id="<?php echo $match['team_b_id']; ?>" 
+                          data-division="<?php echo $match['categ']; ?>"
+                          data-team-a-name="<?php echo htmlspecialchars($match['team_a_name']); ?>" 
+                          data-team-b-name="<?php echo htmlspecialchars($match['team_b_name']); ?>"
+                          data-match-date="<?php echo $match_date; ?>">
+                    <?php echo htmlspecialchars($match['match_title']); ?> (<?php echo htmlspecialchars($match_date); ?>)
+                  </option>
                 <?php } ?>
-              <?php } else { ?>
-                <option value="">No matches available for today</option>
-              <?php } ?>
-            </select>
-        </div>
-      </div>
+              </optgroup>
+            <?php } ?>
+          <?php } else { ?>
+            <option value="">No matches available for today</option>
+          <?php } ?>
+        </select>
+    </div>
+  </div>
 
-      <div class="form-row team-selection" id="team-selection"></div>
+  <div class="form-row team-selection" id="team-selection"></div>
 
-      <div class="form-row score-inputs">
-        <div class="score-left">
-            <label for="team_1_score">Score Team 1:</label>
-            <input type="number" name="team_1_score" id="team_1_score" required>
-        </div>
+  <div class="form-row score-inputs">
+    <div class="score-left">
+        <label for="team_1_score">Score Team 1:</label>
+        <input type="number" name="team_1_score" id="team_1_score" required>
+    </div>
 
-        <div class="score-right">
-            <label for="team_2_score">Score Team 2:</label>
-            <input type="number" name="team_2_score" id="team_2_score" required>
-        </div>
-      </div>
+    <div class="score-right">
+        <label for="team_2_score">Score Team 2:</label>
+        <input type="number" name="team_2_score" id="team_2_score" required>
+    </div>
+  </div>
 
-      <div class="form-row image-upload">
-        <label for="evidence_image">Upload Evidence (Image):</label>
-        <input type="file" name="evidence_image" id="evidence_image" accept="image/*" required multiple>
-        <small>Max 3 images, each up to 2MB</small>
-      </div>
+  <div class="form-row image-upload">
+    <label for="evidence_image">Upload Evidence (Image):</label>
+    <input type="file" name="evidence_image" id="evidence_image" accept="image/*" required multiple>
+    <small>Max 3 images, each up to 2MB</small>
+  </div>
 
-      <input type="hidden" id="division" name="division" value="">
+  <input type="hidden" id="division" name="division" value="">
 
-      <div class="form-row">
-        <button type="submit">Submit Scores</button>
-      </div>
-    </form>
+  <div class="form-row">
+    <button type="button" onclick="confirmSubmit_score()">Submit Scores</button>
+  </div>
+</form>
+<script>
+  function confirmSubmit_score() {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Jangan curang!", 
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, submit it!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('submitscore').submit();
+        }
+    });
+  }
 
+  <?php if ($this->session->flashdata('success')): ?>
+    Swal.fire({
+      title: 'Success!',
+      text: '<?php echo $this->session->flashdata('success'); ?>',
+      icon: 'success',
+      confirmButtonText: 'Ok'
+    });
+  <?php elseif ($this->session->flashdata('error')): ?>
+    Swal.fire({
+      title: 'Error!',
+      text: '<?php echo $this->session->flashdata('error'); ?>',
+      icon: 'error',
+      confirmButtonText: 'Ok'
+    });
+  <?php endif; ?>
+</script>
   </div>
 </section>
 

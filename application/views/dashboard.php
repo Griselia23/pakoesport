@@ -33,46 +33,45 @@
   <div class="intro-container wow fadeIn">
     <!-- Carousel (placed at the top of the section) -->
     <div id="matchesCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-    <?php
-    $matches_ml = $matches_by_division['ml'] ?? [];
-    $matches_fifa = $matches_by_division['fifa'] ?? [];
-    
-    $matches = array_merge($matches_ml, $matches_fifa);
-    $chunks = array_chunk($matches, 7);
-    $activeClass = 'active';
-    
-    // Loop through the chunks
-    foreach ($chunks as $chunk): ?>
-        <div class="carousel-item <?php echo $activeClass; ?>">
+      <div class="carousel-inner">
+        <?php
+        $matches_ml = $matches_by_division['ml'] ?? [];
+        $matches_fifa = $matches_by_division['fifa'] ?? [];
+
+        $matches = array_merge($matches_ml, $matches_fifa);
+        $chunks = array_chunk($matches, 7);
+        $activeClass = 'active';
+
+        foreach ($chunks as $chunk): ?>
+          <div class="carousel-item <?php echo $activeClass; ?>">
             <div class="d-flex flex-wrap justify-content-start">
-                <?php foreach ($chunk as $match): ?>
-                    <div class="box p-2 m-1 border rounded" 
-                         style="min-width: 100px; max-width: 120px; height: 80px; text-align: center; flex: 0 0 auto;">
-                        <h6 class="text-muted" style="font-size: 13px; margin-bottom: 5px;">
-                            <?php echo htmlspecialchars($match['match_title']); ?>
-                        </h6>
-                        <p class="text" style="font-size: 10px; margin: 0;">
-                            <?php echo date('M d, Y', strtotime($match['start_date'])); ?>
-                        </p>
-                        
-                        <h6 class="text-muted" style="font-size: 13px; margin-bottom: 5px;">
-                            <?php
-                                $points_a = isset($match['points_a']) ? $match['points_a'] : 0;
-                                $points_b = isset($match['points_b']) ? $match['points_b'] : 0;
-                                echo $points_a . ' - ' . $points_b;
-                            ?>
-                        </h6>
-                    </div>
-                <?php endforeach; ?>
+              <?php foreach ($chunk as $match): ?>
+                <div class="box p-2 m-1 border rounded"
+                  style="min-width: 100px; max-width: 120px; height: 80px; text-align: center; flex: 0 0 auto;">
+                  <h6 class="text-muted" style="font-size: 13px; margin-bottom: 5px;">
+                    <?php echo htmlspecialchars($match['match_title']); ?>
+                  </h6>
+                  <p class="text" style="font-size: 10px; margin: 0;">
+                    <?php echo date('M d, Y', strtotime($match['start_date'])); ?>
+                  </p>
+
+                  <h6 class="text-muted" style="font-size: 13px; margin-bottom: 5px;">
+                    <?php
+                    $points_a = isset($match['points_a']) ? $match['points_a'] : 0;
+                    $points_b = isset($match['points_b']) ? $match['points_b'] : 0;
+                    echo $points_a . ' - ' . $points_b;
+                    ?>
+                  </h6>
+                </div>
+              <?php endforeach; ?>
             </div>
-        </div>
-        <?php $activeClass = ''; ?>
-    <?php endforeach; ?>
-</div>
+          </div>
+          <?php $activeClass = ''; ?>
+        <?php endforeach; ?>
+      </div>
 
 
-      
+
       <!-- Carousel Controls -->
       <button class="carousel-control-prev" type="button" data-bs-target="#matchesCarousel" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -908,5 +907,3 @@
     $('#fifaTableData').DataTable();
   });
 </script>
-
-

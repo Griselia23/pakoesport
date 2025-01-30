@@ -468,7 +468,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 
 #intro {
   width: 100%;
-  height: 90vh;
+  height: 80vh;
   background: url(../img/intro-bg.jpg) top center;
   background-size: cover;
   overflow: hidden;
@@ -550,6 +550,11 @@ body.mobile-nav-active #mobile-nav-toggle {
   border: 2px solid transparent;
   padding: 10px;
   box-sizing: border-box;
+  flex: 1 0 14%;
+  margin: 5px;
+  min-width: 100px;
+  max-width: 120px;
+  height: 80px;
 }
 
 #matchesCarousel .carousel-item .box:before {
@@ -570,6 +575,7 @@ body.mobile-nav-active #mobile-nav-toggle {
 #matchesCarousel .carousel-item .box p {
   color: white !important;
 }
+
 
 
 #intro h1 {

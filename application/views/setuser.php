@@ -28,7 +28,7 @@
         <div class="section-header">
             <h2>Registered Users</h2>
             <p>Here are the details of the registered users:</p>
-            <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#addUserModal" style="padding: 5px 10px;">Add User</button>
+            <a class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#addUserModal" style="padding: 5px 10px; color: white;">Add User</a>
         </div>
 
         <table class="table table-bordered table-striped mt-4" id="usersTable">

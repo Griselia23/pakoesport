@@ -54,6 +54,7 @@ class Dashboard_model extends CI_Model {
         $query = $this->db->get('user');
         return $query->row();
     }
+    
 
     public function update_user($id, $data) {
         $this->db->where('id', $id);
@@ -98,6 +99,11 @@ class Dashboard_model extends CI_Model {
     public function delete_schedule($id) {
         $this->db->where('id', $id);
         $this->db->delete('schedule');
+    }
+
+    public function clear_schedule()
+    {
+        $this->db->truncate('schedule'); 
     }
 
     public function get_match_by_number($match_number) {
