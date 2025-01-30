@@ -30,7 +30,7 @@ class Login extends CI_Controller {
             $this->session->set_userdata('user_id', $register->id);
             $this->session->set_userdata('role', 'member'); 
             $this->session->set_userdata('leadername', $register->leadername);
-            $this->session->set_flashdata('success', 'Login successful! Welcome, ' . $register->npk . '.');
+            $this->session->set_flashdata('success', 'Login successful! Welcome, ' . $register->leadername . '.');
             $this->session->set_userdata('user_team', $register->team);
             redirect('uploadresult');
         }
@@ -41,7 +41,7 @@ class Login extends CI_Controller {
                 $this->session->set_userdata('user_id', $user->id);
                 $this->session->set_userdata('role', 'admin'); 
                 $this->session->set_userdata('username', $user->username);
-                $this->session->set_flashdata('success', 'Login successful! Welcome, ' . $user->npk . '.');
+                $this->session->set_flashdata('success', 'Login successful! Welcome, ' . $user->username . '.');
                 redirect('admin');
         }
     

@@ -84,14 +84,6 @@
                     <h2 style="color: black;">Setting Period</h2>
                     <p style="color: black;">Hai <?php echo $this->session->userdata('username'); ?>, Here you can set the schedules</p>
                 </div>
-
-                <a href="#addScheduleModal" class="btn btn-primary mt-4">Add Schedule</a>
-                <a id="hideregister" class="btn btn-primary mt-4" style="color: white;">Hide Registration Form</a>
-                <form action="<?= site_url('admin/clearSchedule') ?>" method="post" id="clearScheduleForm">
-                    <a type="button" class="btn btn-primary mt-4" style="color: white;" onclick="confirmClearSchedule()">
-                        Clear Schedule
-                    </a>
-                </form>
                 <?php if ($this->session->flashdata('success')): ?>
                     <div class="alert alert-success">
                         <?= $this->session->flashdata('success'); ?>
@@ -101,6 +93,15 @@
                         <?= $this->session->flashdata('error'); ?>
                     </div>
                 <?php endif; ?>
+
+                <a href="#addScheduleModal" class="btn btn-primary mt-4">Add Schedule</a>
+                <a id="hideregister" class="btn btn-primary mt-4" style="color: white;">Hide Registration Form</a>
+                <form action="<?= site_url('admin/clearSchedule') ?>" method="post" id="clearScheduleForm">
+                    <a type="button" class="btn btn-primary mt-4" style="color: white;" onclick="confirmClearSchedule()">
+                        Clear Schedule
+                    </a>
+                </form>
+                
 
 
                 <div>
@@ -638,10 +639,19 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 document.getElementById('clearScheduleForm').submit();
+
+                
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'The schedule has been cleared.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
             }
         });
     }
 </script>
+
 
 
 
