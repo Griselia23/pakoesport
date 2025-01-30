@@ -282,8 +282,15 @@ class Dashboard extends CI_Controller
             $uploaded_image_paths = [];
             $files = $_FILES['evidence_image']; // Access the uploaded files
     
-            // Loop through each file and upload them
+            // Check if more than 3 files are being uploaded
             $total_files = count($files['name']);
+            if ($total_files > 3) {
+                $this->session->set_flashdata('error', 'You can only upload a maximum of 3 images.');
+                redirect('uploadresult');
+                return;
+            }
+    
+            // Loop through each file and upload them
             for ($i = 0; $i < $total_files; $i++) {
                 $_FILES['file']['name'] = $files['name'][$i];
                 $_FILES['file']['type'] = $files['type'][$i];
@@ -297,6 +304,7 @@ class Dashboard extends CI_Controller
                 } else {
                     $this->session->set_flashdata('error', 'Image upload failed: ' . $this->upload->display_errors());
                     redirect('uploadresult');
+                    return;
                 }
             }
     
@@ -331,6 +339,7 @@ class Dashboard extends CI_Controller
             redirect('uploadresult');
         }
     }
+    
     
 
 
