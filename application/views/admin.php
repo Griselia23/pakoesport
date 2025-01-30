@@ -23,7 +23,6 @@
 </header>
 
 <style>
-
     .modal {
         display: none;
         position: fixed;
@@ -101,7 +100,7 @@
                         Clear Schedule
                     </a>
                 </form>
-                
+
 
 
                 <div>
@@ -387,7 +386,14 @@
                                         <td><?php echo $result->points_a; ?></td>
                                         <td><?php echo $result->points_b; ?></td>
                                         <td><?php echo $result->division; ?></td>
-                                        <td><a href="<?php echo $result->evidence_image; ?>" target="_blank">View Image</a></td>
+                                        <td>
+                                            <?php
+                                            $image_paths = explode(',', $result->evidence_image);
+                                            foreach ($image_paths as $index => $image) {
+                                                echo '<a href="' . base_url($image) . '" target="_blank">View Evidence  ' . ($index + 1) . '</a><br>';
+                                            }
+                                            ?>
+                                        </td>
 
                                         <td>
                                             <!-- Edit Button -->
@@ -395,7 +401,7 @@
 
                                             <!-- Delete Button -->
                                             <form method="POST" action="<?php echo site_url('admin/delete_results/' . $result->id); ?>" style="display:inline;">
-                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this team?');">Del</button>
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this team?');">Del</button>
                                             </form>
                                         </td>
                                     </tr>
@@ -640,7 +646,7 @@
             if (result.isConfirmed) {
                 document.getElementById('clearScheduleForm').submit();
 
-                
+
                 Swal.fire({
                     title: 'Success!',
                     text: 'The schedule has been cleared.',

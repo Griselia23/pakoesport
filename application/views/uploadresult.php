@@ -216,10 +216,11 @@
   </div>
 
   <div class="form-row image-upload">
-    <label for="evidence_image">Upload Evidence (Image):</label>
-    <input type="file" name="evidence_image" id="evidence_image" accept="image/*" required multiple>
+    <label for="evidence_image">Upload Evidence (Images):</label>
+    <input type="file" name="evidence_image[]" id="evidence_image" accept="image/*" required multiple>
     <small>Max 3 images, each up to 2MB</small>
-  </div>
+</div>
+
 
   <input type="hidden" id="division" name="division" value="">
 

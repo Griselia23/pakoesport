@@ -244,15 +244,15 @@ class Dashboard extends CI_Controller
             $team_a_score = $this->input->post('team_1_score');
             $team_b_score = $this->input->post('team_2_score');
             $division = $this->input->post('division');
-
+    
             list($team_a_id, $team_b_id) = explode('-', $match_id);
-
+    
             $team_a = $this->db->get_where('register', ['id' => $team_a_id])->row_array();
             $team_b = $this->db->get_where('register', ['id' => $team_b_id])->row_array();
-
+    
             $team_a_points = 0;
             $team_b_points = 0;
-
+    
             if ($division === 'ml') {
                 $team_a_points = $team_a_score;
                 $team_b_points = $team_b_score;
@@ -268,55 +268,70 @@ class Dashboard extends CI_Controller
                     $team_b_points = 1;
                 }
             }
-
+    
             $upload_path = './uploads/' . $division . '/';
             if (!is_dir($upload_path)) {
                 mkdir($upload_path, 0777, true);
             }
-
+    
             $config['upload_path'] = $upload_path;
             $config['allowed_types'] = 'jpg|jpeg|png|gif';
             $config['max_size'] = 2048;
             $this->load->library('upload', $config);
-
-            if ($this->upload->do_upload('evidence_image')) {
-                $upload_data = $this->upload->data();
-                $image_path = 'uploads/' . $division . '/' . $upload_data['file_name'];
-
-                $match_title = $team_a['team'] . ' vs. ' . $team_b['team'];
-
-                $match_result_data = [
-                    'team_id_a' => $team_a_id,
-                    'team_id_b' => $team_b_id,
-                    'points_a' => $team_a_points,
-                    'points_b' => $team_b_points,
-                    'match_date' => date('Y-m-d H:i:s'),
-                    'evidence_image' => $image_path,
-                    'division' => $division,
-                    'match_title' => $match_title
-                ];
-
-                $existing_match_result = $this->db->get_where('match_results', [
-                    'team_id_a' => $team_a_id,
-                    'team_id_b' => $team_b_id
-                ])->row_array();
-
-                if ($existing_match_result) {
-                    $this->db->update('match_results', $match_result_data, [
-                        'id' => $existing_match_result['id']
-                    ]);
+    
+            $uploaded_image_paths = [];
+            $files = $_FILES['evidence_image']; // Access the uploaded files
+    
+            // Loop through each file and upload them
+            $total_files = count($files['name']);
+            for ($i = 0; $i < $total_files; $i++) {
+                $_FILES['file']['name'] = $files['name'][$i];
+                $_FILES['file']['type'] = $files['type'][$i];
+                $_FILES['file']['tmp_name'] = $files['tmp_name'][$i];
+                $_FILES['file']['error'] = $files['error'][$i];
+                $_FILES['file']['size'] = $files['size'][$i];
+    
+                if ($this->upload->do_upload('file')) {
+                    $upload_data = $this->upload->data();
+                    $uploaded_image_paths[] = 'uploads/' . $division . '/' . $upload_data['file_name'];
                 } else {
-                    $this->db->insert('match_results', $match_result_data);
+                    $this->session->set_flashdata('error', 'Image upload failed: ' . $this->upload->display_errors());
+                    redirect('uploadresult');
                 }
-
-                $this->session->set_flashdata('success', 'Scores and evidence image uploaded successfully!');
-            } else {
-                $this->session->set_flashdata('error', 'Image upload failed: ' . $this->upload->display_errors());
             }
-
+    
+            // If images are uploaded successfully, process match result
+            $match_title = $team_a['team'] . ' vs. ' . $team_b['team'];
+    
+            $match_result_data = [
+                'team_id_a' => $team_a_id,
+                'team_id_b' => $team_b_id,
+                'points_a' => $team_a_points,
+                'points_b' => $team_b_points,
+                'match_date' => date('Y-m-d H:i:s'),
+                'evidence_image' => implode(',', $uploaded_image_paths), // Store multiple image paths as a comma-separated string
+                'division' => $division,
+                'match_title' => $match_title
+            ];
+    
+            $existing_match_result = $this->db->get_where('match_results', [
+                'team_id_a' => $team_a_id,
+                'team_id_b' => $team_b_id
+            ])->row_array();
+    
+            if ($existing_match_result) {
+                $this->db->update('match_results', $match_result_data, [
+                    'id' => $existing_match_result['id']
+                ]);
+            } else {
+                $this->db->insert('match_results', $match_result_data);
+            }
+    
+            $this->session->set_flashdata('success', 'Scores and evidence images uploaded successfully!');
             redirect('uploadresult');
         }
     }
+    
 
 
 }
