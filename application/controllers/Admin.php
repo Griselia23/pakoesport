@@ -13,7 +13,9 @@ class Admin extends CI_Controller {
         if ($this->session->userdata('role') !== 'admin') {
             redirect('login');  
         }
-
+        if ($this ->session->userdata('pakoesport') == null) {
+         redirect('login');
+        }
         $this->load->model('Dashboard_model'); 
         $this->load->model('Admin_model'); 
     }

@@ -38,10 +38,13 @@ class Login extends CI_Controller {
             $user = $this->db->get_where('user', ['npk' => $npk])->row();
             
             if ($user && password_verify($password, $user->password)) {
+                $data['npk'] = $user->npk;
+                $data['username'] = $user->username;
                 $this->session->set_userdata('user_id', $user->id);
                 $this->session->set_userdata('role', 'admin'); 
                 $this->session->set_userdata('username', $user->username);
                 $this->session->set_flashdata('success', 'Login successful! Welcome, ' . $user->username . '.');
+                $this->session->set_userdata('pakoesport', $data);
                 redirect('admin');
         }
     
