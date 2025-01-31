@@ -4,7 +4,7 @@
 <header id="header">
     <div class="container">
         <div id="logo" class="pull-left">
-            <a href="#intro" class="scrollto"><img src="<?php echo base_url('application/template/img/logo.png'); ?>" alt="" title=""></a>
+            <a href="dashboard" class="scrollto"><img src="<?php echo base_url('application/template/img/logo.png'); ?>" alt="" title=""></a>
         </div>
         <nav id="nav-menu-container">
             <ul class="nav-menu">
@@ -14,8 +14,11 @@
                 <li><a href="<?php echo base_url('dashboard'); ?>">Home</a></li>
 
                 <li class="buy-tickets">
-                    <a href="<?php echo base_url('login/logout'); ?>">Logout</a>
+                    <a href="#" onclick="confirmLogout(event)">Logout</a>
                 </li>
+
+
+
 
             </ul>
         </nav>
@@ -655,6 +658,17 @@
                 });
             }
         });
+    }
+</script>
+
+<script type="text/javascript">
+    function confirmLogout(event) {
+        event.preventDefault();  
+
+        if (confirm("Are you sure you want to log out?")) {
+            
+            window.location.href = "<?php echo base_url('login/logout'); ?>";
+        }
     }
 </script>
 
