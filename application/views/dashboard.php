@@ -216,6 +216,7 @@
             </div>
 
             <div id="mobileLegendsTable" class="schedule-table">
+            <h4>Schedule - Mobile Legends</h4>
               <div class="table-responsive">
                 <table id="mlTable" class="table table-light table-hover">
                   <thead>
@@ -228,7 +229,7 @@
                     <?php if (isset($matches_by_division['ml']) && !empty($matches_by_division['ml'])): ?>
                       <?php foreach ($matches_by_division['ml'] as $match): ?>
                         <tr>
-                          <td><?php echo date('l, M d Y ', strtotime($match['start_date'])); ?></td>
+                          <td><?php echo date(' M d Y ', strtotime($match['start_date'])); ?></td>
                           <td><?php echo $match['match_title']; ?></td>
                         </tr>
                       <?php endforeach; ?>
@@ -243,6 +244,7 @@
             </div>
 
             <div id="fifaTable" class="schedule-table" style="display:none;">
+            <h4>Schedule - FIFA</h4>
               <div class="table-responsive">
                 <table id="fifaTableData" class="table table-light table-hover">
                   <thead>
@@ -255,7 +257,7 @@
                     <?php if (isset($matches_by_division['fifa']) && !empty($matches_by_division['fifa'])): ?>
                       <?php foreach ($matches_by_division['fifa'] as $match): ?>
                         <tr>
-                          <td><?php echo date('l, M  d Y', strtotime($match['start_date'])); ?></td>
+                          <td><?php echo date(' M  d Y', strtotime($match['start_date'])); ?></td>
                           <td><?php echo $match['match_title']; ?></td>
                         </tr>
                       <?php endforeach; ?>
@@ -914,15 +916,16 @@
     $('#mlTable').DataTable({
       "searching": false,  
       "paging": true,
-      "order": [[1, 'asc'], [0, 'asc']] // Sort by Match (column 1) first, then Date (column 0)
+      "order": [[0, 'asc']] // Sort by Date (column 0) in ascending order
     });
     $('#fifaTableData').DataTable({
       "searching": false, 
       "paging": true,
-      "order": [[1, 'asc'], [0, 'asc']] // If you want the same behavior for this table
+      "order": [[0, 'asc']] // Sort by Date (column 0) in ascending order
     });
   });
 </script>
+
 
 
 <script>
